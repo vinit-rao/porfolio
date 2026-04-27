@@ -1,0 +1,20 @@
+/* Dynamic Grid - MAX 3 COLUMNS */
+.glass-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 30px; width: 100%; }
+@media (min-width: 750px) { .glass-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { .glass-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* Filters */
+.filter-btn { background: transparent; color: var(--text-dim); border: 1px solid var(--glass-border); padding: 10px 26px; font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px; }
+.filter-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.filter-btn.active-all { background: #fff; color: #000; border-color: #fff; }
+.filter-btn.active-video { background: rgba(255, 51, 51, 0.15); color: var(--cat-video); border-color: var(--cat-video); }
+.filter-btn.active-code { background: rgba(51, 153, 255, 0.15); color: var(--cat-code); border-color: var(--cat-code); }
+.filter-btn.active-graphics { background: rgba(204, 51, 255, 0.15); color: var(--cat-graphics); border-color: var(--cat-graphics); }
+.filter-btn.active-photos { background: rgba(51, 204, 153, 0.15); color: var(--cat-photos); border-color: var(--cat-photos); }
+
+/* Pagination */
+.pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 60px; margin-bottom: 60px; }
+.page-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-dim); padding: 10px 18px; font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+.page-btn:hover:not(:disabled) { background: rgba(255,255,255,0.05); color: #fff; border-color: #fff; }
+.page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.page-btn:disabled { opacity: 0.3; cursor: not-allowed; }

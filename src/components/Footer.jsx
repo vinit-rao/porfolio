@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './Footer.css';
 
 const Footer = () => {
     const [currentTime, setCurrentTime] = useState('');

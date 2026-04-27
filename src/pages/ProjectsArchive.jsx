@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import projectsData from '../data/projects';
 import ProjectCard from '../components/ProjectCard';
 import Footer from '../components/Footer';
+import './ProjectsArchive.css';
 
 const ProjectsArchive = () => {
     const [filter, setFilter] = useState('all');

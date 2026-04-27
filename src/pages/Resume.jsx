@@ -26,7 +26,7 @@ const Resume = () => {
                         width="100%" 
                         height="100%" 
                         style={{ border: 'none', position: 'absolute', top: 0, left: 0 }} 
-                        title="Vinit Rao Resume" 
+                        title="Vinit Rao Resume" loading="lazy"
                     />
                 </div>
             </div>

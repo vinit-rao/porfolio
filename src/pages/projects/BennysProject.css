@@ -1,0 +1,83 @@
+/* BENNY'S PROJECT - ASYMMETRIC CAROUSEL LAYOUT */
+
+.bp-back-btn { font-family: var(--font-mono); color: var(--text-dim); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; transition: 0.3s; display: inline-block; }
+.bp-back-btn:hover { color: #fff; }
+
+/* Added word-wrap to prevent massive words from breaking the grid */
+.bp-massive-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 0.9; text-transform: uppercase; color: #fff; margin-bottom: 20px; letter-spacing: -1px; word-wrap: break-word; }
+
+/* BUTTON STYLING */
+.bp-hero-actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 40px; }
+.glass-btn { display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+/* GitHub Official Grey Match */
+.btn-github { background: transparent; color: #fff; border: 1px solid #6e7681; }
+.btn-github:hover { background: #24292e; color: #fff; border-color: #24292e; }
+
+/* Brutalist Play Button */
+.btn-play { background: transparent; color: var(--accent); border-color: var(--glass-border); padding: 16px 24px; font-weight: bold; }
+.btn-play:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* HERO SPLIT - Breakpoint moved to 1100px and added min-width: 0 */
+.bp-hero-split { display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 60px; }
+.bp-hero-split > div { min-width: 0; } /* Anti-Overlap Failsafe */
+@media (min-width: 1100px) { .bp-hero-split { grid-template-columns: 1fr 1.4fr; gap: 50px; } }
+
+.bp-section-title { font-family: var(--font-display); color: #fff; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid var(--glass-border); }
+.bp-text { font-family: var(--font-body); color: #aaa; font-size: 1rem; line-height: 1.8; margin-bottom: 20px; }
+
+/* MAIN MEDIA & THUMBNAILS GALLERY */
+.bp-media-gallery { display: flex; flex-direction: column; gap: 15px; width: 100%; height: 100%; min-width: 0; }
+@media (min-width: 600px) { 
+    .bp-media-gallery { flex-direction: row; align-items: stretch; } 
+}
+
+.bp-main-media { flex: 1; border: 1px solid var(--glass-border); background: #000; position: relative; aspect-ratio: 16/9; min-width: 0; }
+.bp-main-media iframe, .bp-main-media img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.bp-thumbnails-list { display: flex; flex-direction: row; gap: 10px; overflow-x: auto; min-width: 0; }
+@media (min-width: 600px) { 
+    .bp-thumbnails-list { flex-direction: column; width: 100px; height: auto; justify-content: space-between; overflow-x: visible; } 
+}
+
+.bp-thumbnail { border: 1px solid var(--glass-border); background: #000; cursor: pointer; transition: 0.3s; opacity: 0.4; overflow: hidden; position: relative; flex: 1; min-height: 0; }
+.bp-thumbnail:hover, .bp-thumbnail.active { opacity: 1; border-color: var(--accent); }
+.bp-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bp-thumb-placeholder { font-family: var(--font-mono); font-size: 0.6rem; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; text-align: center; color: var(--text-dim); line-height: 1.2; }
+
+/* TECH STACK MARQUEE */
+.bp-tech-stack-section { margin: 80px 0; }
+.bp-tech-label { font-family: var(--font-mono); color: var(--accent); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 15px; }
+.fast-track { animation: marqueeScroll 25s linear infinite; }
+
+/* BOTTOM SPLIT - Breakpoint moved to 1100px and added min-width: 0 */
+.bp-bottom-split { display: grid; grid-template-columns: 1fr; gap: 60px; margin-top: 40px; }
+.bp-bottom-split > div { min-width: 0; } /* Anti-Overlap Failsafe */
+@media (min-width: 1100px) { .bp-bottom-split { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+/* LINKEDIN CAROUSEL */
+.bp-carousel-container { display: flex; flex-direction: column; width: 100%; border: 1px solid var(--glass-border); background: #000; min-width: 0; }
+.social-viewport { min-height: 550px; height: auto; position: relative; background: #050505; }
+.social-viewport iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+.bp-carousel-controls { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-top: 1px solid var(--glass-border); font-family: var(--font-mono); font-size: 0.75rem; background: #0a0a0c; }
+.bp-carousel-controls button { background: transparent; border: none; color: var(--text-dim); cursor: pointer; font-family: var(--font-mono); letter-spacing: 1px; transition: 0.3s; }
+.bp-carousel-controls button:hover { color: var(--accent); }
+.bp-carousel-indicator { color: #fff; letter-spacing: 2px; }
+
+/* CONTRIBUTIONS */
+.bp-contribution-list { display: flex; flex-direction: column; gap: 15px; min-width: 0; }
+.bp-contribution-card { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); padding: 25px; transition: 0.3s; border-left: 2px solid transparent; }
+.bp-contribution-card:hover { background: rgba(255,255,255,0.04); border-left-color: var(--accent); transform: translateX(5px); }
+.bp-contribution-card h3 { font-family: var(--font-mono); color: #fff; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 10px; }
+.bp-contribution-card p { font-family: var(--font-body); color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+.bp-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-dim); }
+.blueprint-bg { background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 20px 20px; background-position: center center; }
+
+/* GLOBAL RE-USE */
+.marquee-wrapper { width: 100%; overflow: hidden; display: flex; align-items: center; }
+.marquee-track { display: flex; gap: 15px; width: max-content; }
+@keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+@media (max-width: 600px) { .bp-hero-actions { flex-direction: column; } .glass-btn { width: 100%; justify-content: center; } }
