@@ -10,13 +10,13 @@
 .bp-hero-actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 40px; }
 .glass-btn { display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-/* GitHub Official Grey Match */
-.btn-github { background: transparent; color: #fff; border: 1px solid #6e7681; }
-.btn-github:hover { background: #24292e; color: #fff; border-color: #24292e; }
+/* GitHub Button: Solid Grey -> Hollow Grey */
+.btn-github { background: #24292e; color: #ffffff; border: 1px solid #24292e; padding: 16px 24px; font-weight: bold; }
+.btn-github:hover { background: transparent; color: #ffffff; border-color: #6e7681; }
 
-/* Brutalist Play Button */
-.btn-play { background: transparent; color: var(--accent); border-color: var(--glass-border); padding: 16px 24px; font-weight: bold; }
-.btn-play:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+/* Play Button: Solid Accent -> Hollow Accent */
+.btn-play { background: var(--accent); color: #fff; border: 1px solid var(--accent); padding: 16px 24px; font-weight: bold; }
+.btn-play:hover { background: transparent; color: var(--accent); }
 
 /* HERO SPLIT - Breakpoint moved to 1100px and added min-width: 0 */
 .bp-hero-split { display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 60px; }

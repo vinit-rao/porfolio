@@ -7,16 +7,14 @@ import './Home.css';
 const Home = () => {
     const [featured, setFeatured] = useState([]);
     const [showContent, setShowContent] = useState(false);
+    const [activeTouchCard, setActiveTouchCard] = useState(null); // Tracks mobile taps
     const navigate = useNavigate();
 
     useEffect(() => {
         const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 4);
         setFeatured(randomized);
 
-        const animationTimer = setTimeout(() => {
-            setShowContent(true);
-        }, 50);
-
+        const animationTimer = setTimeout(() => { setShowContent(true); }, 50);
         return () => clearTimeout(animationTimer);
     }, []);
 
@@ -30,43 +28,39 @@ const Home = () => {
         }
     };
 
+    // 2-Tap Logic for Mobile
+    const handleProjectClick = (e, p, idx) => {
+        if (window.matchMedia('(hover: none)').matches) {
+            if (activeTouchCard !== idx) {
+                e.preventDefault();
+                setActiveTouchCard(idx);
+                return; // Stop here on the first tap
+            }
+        }
+        // Second tap (or desktop click) navigates
+        if (p.internalLink) navigate(p.internalLink);
+        else window.open(p.link, '_blank');
+    };
+
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <div className="container" style={{ paddingTop: '100px', flexGrow: 1 }}>
 
                 <header style={{ position: 'relative', minHeight: '90vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-
                     <div className="css-starfield"></div>
-
-                    <div className="spline-container" style={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        width: '100%',
-                        height: '100%',
-                        zIndex: 2,
-                        pointerEvents: 'none'
-                    }}>
-                        <spline-viewer
-                            url="https://prod.spline.design/vyQWyAKaGzlKQJKm/scene.splinecode"
-                            events-target="global"
-                        ></spline-viewer>
+                    <div className="spline-container" style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: '100%', zIndex: 2, pointerEvents: 'none' }}>
+                        <spline-viewer url="https://prod.spline.design/vyQWyAKaGzlKQJKm/scene.splinecode" events-target="global"></spline-viewer>
                     </div>
-                    
-                    {/* LAYER 3: YOUR TEXT (Foreground) */}
                     <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-                        <h2 style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.8rem', letterSpacing: '4px' }}>
-                            INTERACTIVE DESIGNER
-                        </h2>
-                        <h1 className="massive-title" style={{ fontSize: 'clamp(4rem, 16vw, 12rem)', lineHeight: '0.85' }}>
-                            VINIT<br />RAO.
-                        </h1>
+                        <h2 style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.8rem', letterSpacing: '4px' }}>INTERACTIVE DESIGNER</h2>
+                        <h1 className="massive-title" style={{ fontSize: 'clamp(4rem, 16vw, 12rem)', lineHeight: '0.85' }}>VINIT<br />RAO.</h1>
                     </div>
                 </header>
 
                 <section style={{ padding: '120px 0', borderTop: '1px solid var(--glass-border)' }}>
                     <h2 className="massive-title" style={{ fontSize: '3.5rem', marginBottom: '50px', textShadow: 'none' }}>ABOUT ME</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '60px', alignItems: 'stretch' }}>
+                    {/* BUG FIX: Changed minmax(400px) to minmax(min(100%, 350px)) to prevent horizontal scroll on Pixel 7a */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '60px', alignItems: 'stretch' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '40px' }}>
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '15px' }}>
@@ -79,7 +73,7 @@ const Home = () => {
                             </div>
 
                             <div className="glass-card" style={{ padding: '30px' }}>
-                                <span className="card-label">Tech Stack & Tools</span>
+                                <span className="card-label" style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '20px' }}>Tech Stack & Tools</span>
                                 <ul style={{ listStyle: 'none', color: '#888', fontSize: '0.85rem', lineHeight: '1.8' }}>
                                     <li style={{ marginBottom: '12px' }}><b style={{ color: '#fff' }}>LANGUAGES:</b> Python, Java, C++, C#, HTML, CSS, JavaScript, SQL, Swift</li>
                                     <li style={{ marginBottom: '12px' }}><b style={{ color: '#fff' }}>CREATIVE:</b> Adobe CC, Figma, Final Cut, Blender, Maya</li>
@@ -88,20 +82,23 @@ const Home = () => {
                             </div>
 
                             <div className="action-btn-group">
-                                <Link to="/resume" className="glass-btn">VIEW RESUME</Link>
-                                <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noopener noreferrer" className="glass-btn">LINKEDIN</a>
-                                <Link to="/projects" className="glass-btn">VIEW PROJECTS</Link>
+                                <Link to="/resume" className="glass-btn btn-resume">
+                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM18 20H6V4h5v6h6v10z" /></svg>
+                                    VIEW RESUME
+                                </Link>
+                                <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noopener noreferrer" className="glass-btn btn-linkedin">
+                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                                    LINKEDIN
+                                </a>
+                                <Link to="/projects" className="glass-btn btn-projects">
+                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M10 3H3v7h7V3zm-2 5H5V5h3v3zm13-5h-7v7h7V3zm-2 5h-3V5h3v3zM10 14H3v7h7v-7zm-2 5H5v-3h3v3zm13-5h-7v7h7v-7zm-2 5h-3v-3h3v3z" /></svg>
+                                    VIEW PROJECTS
+                                </Link>
                             </div>
                         </div>
 
                         <div className="glass-card" style={{ padding: 0, overflow: 'hidden', height: '100%', minHeight: '400px', position: 'relative' }}>
-                            <img
-                                src="/images/herobg.jpg"
-                                alt="Vinit Rao"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'grayscale(100%) contrast(1.1) brightness(0.8)', transition: 'filter 0.5s ease' }}
-                                onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) contrast(1.1) brightness(1)'}
-                                onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) contrast(1.1) brightness(0.8)'}
-                            />
+                            <img src="/images/herobg.jpg" alt="Vinit Rao" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'grayscale(100%) contrast(1.1) brightness(0.8)', transition: 'filter 0.5s ease' }} onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) contrast(1.1) brightness(1)'} onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) contrast(1.1) brightness(0.8)'} />
                         </div>
                     </div>
                 </section>
@@ -115,8 +112,8 @@ const Home = () => {
                         {featured.map((p, idx) => (
                             <div
                                 key={idx}
-                                className="accordion-panel"
-                                onClick={() => p.internalLink ? navigate(p.internalLink) : window.open(p.link, '_blank')}
+                                className={`accordion-panel ${activeTouchCard === idx ? 'touch-active' : ''}`}
+                                onClick={(e) => handleProjectClick(e, p, idx)}
                                 style={{ '--card-color': getCategoryColor(p.category) }}
                             >
                                 <img src={p.image} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} alt={p.title} />
@@ -134,7 +131,6 @@ const Home = () => {
                     </div>
                 </section>
             </div>
-
             <Footer />
         </div>
     );

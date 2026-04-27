@@ -7,7 +7,7 @@ const projects = [
         description: 'Unity made 3D game where the player trys to catch falling scoops and complete orders.',
         internalLink: '/bennys-adventure',
         video: 'videos/project_25.mp4',
-        image: 'images/project_25.jpg',
+        image: 'images/project_25-4.jpg',
         badges: ['| C# | Unity | After Effects | School |'],
         featured: true
     },

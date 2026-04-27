@@ -1,8 +1,9 @@
 .sharp-project-card { position: relative; width: 100%; aspect-ratio: 4/3; background: #000; overflow: hidden; border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.4s; z-index: 1; }
 .sharp-project-card:hover { border-color: var(--card-color); box-shadow: 0 0 20px var(--card-color); z-index: 10; }
 
-.card-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease; filter: brightness(0.45); }
-.sharp-project-card:hover .card-bg-img { transform: scale(1.05); filter: brightness(0.85); }
+/* INVERTED BRIGHTNESS LOGIC */
+.card-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease; filter: brightness(1); }
+.sharp-project-card:hover .card-bg-img { transform: scale(1.05); filter: brightness(0.35); }
 
 .card-category-top { position: absolute; top: 15px; left: 15px; z-index: 4; display: flex; align-items: center; gap: 10px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: top left; }
 .sharp-project-card:hover .card-category-top { transform: scale(1.1); }
@@ -11,20 +12,39 @@
 .category-glow-dot { width: 12px; height: 12px; background-color: var(--card-color); box-shadow: 0 0 8px var(--card-color); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .sharp-project-card:hover .category-glow-dot { background-color: #fff; box-shadow: 0 0 15px var(--card-color), 0 0 30px var(--card-color), inset 0 0 4px #fff; transform: scale(1.2); }
 
+/* IDLE INFO & TEXT HIDING FIX */
 .card-idle-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 2; transition: all 0.4s ease; transform: translateY(0); }
 .card-idle-info.fade-out { opacity: 0; transform: translateY(20px); }
+.sharp-project-card:hover .card-idle-info { opacity: 0; transform: translateY(20px); pointer-events: none; }
 
-/* SHRINKED IDLE TEXT TO PREVENT UGLY WRAPPING */
 .idle-title { margin: 0; font-family: var(--font-display); font-size: clamp(0.85rem, 1.1vw, 1.2rem); color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
 .card-hover-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 35%); z-index: 3; opacity: 0; transition: all 0.4s; overflow: hidden; pointer-events: none; }
 .sharp-project-card:hover .card-hover-overlay { opacity: 1; box-shadow: inset 0 0 80px var(--card-color); }
 .hover-title { position: absolute; top: 15px; right: 15px; margin: 0; font-family: var(--font-display); font-size: clamp(0.9rem, 1.4vw, 1.25rem); color: #fff; text-transform: uppercase; letter-spacing: 1px; text-align: right; max-width: 50%; line-height: 1.2; transform: translateY(-10px); transition: transform 0.4s ease; }
 .card-hover-overlay.active .hover-title { transform: translateY(0); }
-.hover-bottom-content { position: absolute; bottom: 0; left: 0; width: 100%; display: flex; flex-direction: column; background: linear-gradient(to top, rgba(0,0,0,0.95) 40%, transparent); transform: translateY(20px); transition: transform 0.4s ease; padding-top: 30px; }
-.card-hover-overlay.active .hover-bottom-content { transform: translateY(0); }
-.hover-desc { color: #fff; font-size: 0.85rem; line-height: 1.5; padding: 0 20px; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-.marquee-wrapper { width: 100%; overflow: hidden; display: flex; align-items: center; padding-bottom: 20px; }
-.marquee-track { display: flex; gap: 15px; width: max-content; animation: marqueeScroll 10s linear infinite; }
+/* BALANCED SPACING FOR DESKTOP */
+.hover-bottom-content { position: absolute; bottom: 0; left: 0; width: 100%; display: flex; flex-direction: column; background: linear-gradient(to top, rgba(0,0,0,0.95) 45%, transparent); transform: translateY(20px); transition: transform 0.4s ease; padding-top: 40px; padding-bottom: 25px; }
+.card-hover-overlay.active .hover-bottom-content { transform: translateY(0); }
+.hover-desc { color: #fff; font-size: 0.85rem; line-height: 1.5; padding: 0 20px; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+
+.marquee-wrapper { width: 100%; overflow: hidden; display: flex; align-items: center; padding-bottom: 0; }
+.marquee-track { display: flex; gap: 10px; width: max-content; animation: marqueeScroll 15s linear infinite; }
 @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* Mobile Touch Support */
+@media (hover: none) {
+    .sharp-project-card.touch-active { border-color: var(--card-color); box-shadow: 0 0 20px var(--card-color); z-index: 10; }
+    
+    /* MOBILE TEXT HIDING FIX */
+    .sharp-project-card.touch-active .card-idle-info { opacity: 0; transform: translateY(20px); pointer-events: none; }
+    
+    .sharp-project-card.touch-active .card-bg-img { transform: scale(1.05); filter: brightness(0.35); }
+    .sharp-project-card.touch-active .card-category-top { transform: scale(1.1); }
+    .sharp-project-card.touch-active .category-text { color: var(--card-color); }
+    .sharp-project-card.touch-active .category-glow-dot { background-color: #fff; box-shadow: 0 0 15px var(--card-color), 0 0 30px var(--card-color), inset 0 0 4px #fff; transform: scale(1.2); }
+    
+    .sharp-project-card.touch-active .card-hover-overlay { opacity: 1; box-shadow: inset 0 0 80px var(--card-color); }
+    .card-hover-overlay.active { opacity: 1; pointer-events: auto; }
+}

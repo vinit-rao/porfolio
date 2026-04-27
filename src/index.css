@@ -1,4 +1,9 @@
 /* VINIT RAO - CORE GLOBALS */
+html, body { 
+    overflow-x: hidden; 
+    width: 100%; 
+    max-width: 100vw; 
+}
 :root { --bg-void: #0a0a0c; --bg-glow: radial-gradient(circle at 50% -20%, #1a0808 0%, var(--bg-void) 70%); --glass-border: rgba(255, 255, 255, 0.15); --text-main: #f4f4f5; --text-dim: #888888; --accent: #e60000; --font-display: 'Syne', sans-serif; --font-body: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace; --cat-video: #ff3333; --cat-code: #3399ff; --cat-graphics: #cc33ff; --cat-photos: #33cc99; }
 * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0 !important; }
 html { scroll-behavior: smooth; background-color: var(--bg-void); color: var(--text-main); font-family: var(--font-body); }

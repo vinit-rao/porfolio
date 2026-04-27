@@ -4,13 +4,30 @@
 .sharp-nav { display: flex; justify-content: space-between; align-items: center; height: 80px; }
 
 .nav-brand-container { display: flex; justify-content: flex-start; }
-.nav-brand { font-family: var(--font-display); font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 1.3rem; }
+.nav-brand { display: flex; align-items: center; height: 80px; font-family: var(--font-display); font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 1.3rem; }
 .nav-brand:hover { color: var(--accent); }
 .brand-short { display: none; }
 
-.nav-links-group { display: flex; align-items: center; justify-content: flex-end; }
-.nav-divider { color: var(--glass-border); font-family: var(--font-mono); font-size: 0.8rem; margin: 0 5px; }
-.nav-link { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); text-decoration: none; letter-spacing: 2px; transition: 0.3s; padding: 0 15px; }
+.nav-links-group { display: flex; align-items: center; justify-content: flex-end; height: 100%; }
+
+/* Bolder, larger dividers to match the links */
+.nav-divider { color: var(--glass-border); font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; margin: 0 5px; }
+
+/* Bolder, larger links with a slightly wider click area */
+.nav-link { 
+    display: flex; 
+    align-items: center; 
+    height: 80px; 
+    font-family: var(--font-mono); 
+    font-size: 0.95rem; 
+    font-weight: 700;
+    text-transform: uppercase; 
+    color: var(--text-dim); 
+    text-decoration: none; 
+    letter-spacing: 2px; 
+    transition: 0.3s; 
+    padding: 0 20px; 
+}
 .nav-link:hover, .nav-link.active { color: var(--accent); }
 
 /* Hide balancer on desktop so links stay completely right */
@@ -18,18 +35,17 @@
 
 /* TABLET & MOBILE VIEW (Trigger at 950px) */
 @media (max-width: 950px) { 
-    /* Reactivate the 3-column flex grid for perfect centering */
     .nav-brand-container { flex: 1; }
     .nav-links-group { flex: 2; justify-content: center; }
     .nav-balancer { display: block; flex: 1; } 
 
     .brand-full { display: none; }
-    .brand-short { display: block; font-size: 1.6rem; color: #fff; } /* Now explicitly white */
-    .nav-link { padding: 0 10px; font-size: 0.75rem; letter-spacing: 1px; }
+    .brand-short { display: block; font-size: 1.6rem; color: #fff; } 
+    .nav-link { padding: 0 10px; font-size: 0.8rem; letter-spacing: 1px; }
 }
 
 /* NARROW MOBILE VIEW */
 @media (max-width: 500px) {
-    .nav-link { padding: 0 5px; font-size: 0.65rem; letter-spacing: 0px; }
+    .nav-link { padding: 0 5px; font-size: 0.7rem; letter-spacing: 0px; }
     .brand-short { font-size: 1.3rem; }
 }
