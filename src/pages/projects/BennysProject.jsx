@@ -12,9 +12,9 @@ const BennysProject = () => {
     const heroMedia = [
         { id: 0, type: 'iframe', src: 'https://www.youtube.com/embed/_w7nBbe73mw?autoplay=1&mute=1&loop=1', thumb: 'https://img.youtube.com/vi/_w7nBbe73mw/maxresdefault.jpg' },
         { id: 1, type: 'image', src: '/images/project_25.jpg', thumb: '/images/project_25.jpg' }, 
-        { id: 2, type: 'placeholder', text: 'SC 02', thumb: null },
-        { id: 3, type: 'placeholder', text: 'SC 03', thumb: null },
-        { id: 4, type: 'placeholder', text: 'SC 04', thumb: null }
+        { id: 2, type: 'image', src: '/images/project_25-1.png', thumb: '/images/project_25-1.png' },
+        { id: 3, type: 'image', src: '/images/project_25-2.png', thumb: '/images/project_25-2.png' },
+        { id: 4, type: 'image', src: '/images/project_25-3.png', thumb: '/images/project_25-3.png' }
     ];
 
     const socialEmbeds = [
