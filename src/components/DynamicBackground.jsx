@@ -2,38 +2,37 @@ import { useMemo } from 'react';
 import './DynamicBackground.css';
 
 const DynamicBackground = () => {
-    // Generates short, sweeping wave pulses
+    // Generate a smaller array of short, random streaks for a cleaner look
     const streaks = useMemo(() => {
-        const count = 18; // Increased count slightly since they are shorter and fade out
+        const count = 15; // FEWER LINES: reduced from 55 to 15
         const data = [];
         
         for (let i = 0; i < count; i++) {
-            const isRed = Math.random() > 0.55; 
+            // Increased the density of red streaks slightly for flavor
+            const isRed = Math.random() > 0.45; 
             const color = isRed ? 'red' : 'dark';
             
-            // Randomize duration (faster than before to feel like data pulses)
-            const duration = Math.random() * (16 - 8) + 8; 
+            // Randomize duration (slow and elegant speeds between 8s and 20s)
+            const duration = Math.random() * (20 - 8) + 8; 
             
-            const delay = Math.random() * -20; 
+            // Randomize delay (staggered starts)
+            const delay = Math.random() * -12; 
             
-            // Randomize how long the physical "dash" is
-            const streakLength = Math.random() * (400 - 100) + 100;
+            // Randomize vertical placement (0% to 95% down the screen)
+            const top = Math.random() * 95; 
             
-            const startY = Math.random() * 1000;
-            const cp1Y = Math.random() * 1000; 
-            const cp2Y = Math.random() * 1000; 
-            const endY = Math.random() * 1000;
-            
-            const pathD = `M -100 ${startY} C 600 ${cp1Y}, 1400 ${cp2Y}, 2100 ${endY}`;
+            // Randomize size/length (make them shorter)
+            const scaleX = Math.random() * (1.1 - 0.4) + 0.4; 
             
             data.push({
                 id: i,
                 color,
-                d: pathD,
                 style: {
+                    top: `${top}%`,
+                    // Inject randomized animation and length properties inline
                     '--draw-duration': `${duration}s`,
                     '--draw-delay': `${delay}s`,
-                    '--streak-length': `${streakLength}` /* Passed to CSS */
+                    '--draw-scaleX': `${scaleX}`
                 }
             });
         }
@@ -42,16 +41,13 @@ const DynamicBackground = () => {
 
     return (
         <div className="dynamic-bg-wrapper">
-            <svg className="dynamic-bg-svg" viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                {streaks.map(streak => (
-                    <path 
-                        key={streak.id}
-                        d={streak.d} 
-                        className={`wavy-path ${streak.color}`}
-                        style={streak.style}
-                    />
-                ))}
-            </svg>
+            {streaks.map(streak => (
+                <div 
+                    key={streak.id}
+                    className={`streak-line ${streak.color}`}
+                    style={streak.style}
+                />
+            ))}
         </div>
     );
 };

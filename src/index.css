@@ -57,7 +57,6 @@ body {
     font-family: var(--font-body);
     transition: background-color 0.4s ease, color 0.4s ease;
     
-    /* Grid background flattened to body to prevent scroll repaints */
     background-image: 
         linear-gradient(var(--grid-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -67,7 +66,6 @@ body {
     -webkit-backface-visibility: hidden;
 }
 
-/* THE TIGHTER GLOBAL CONTAINER */
 .container { 
     width: 100%; 
     max-width: 1060px; 
@@ -123,47 +121,27 @@ img { display: block; width: 100%; }
     background: var(--accent); 
     color: #FFF; 
     border-color: var(--accent); 
-    /* Use translate3d instead of translate to force GPU */
     transform: translate3d(-2px, -2px, 0) rotate(0deg); 
     box-shadow: 8px 8px 0px rgba(217, 28, 28, 0.2); 
 }
 
 .scrap-input {
-    background: transparent; 
-    border: none; 
-    border-bottom: 2px dashed var(--border-color);
-    padding: 15px 5px; 
-    color: var(--text-primary); 
-    font-family: var(--font-mono); 
-    font-size: 1rem;
-    transition: all 0.3s ease; 
-    border-radius: 0;
+    background: transparent; border: none; border-bottom: 2px dashed var(--border-color);
+    padding: 15px 5px; color: var(--text-primary); font-family: var(--font-mono); font-size: 1rem;
+    transition: all 0.3s ease; border-radius: 0;
 }
+.scrap-input:focus { outline: none; border-bottom: 2px solid var(--accent); background: rgba(217, 28, 28, 0.03); }
 
-.scrap-input:focus { 
-    outline: none; 
-    border-bottom: 2px solid var(--accent); 
-    background: rgba(217, 28, 28, 0.03); 
-}
-
-/* ==========================================================================
-   ULTIMATE MAC & HIGH-DPI STABILITY FIXES
-   These rules separate the high-intensity background layers from the 
-   interactive foreground cards to prevent the subpixel Safari flickering.
-   ========================================================================== */
-
-/* 1. Isolate the entire background so it exists in its own memory space */
+/* --- CLEAN MAC GPU FIX --- */
 .dynamic-bg-wrapper {
     isolation: isolate;
     backface-visibility: hidden;
-    perspective: 1000px;
-    transform: translate3d(0, 0, -100px); /* Pushes background physically away from UI layers */
+    transform: translate3d(0, 0, -100px); 
     pointer-events: none;
     z-index: -1;
-    contain: strict; /* Tells GPU it will never affect surrounding layout */
+    contain: strict; 
 }
 
-/* 2. Force all interactive elements into their own clean GPU layers */
 .single-polaroid, 
 .dossier-card, 
 .glass-btn, 
@@ -172,15 +150,7 @@ img { display: block; width: 100%; }
 .project-card,
 .archive-hero-selector {
     transform: translate3d(0, 0, 0); 
-    will-change: transform, opacity, box-shadow;
     backface-visibility: hidden;
-    -webkit-perspective: 1000;
     -webkit-font-smoothing: antialiased; 
-}
-
-/* 3. Disable line-scaling recalculations for the moving paths */
-.wavy-path {
-    shape-rendering: optimizeSpeed;
-    vector-effect: non-scaling-stroke; 
-    will-change: stroke-dashoffset;
+    /* Removed aggressive will-change to stop Mac memory exhaustion */
 }

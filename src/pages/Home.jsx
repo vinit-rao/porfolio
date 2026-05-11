@@ -45,7 +45,7 @@ const Home = () => {
                             <span className="reveal-mask"><span className="reveal-text delay-2 text-red">RAO.</span></span>
                         </h1>
                         <p className="hero-subtitle">
-                            Interactive Designer & Software Engineer. I build digital experiences from the ground up—blending end-to-end UX/UI design with fullstack applications and motion graphics.
+                            Interactive designer and software developer.
                         </p>
                         
                         <div className="hero-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
@@ -85,7 +85,7 @@ const Home = () => {
                 <section className="container works-section" style={{ paddingTop: '100px' }}>
                     <ScrollReveal direction="up">
                         <div className="section-header">
-                            <h2>SELECTED WORKS</h2>
+                            <h2>FEATURED PROJECTS</h2>
                             <Link to="/projects" className="view-all-link">ALL FILES →</Link>
                         </div>
                     </ScrollReveal>
@@ -107,33 +107,46 @@ const Home = () => {
                         </div>
                     </ScrollReveal>
 
-                    <div className="bento-grid">
+                    {/* 60/40 split (Info left, Image right) with grid properties to match heights */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '6fr 4fr', gap: '50px', alignItems: 'stretch', marginBottom: '80px' }}>
+                        
+                        {/* LEFT COLUMN (60%): Clean Dossier Card Info */}
                         <ScrollReveal direction="right" delay={0.1}>
-                            <div className="dossier-card">
+                            <div style={{ 
+                                background: 'var(--bg-surface)', 
+                                border: '1px solid var(--border-color)', 
+                                padding: '40px', 
+                                position: 'relative', 
+                                boxShadow: 'var(--shadow-soft)', 
+                                display: 'flex', 
+                                flexDirection: 'column', 
+                                gap: '30px',
+                                height: '100%', 
+                                transform: 'translateZ(0)' 
+                            }}>
                                 
                                 <div className="bio-text">
-                                    <p className="bio-paragraph">
+                                    <p className="bio-paragraph" style={{ marginBottom: '25px' }}>
                                         I'm a third-year Interactive Multimedia & Design student at <span className="red-marker"> Carleton University. </span> I specialize in bridging the gap between digital and physical—programming C# game systems, creating motion graphics, and engineering custom Arduino controllers.
                                     </p>
                                     
-                                    {/* FIXED: Strict 2-column layout via CSS class */}
                                     <div className="bio-lists-grid">
                                         <div className="bio-list-block">
                                             <strong className="bio-list-title">// Currently Working On:</strong>
                                             <ul className="bio-list">
                                                 <li>Godot Roguelike Platformer</li>
-                                                <li>MC Server & API Integration</li>
-                                                <li>Building FPV Drones</li>
+                                                <li>Self hosting MC server & integrating API bot</li>
+                                                <li>Learning how to make FPV drone</li>
                                             </ul>
                                         </div>
 
                                         <div className="bio-list-block">
                                             <strong className="bio-list-title">// Hobbies:</strong>
                                             <ul className="bio-list">
-                                                <li>After Effects Video Editing</li>
+                                                <li>After Effects video editing</li>
                                                 <li>Tennis, Soccer, Pickleball</li>
-                                                <li>Playing Guitar & Drums</li>
-                                                <li>Pixel Art & Video Games</li>
+                                                <li>Playing guitar & drums</li>
+                                                <li>Pixel art & Video games</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -174,14 +187,36 @@ const Home = () => {
                                 </div>
                             </div>
                         </ScrollReveal>
-                        
+
+                        {/* RIGHT COLUMN (40%): Image that expands to fill the vertical frame */}
                         <ScrollReveal direction="left" delay={0.2}>
-                            <div className="photo-scatter-container single-photo">
-                                <div className="single-polaroid">
-                                    <img src="/images/herobg.jpg" alt="Vinit Rao Profile" />
+                            <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <div style={{ 
+                                    width: '100%', 
+                                    background: '#FFF', 
+                                    padding: '12px', 
+                                    border: '1px solid var(--border-color)', 
+                                    boxShadow: 'var(--shadow-soft)', 
+                                    transform: 'none', 
+                                    backfaceVisibility: 'hidden',
+                                    height: '100%', 
+                                    transition: 'all 0.15s ease',
+                                    display: 'flex' 
+                                }}>
+                                    <img 
+                                        src="/images/herobg.jpg" 
+                                        alt="Vinit Rao Profile" 
+                                        style={{ 
+                                            width: '100%', 
+                                            height: '100%', 
+                                            objectFit: 'cover', 
+                                            filter: 'none' 
+                                        }} 
+                                    />
                                 </div>
                             </div>
                         </ScrollReveal>
+                        
                     </div>
                 </section>
 
