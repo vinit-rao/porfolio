@@ -4,64 +4,59 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
     pointer-events: none;
+    z-index: 9999; /* Front overlay */
     overflow: hidden;
 }
 
-.dynamic-bg-svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    opacity: 0.9;
-}
-
-.wavy-path {
+.trim-path-svg {
+    position: absolute;
+    height: 20px;
     fill: none;
+    will-change: stroke-dashoffset, opacity;
+    animation: trimPathAnim linear infinite;
+}
+
+.trim-path-svg path {
+    stroke-width: 2;
     stroke-linecap: round;
-    
-    /* Creates a single short dash (var(--streak-length)), 
-      followed by an invisible gap of 4000px so it doesn't repeat immediately 
-    */
-    stroke-dasharray: var(--streak-length, 250) 4000;
-    stroke-dashoffset: 4000;
-    
-    /* Uses 'linear' so the speed is consistent as it travels */
-    animation: shootWavy var(--draw-duration) linear infinite;
-    animation-delay: var(--draw-delay);
-    
-    /* Opacity is driven entirely by the keyframes to make them fade in and out */
-    opacity: 0; 
+    /* This creates the "Trim Path" length */
+    stroke-dasharray: 1000; 
+    stroke-dashoffset: 1000;
 }
 
-/* Red Accent Waves */
-.wavy-path.red {
+.draw-red path {
     stroke: var(--accent);
-    stroke-width: 3px;
-    --max-opacity: 0.65;
 }
 
-/* Secondary Background Waves */
-.wavy-path.dark {
-    stroke: var(--text-primary);
-    stroke-width: 2px;
-    --max-opacity: 0.25;
+.draw-grey path {
+    stroke: var(--border-color);
 }
 
-/* Soften the secondary waves in dark mode */
-body.dark-theme .wavy-path.dark {
-    stroke: #FFFFFF;
-    --max-opacity: 0.15;
+@keyframes trimPathAnim {
+    0% {
+        stroke-dashoffset: 1000;
+        opacity: 0;
+        transform: translateX(0);
+    }
+    10% {
+        stroke-dashoffset: 800; /* Starts drawing */
+        opacity: 0.6;
+    }
+    50% {
+        stroke-dashoffset: 0; /* Fully drawn */
+        opacity: 0.4;
+    }
+    90% {
+        opacity: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        transform: translateX(200px); /* Moves it slightly forward as it fades */
+    }
 }
 
-/* 1. Starts offscreen and invisible
-  2. Fades in as it enters
-  3. Stays visible across the main body
-  4. Flies offscreen (-500) and fades out completely
-*/
-@keyframes shootWavy {
-    0% { stroke-dashoffset: 4000; opacity: 0; }
-    15% { opacity: var(--max-opacity); }
-    85% { opacity: var(--max-opacity); }
-    100% { stroke-dashoffset: -500; opacity: 0; }
+/* Ensure visibility on dark background */
+body.dark-theme .draw-grey path {
+    stroke: rgba(255, 255, 255, 0.2);
 }

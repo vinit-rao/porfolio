@@ -39,21 +39,12 @@ const ProjectsArchive = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [currentPage, filter]); 
 
-    // --- LIVE GITHUB TELEMETRY BANNER ---
     // Pulls real image data from your GitHub username
     const renderGithubStats = () => {
         const username = "vinit-rao";
         
         return (
             <div className="github-stats-wrapper">
-                <div className="gh-header">
-                    <h3 className="gh-username">
-                        <i className="fab fa-github"></i> USER // {username}
-                    </h3>
-                    <div className="gh-live-indicator">
-                        <span className="gh-live-dot"></span> LIVE TELEMETRY
-                    </div>
-                </div>
 
                 <div className="gh-contribution-section">
                     <h4 className="gh-graph-title">LIVE COMMIT ACTIVITY</h4>
@@ -76,7 +67,7 @@ const ProjectsArchive = () => {
             <div className="container archive-container">
                 
                 <header className="archive-header">
-                    <h1 className="massive-title" style={{ textShadow: 'none', textAlign: 'left' }}>ARCHIVE</h1>
+                    <h1 className="massive-title" style={{ textShadow: 'none', textAlign: 'left' }}>Projects</h1>
                 </header>
 
                 {/* THE MASTER-DETAIL HERO SELECTOR */}
@@ -152,7 +143,6 @@ const ProjectsArchive = () => {
                     </div>
                 )}
             </div>
-            
             <Footer />
         </div>
     );

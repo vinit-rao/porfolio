@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
+    // ENFORCED LIGHT START
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
@@ -26,7 +27,6 @@ const Navbar = () => {
 
     return (
         <nav className="navbar-container">
-            {/* CENTRALIZED CONTAINER ENFORCED */}
             <div className="container">
                 <div className="navbar-inner">
                     <Link to="/" className="nav-logo">VINIT RAO</Link>
@@ -44,7 +44,8 @@ const Navbar = () => {
 
                     <div className={`nav-menu ${menuOpen ? 'active' : ''}`}>
                         <div className="nav-links">
-                            <Link to="/projects" className="nav-framed-link">WORK</Link>
+                            {/* FIX: URL path points to /projects to prevent blank page, but text says MY PROJECTS */}
+                            <Link to="/projects" className="nav-framed-link">PROJECTS</Link>
                             <Link to="/contact" className="nav-framed-link">CONTACT</Link>
                             <Link to="/resume" className="nav-framed-link">RESUME</Link>
                         </div>

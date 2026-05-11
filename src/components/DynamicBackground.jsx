@@ -2,37 +2,33 @@ import { useMemo } from 'react';
 import './DynamicBackground.css';
 
 const DynamicBackground = () => {
-    // Generate a smaller array of short, random streaks for a cleaner look
-    const streaks = useMemo(() => {
-        const count = 15; // FEWER LINES: reduced from 55 to 15
+    const lines = useMemo(() => {
+        const count = 10; 
         const data = [];
         
         for (let i = 0; i < count; i++) {
-            // Increased the density of red streaks slightly for flavor
-            const isRed = Math.random() > 0.45; 
-            const color = isRed ? 'red' : 'dark';
+            const isRed = Math.random() > 0.7;
+            const colorClass = isRed ? 'draw-red' : 'draw-grey';
             
-            // Randomize duration (slow and elegant speeds between 8s and 20s)
-            const duration = Math.random() * (20 - 8) + 8; 
-            
-            // Randomize delay (staggered starts)
-            const delay = Math.random() * -12; 
-            
-            // Randomize vertical placement (0% to 95% down the screen)
-            const top = Math.random() * 95; 
-            
-            // Randomize size/length (make them shorter)
-            const scaleX = Math.random() * (1.1 - 0.4) + 0.4; 
-            
+            const duration = Math.random() * (12 - 6) + 6; 
+            const delay = Math.random() * -10; 
+            const top = Math.random() * 95;
+            const width = Math.random() * (300 - 100) + 100; 
+
+            // Creates a slightly imperfect "hand-drawn" wavy line
+            const path = `M 0 10 Q ${width/4} ${Math.random()*20}, ${width/2} 10 T ${width} 10`;
+
             data.push({
                 id: i,
-                color,
+                colorClass,
+                path,
+                width,
                 style: {
                     top: `${top}%`,
-                    // Inject randomized animation and length properties inline
-                    '--draw-duration': `${duration}s`,
-                    '--draw-delay': `${delay}s`,
-                    '--draw-scaleX': `${scaleX}`
+                    left: `${Math.random() * 80}%`, // Random horizontal start
+                    width: `${width}px`,
+                    animationDuration: `${duration}s`,
+                    animationDelay: `${delay}s`
                 }
             });
         }
@@ -41,12 +37,15 @@ const DynamicBackground = () => {
 
     return (
         <div className="dynamic-bg-wrapper">
-            {streaks.map(streak => (
-                <div 
-                    key={streak.id}
-                    className={`streak-line ${streak.color}`}
-                    style={streak.style}
-                />
+            {lines.map(line => (
+                <svg 
+                    key={line.id}
+                    className={`trim-path-svg ${line.colorClass}`}
+                    style={line.style}
+                    viewBox={`0 0 ${line.width} 20`}
+                >
+                    <path d={line.path} />
+                </svg>
             ))}
         </div>
     );

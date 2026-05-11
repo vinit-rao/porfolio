@@ -17,6 +17,7 @@
     --shadow-hover: 8px 8px 0px rgba(217, 28, 28, 0.2); 
     --radius-sm: 2px;
     
+    /* RESTORED: Faded grid back to original 4% opacity */
     --grid-color: rgba(0, 0, 0, 0.04);
     
     --font-display: 'Syne', sans-serif; 
@@ -41,20 +42,16 @@ body.dark-theme {
     --shadow-soft: 4px 4px 0px rgba(0, 0, 0, 0.4);
     --shadow-hover: 8px 8px 0px rgba(255, 77, 77, 0.3);
 
-    --grid-color: rgba(255, 255, 255, 0.025);
+    /* RESTORED: Faded dark mode grid to 3% opacity */
+    --grid-color: rgba(255, 255, 255, 0.03);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body { 
-    overflow-x: hidden; 
-    width: 100%; 
-    max-width: 100vw; 
-    -webkit-font-smoothing: antialiased; 
-    background-color: var(--bg-main); 
-    color: var(--text-primary); 
-    font-family: var(--font-body);
+    overflow-x: hidden; width: 100%; max-width: 100vw; -webkit-font-smoothing: antialiased; 
+    background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-body);
     transition: background-color 0.4s ease, color 0.4s ease;
     
     background-image: 
@@ -67,63 +64,27 @@ body {
 }
 
 .container { 
-    width: 100%; 
-    max-width: 1060px; 
-    margin: 0 auto; 
-    padding: 0 40px; 
-    position: relative; 
-    z-index: 10; 
-    box-sizing: border-box;
+    width: 100%; max-width: 1060px; margin: 0 auto; padding: 0 40px; 
+    position: relative; z-index: 10; box-sizing: border-box;
 }
-
-@media (max-width: 768px) {
-    .container { padding: 0 25px; } 
-}
+@media (max-width: 768px) { .container { padding: 0 25px; } }
 
 img { display: block; width: 100%; }
 
-.massive-title { 
-    font-family: var(--font-display); 
-    font-size: clamp(3.5rem, 10vw, 7.5rem); 
-    line-height: 1.05; 
-    letter-spacing: -0.03em; 
-    text-transform: uppercase; 
-    color: var(--text-primary); 
-    font-weight: 800; 
-}
+.massive-title { font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 7.5rem); line-height: 1.05; letter-spacing: -0.03em; text-transform: uppercase; color: var(--text-primary); font-weight: 800; }
 
 .red-marker {
     background: linear-gradient(104deg, rgba(217, 28, 28, 0) 0.9%, rgba(217, 28, 28, 0.15) 2.4%, rgba(217, 28, 28, 0.3) 5.8%, rgba(217, 28, 28, 0.1) 93%, rgba(217, 28, 28, 0) 96%);
-    padding: 0 4px; 
-    font-style: italic;
+    padding: 0 4px; font-style: italic;
 }
 
 .glass-btn { 
-    background: var(--bg-surface); 
-    color: var(--text-primary); 
-    border: 1px solid var(--border-color); 
-    padding: 12px 24px; 
-    font-family: var(--font-mono); 
-    font-size: 0.85rem; 
-    text-transform: uppercase; 
-    cursor: pointer; 
-    text-decoration: none; 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-weight: 900; 
-    transition: all 0.15s ease; 
-    box-shadow: var(--shadow-soft); 
-    transform: rotate(-1deg);
+    background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-color); 
+    padding: 12px 24px; font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; cursor: pointer; 
+    text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; 
+    transition: all 0.15s ease; box-shadow: var(--shadow-soft); transform: rotate(-1deg);
 }
-
-.glass-btn:hover { 
-    background: var(--accent); 
-    color: #FFF; 
-    border-color: var(--accent); 
-    transform: translate3d(-2px, -2px, 0) rotate(0deg); 
-    box-shadow: 8px 8px 0px rgba(217, 28, 28, 0.2); 
-}
+.glass-btn:hover { background: var(--accent); color: #FFF; border-color: var(--accent); transform: translate3d(-2px, -2px, 0) rotate(0deg); box-shadow: 8px 8px 0px rgba(217, 28, 28, 0.2); }
 
 .scrap-input {
     background: transparent; border: none; border-bottom: 2px dashed var(--border-color);
@@ -132,25 +93,28 @@ img { display: block; width: 100%; }
 }
 .scrap-input:focus { outline: none; border-bottom: 2px solid var(--accent); background: rgba(217, 28, 28, 0.03); }
 
-/* --- CLEAN MAC GPU FIX --- */
+/* Overlay Wrapper for Dynamic Lines */
 .dynamic-bg-wrapper {
-    isolation: isolate;
-    backface-visibility: hidden;
-    transform: translate3d(0, 0, -100px); 
+    position: fixed;
+    inset: 0;
     pointer-events: none;
-    z-index: -1;
-    contain: strict; 
+    z-index: 9999;
+    overflow: hidden;
+    contain: strict;
 }
 
-.single-polaroid, 
-.dossier-card, 
-.glass-btn, 
-.hero-social-link,
-.hero-social-board,
-.project-card,
-.archive-hero-selector {
-    transform: translate3d(0, 0, 0); 
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased; 
-    /* Removed aggressive will-change to stop Mac memory exhaustion */
+.navbar-container { z-index: 10000 !important; }
+
+/* Perfect 2x2 Grid for Tablet/Desktop */
+.projects-grid, .archive-grid { 
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 60px !important; 
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .projects-grid, .archive-grid { 
+        grid-template-columns: repeat(2, 1fr) !important; 
+    }
 }

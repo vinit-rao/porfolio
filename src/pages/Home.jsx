@@ -13,7 +13,8 @@ const Home = () => {
     const [scrollY, setScrollY] = useState(0);
 
     useEffect(() => {
-        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 3);
+        // ENFORCED: 4 Featured Projects max for the perfect 2x2 grid
+        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 4);
         setFeatured(randomized);
 
         const handleScroll = () => setScrollY(window.scrollY);
@@ -38,7 +39,6 @@ const Home = () => {
             
             <div className="hero-curtain-container">
                 <header className="container hero-clean-desk" style={{ opacity: heroOpacity, transform: `translateY(${heroY}px)` }}>
-                    
                     <div className="hero-left-col">
                         <h1 className="hero-title-massive">
                             <span className="reveal-mask"><span className="reveal-text delay-1">VINIT</span></span><br/>
@@ -76,11 +76,18 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-
                 </header>
             </div>
 
-            <div className="content-slide-over">
+            {/* Solid background applied here to block the hero text, while the HUD streaks flow over top */}
+            <div className="content-slide-over" style={{
+                backgroundColor: 'var(--bg-main)',
+                backgroundImage: 'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
+                backgroundSize: '40px 40px',
+                backgroundAttachment: 'fixed',
+                position: 'relative',
+                zIndex: 10
+            }}>
                 
                 <section className="container works-section" style={{ paddingTop: '100px' }}>
                     <ScrollReveal direction="up">
@@ -107,24 +114,14 @@ const Home = () => {
                         </div>
                     </ScrollReveal>
 
-                    {/* 60/40 split (Info left, Image right) with grid properties to match heights */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '6fr 4fr', gap: '50px', alignItems: 'stretch', marginBottom: '80px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '50px', marginBottom: '80px' }}>
                         
-                        {/* LEFT COLUMN (60%): Clean Dossier Card Info */}
-                        <ScrollReveal direction="right" delay={0.1}>
+                        <ScrollReveal direction="up" delay={0.1}>
                             <div style={{ 
-                                background: 'var(--bg-surface)', 
-                                border: '1px solid var(--border-color)', 
-                                padding: '40px', 
-                                position: 'relative', 
-                                boxShadow: 'var(--shadow-soft)', 
-                                display: 'flex', 
-                                flexDirection: 'column', 
-                                gap: '30px',
-                                height: '100%', 
-                                transform: 'translateZ(0)' 
+                                background: 'var(--bg-surface)', border: '1px solid var(--border-color)', 
+                                padding: '40px', position: 'relative', boxShadow: 'var(--shadow-soft)', 
+                                display: 'flex', flexDirection: 'column', gap: '30px', transform: 'translateZ(0)' 
                             }}>
-                                
                                 <div className="bio-text">
                                     <p className="bio-paragraph" style={{ marginBottom: '25px' }}>
                                         I'm a third-year Interactive Multimedia & Design student at <span className="red-marker"> Carleton University. </span> I specialize in bridging the gap between digital and physical—programming C# game systems, creating motion graphics, and engineering custom Arduino controllers.
@@ -188,30 +185,21 @@ const Home = () => {
                             </div>
                         </ScrollReveal>
 
-                        {/* RIGHT COLUMN (40%): Image that expands to fill the vertical frame */}
-                        <ScrollReveal direction="left" delay={0.2}>
-                            <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <ScrollReveal direction="up" delay={0.2}>
+                            <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
                                 <div style={{ 
-                                    width: '100%', 
-                                    background: '#FFF', 
-                                    padding: '12px', 
-                                    border: '1px solid var(--border-color)', 
-                                    boxShadow: 'var(--shadow-soft)', 
-                                    transform: 'none', 
-                                    backfaceVisibility: 'hidden',
-                                    height: '100%', 
-                                    transition: 'all 0.15s ease',
-                                    display: 'flex' 
-                                }}>
+                                    width: '100%', background: 'var(--bg-surface)', 
+                                    border: '10px solid var(--accent)', padding: '12px 12px 40px 12px', 
+                                    boxShadow: 'var(--shadow-soft)', transform: 'translateZ(0)', 
+                                    backfaceVisibility: 'hidden', transition: 'all 0.3s ease', display: 'flex' 
+                                }}
+                                onMouseOver={(e) => { e.currentTarget.style.transform = 'translate3d(-4px,-4px,0)'; e.currentTarget.style.boxShadow = '15px 15px 0px rgba(0,0,0,0.1)'; }}
+                                onMouseOut={(e) => { e.currentTarget.style.transform = 'translateZ(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-soft)'; }}
+                                >
                                     <img 
                                         src="/images/herobg.jpg" 
                                         alt="Vinit Rao Profile" 
-                                        style={{ 
-                                            width: '100%', 
-                                            height: '100%', 
-                                            objectFit: 'cover', 
-                                            filter: 'none' 
-                                        }} 
+                                        style={{ width: '100%', maxHeight: '600px', objectFit: 'cover' }} 
                                     />
                                 </div>
                             </div>
