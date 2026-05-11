@@ -96,3 +96,32 @@ img { display: block; width: 100%; }
     transition: all 0.3s ease; border-radius: 0;
 }
 .scrap-input:focus { outline: none; border-bottom: 2px solid var(--accent); background: rgba(217, 28, 28, 0.03); }
+
+/* --- COMPOSITING ENGINE OPTIMIZATION --- */
+
+/* Forces GPU to handle cards and buttons on their own layers */
+.single-polaroid, 
+.dossier-card, 
+.glass-btn, 
+.hero-social-link,
+.project-card,
+.archive-hero-selector {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+    will-change: transform;
+    transform: translateZ(0); /* The magic line that stops flickering */
+}
+
+/* Isolates the background so it doesn't trigger global repaints */
+.dynamic-bg-wrapper {
+    contain: strict;
+    pointer-events: none;
+    transform: translateZ(-1px);
+    z-index: -1;
+}
+
+/* Optimizes SVG performance for wavy lines */
+.wavy-path {
+    shape-rendering: optimizeSpeed;
+    will-change: stroke-dashoffset;
+}
