@@ -15,36 +15,37 @@ const Footer = () => {
         return () => clearInterval(intervalId);
     }, []);
 
+    const socials = [
+        { label: 'GITHUB', url: 'https://github.com/vinit-rao' },
+        { label: 'INSTAGRAM', url: 'https://instagram.com/instavinitgram' },
+        { label: 'YOUTUBE', url: 'https://youtube.com/@OfficialVinitRao' },
+        { label: 'LINKEDIN', url: 'https://linkedin.com/in/vinitrao1/' }
+    ];
+
     return (
-        <footer className="social-footer">
+        <footer className="scrap-footer-wrapper">
             <div className="container">
-                <div style={{ paddingBottom: '60px' }}>
-                    <h2 className="massive-title" style={{ color: 'var(--accent)', fontSize: 'clamp(3rem, 8vw, 6rem)', marginBottom: '15px', textShadow: 'none' }}>
-                        STAY CONNECTED
-                    </h2>
-                    <p style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', letterSpacing: '3px', fontSize: '0.75rem', marginBottom: '50px' }}>
-                        FOLLOW MY SOCIALS OR INITIATE CONTACT
-                    </p>
-                    
-                    <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '20px', flexWrap: 'wrap', marginBottom: '40px' }}>
-                        <a href="https://github.com/vinit-rao" target="_blank" rel="noreferrer" className="footer-link">GITHUB</a>
-                        <span className="footer-dot">|</span>
-                        <a href="https://instagram.com/instavinitgram" target="_blank" rel="noreferrer" className="footer-link">INSTAGRAM</a>
-                        <span className="footer-dot">|</span>
-                        <a href="https://youtube.com/@OfficialVinitRao" target="_blank" rel="noreferrer" className="footer-link">YOUTUBE</a>
-                        <span className="footer-dot">|</span>
-                        <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noreferrer" className="footer-link">LINKEDIN</a>
-                    </div>
+                
+                <h2 className="footer-giant-title">
+                    INITIATE<br/><span>CONTACT.</span>
+                </h2>
+
+                <div className="footer-links-grid">
+                    {socials.map((s, idx) => (
+                        <a key={idx} href={s.url} target="_blank" rel="noreferrer" className="scrap-social-link">
+                            <span>{s.label}</span>
+                        </a>
+                    ))}
                 </div>
 
-                <div style={{ width: '100%', position: 'relative', borderTop: '1px solid var(--glass-border)', padding: '25px 0' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '15px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', fontSize: '0.8rem', letterSpacing: '1px' }}>
-                        <span>OTTAWA, ON</span>
-                        <span>VINIT RAO // LOCAL TIME: {currentTime}</span>
+                <div className="footer-bottom-bar">
+                    <div className="footer-stamp">
+                        LOCATION // OTTAWA, ON
                     </div>
+                    <span>VINIT RAO // LOCAL TIME: {currentTime}</span>
                 </div>
+
             </div>
-            <div className="footer-accent-bar"></div>
         </footer>
     );
 };

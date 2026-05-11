@@ -1,32 +1,54 @@
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import DynamicBackground from '../components/DynamicBackground';
 
 const Resume = () => {
     return (
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div className="container" style={{ paddingTop: '140px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <div className="page-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <Navbar />
+            <DynamicBackground />
+
+            <div className="container" style={{ paddingTop: '140px', flexGrow: 1, display: 'flex', flexDirection: 'column', zIndex: 10 }}>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px', flexWrap: 'wrap', gap: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px', flexWrap: 'wrap', gap: '20px', borderBottom: '2px solid var(--text-primary)', paddingBottom: '15px' }}>
                     <div>
-                        <h1 className="massive-title" style={{ textShadow: 'none', margin: 0 }}>RESUME</h1>
-                        <p style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', marginTop: '10px', fontSize: '0.8rem', letterSpacing: '1px' }}>
+                        <h1 className="massive-title" style={{ margin: 0 }}>RESUME</h1>
+                        <p className="meta-text" style={{ marginTop: '10px' }}>
                             VINIT RAO // INTERACTIVE MULTIMEDIA & DESIGN
                         </p>
                     </div>
                     
-                    {/* DOWNLOAD BUTTON */}
-                    <a href="/Vinit_Rao_Resume.pdf" download="Vinit_Rao_Resume.pdf" className="glass-btn" style={{ padding: '12px 24px' }}>
+                    <a href="/Vinit_Rao_Resume.pdf" download="Vinit_Rao_Resume.pdf" className="glass-btn" style={{ background: 'var(--accent)', color: '#FFF', borderColor: 'var(--accent)' }}>
                         DOWNLOAD PDF
                     </a>
                 </div>
 
-                {/* PDF VIEWER WINDOW */}
-                <div style={{ flexGrow: 1, border: '1px solid var(--glass-border)', background: '#0a0a0c', minHeight: '75vh', marginBottom: '60px', position: 'relative' }}>
+                {/* PHYSICAL FOLDER CONTAINER FOR PDF */}
+                <div style={{ 
+                    flexGrow: 1, 
+                    background: 'var(--bg-surface)', 
+                    border: '2px solid var(--border-color)', 
+                    minHeight: '75vh', 
+                    marginBottom: '60px', 
+                    position: 'relative',
+                    padding: '15px',
+                    boxShadow: 'var(--shadow-soft)',
+                    transform: 'rotate(-0.5deg)'
+                }}>
+                    {/* Tape on top */}
+                    <div style={{
+                        position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%) rotate(2deg)',
+                        width: '100px', height: '30px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(2px)',
+                        border: '1px solid rgba(0,0,0,0.1)', zIndex: 5, boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
+                    }}></div>
+
                     <iframe 
                         src="/Vinit_Rao_Resume.pdf" 
                         width="100%" 
                         height="100%" 
-                        style={{ border: 'none', position: 'absolute', top: 0, left: 0 }} 
-                        title="Vinit Rao Resume" loading="lazy"
+                        style={{ border: '1px solid rgba(0,0,0,0.1)' }} 
+                        title="Vinit Rao Resume" 
+                        loading="lazy"
                     />
                 </div>
             </div>

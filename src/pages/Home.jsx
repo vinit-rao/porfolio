@@ -1,137 +1,203 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import projectsData from '../data/projects';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import ScrollReveal from '../components/ScrollReveal';
+import ProjectCard from '../components/ProjectCard';
+import DynamicBackground from '../components/DynamicBackground'; 
 import './Home.css';
 
 const Home = () => {
     const [featured, setFeatured] = useState([]);
-    const [showContent, setShowContent] = useState(false);
-    const [activeTouchCard, setActiveTouchCard] = useState(null); // Tracks mobile taps
-    const navigate = useNavigate();
+    const [scrollY, setScrollY] = useState(0);
 
     useEffect(() => {
-        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 4);
+        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 3);
         setFeatured(randomized);
 
-        const animationTimer = setTimeout(() => { setShowContent(true); }, 50);
-        return () => clearTimeout(animationTimer);
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const getCategoryColor = (cat) => {
-        switch (cat.toLowerCase()) {
-            case 'video': return 'var(--cat-video)';
-            case 'code': return 'var(--cat-code)';
-            case 'graphics': return 'var(--cat-graphics)';
-            case 'photos': return 'var(--cat-photos)';
-            default: return '#ffffff';
-        }
-    };
+    const heroY = scrollY * 0.4;    
+    const heroOpacity = Math.max(0, 1 - (scrollY / 500));
 
-    // 2-Tap Logic for Mobile
-    const handleProjectClick = (e, p, idx) => {
-        if (window.matchMedia('(hover: none)').matches) {
-            if (activeTouchCard !== idx) {
-                e.preventDefault();
-                setActiveTouchCard(idx);
-                return; // Stop here on the first tap
-            }
+    // Smooth scroll handler for the About button
+    const scrollToAbout = () => {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
         }
-        // Second tap (or desktop click) navigates
-        if (p.internalLink) navigate(p.internalLink);
-        else window.open(p.link, '_blank');
     };
 
     return (
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div className="container" style={{ paddingTop: '100px', flexGrow: 1 }}>
-
-                <header style={{ position: 'relative', minHeight: '90vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-                    <div className="css-starfield"></div>
-                    <div className="spline-container" style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: '100%', zIndex: 2, pointerEvents: 'none' }}>
-                        <spline-viewer url="https://prod.spline.design/vyQWyAKaGzlKQJKm/scene.splinecode" events-target="global"></spline-viewer>
+        <div className="page-wrapper">
+            <Navbar />
+            <DynamicBackground />
+            
+            <div className="hero-curtain-container">
+                <header className="container hero-clean-desk" style={{ opacity: heroOpacity, transform: `translateY(${heroY}px)` }}>
+                    
+                    {/* LEFT: Name, Info, Buttons */}
+                    <div className="hero-left-col">
+                        <h1 className="hero-title-massive">
+                            <span className="reveal-mask"><span className="reveal-text delay-1">VINIT</span></span><br/>
+                            <span className="reveal-mask"><span className="reveal-text delay-2 text-red">RAO.</span></span>
+                        </h1>
+                        <p className="hero-subtitle">
+                            Interactive Designer & Software Engineer. I build digital experiences from the ground up—blending end-to-end UX/UI design with fullstack applications and motion graphics.
+                        </p>
+                        
+                        <div className="hero-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                            <Link to="/projects" className="glass-btn btn-primary" style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', border: 'none' }}>
+                                SEE MY WORK
+                            </Link>
+                            {/* FIXED: Uses onClick to smoothly scroll down without breaking React Router */}
+                            <button onClick={scrollToAbout} className="glass-btn">
+                                ABOUT ME
+                            </button>
+                        </div>
                     </div>
-                    <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-                        <h2 style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.8rem', letterSpacing: '4px' }}>INTERACTIVE DESIGNER</h2>
-                        <h1 className="massive-title" style={{ fontSize: 'clamp(4rem, 16vw, 12rem)', lineHeight: '0.85' }}>VINIT<br />RAO.</h1>
-                    </div>
-                </header>
 
-                <section style={{ padding: '120px 0', borderTop: '1px solid var(--glass-border)' }}>
-                    <h2 className="massive-title" style={{ fontSize: '3.5rem', marginBottom: '50px', textShadow: 'none' }}>ABOUT ME</h2>
-                    {/* BUG FIX: Changed minmax(400px) to minmax(min(100%, 350px)) to prevent horizontal scroll on Pixel 7a */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '60px', alignItems: 'stretch' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '40px' }}>
-                            <div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '15px' }}>
-                                    <h3 style={{ fontSize: '1.5rem', color: '#fff', fontFamily: 'var(--font-display)' }}>VINIT RAO</h3>
-                                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.9rem' }}>GPA: 3.7 / 4.0</span>
-                                </div>
-                                <p style={{ fontSize: '1rem', color: '#ccc', lineHeight: '1.8' }}>
-                                    Interactive Multimedia and Design student at Carleton University. I architect digital experiences through end-to-end UX/UI design and custom hardware-to-engine integration. Based in Ottawa, I bridge the gap between creative vision and technical execution.
-                                </p>
-                            </div>
-
-                            <div className="glass-card" style={{ padding: '30px' }}>
-                                <span className="card-label" style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '20px' }}>Tech Stack & Tools</span>
-                                <ul style={{ listStyle: 'none', color: '#888', fontSize: '0.85rem', lineHeight: '1.8' }}>
-                                    <li style={{ marginBottom: '12px' }}><b style={{ color: '#fff' }}>LANGUAGES:</b> Python, Java, C++, C#, HTML, CSS, JavaScript, SQL, Swift</li>
-                                    <li style={{ marginBottom: '12px' }}><b style={{ color: '#fff' }}>CREATIVE:</b> Adobe CC, Figma, Final Cut, Blender, Maya</li>
-                                    <li style={{ marginBottom: '12px' }}><b style={{ color: '#fff' }}>DEV TOOLS:</b> Arch Linux, Git, Unity, Unreal, Django</li>
-                                </ul>
-                            </div>
-
-                            <div className="action-btn-group">
-                                <Link to="/resume" className="glass-btn btn-resume">
-                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM18 20H6V4h5v6h6v10z" /></svg>
-                                    VIEW RESUME
-                                </Link>
-                                <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noopener noreferrer" className="glass-btn btn-linkedin">
-                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
-                                    LINKEDIN
+                    {/* RIGHT: Social Links inside a sticky note frame */}
+                    <div className="hero-right-col">
+                        <div className="hero-social-board">
+                            <div className="hero-social-cluster">
+                                <a href="https://github.com/vinit-rao" target="_blank" rel="noreferrer" className="hero-social-link">
+                                    GITHUB <i className="fab fa-github"></i>
                                 </a>
-                                <Link to="/projects" className="glass-btn btn-projects">
-                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M10 3H3v7h7V3zm-2 5H5V5h3v3zm13-5h-7v7h7V3zm-2 5h-3V5h3v3zM10 14H3v7h7v-7zm-2 5H5v-3h3v3zm13-5h-7v7h7v-7zm-2 5h-3v-3h3v3z" /></svg>
-                                    VIEW PROJECTS
-                                </Link>
+                                <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noreferrer" className="hero-social-link">
+                                    LINKEDIN <i className="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://youtube.com/@OfficialVinitRao" target="_blank" rel="noreferrer" className="hero-social-link">
+                                    YOUTUBE <i className="fab fa-youtube"></i>
+                                </a>
+                                <a href="https://instagram.com/officialvinitrao" target="_blank" rel="noreferrer" className="hero-social-link">
+                                    INSTAGRAM <i className="fab fa-instagram"></i>
+                                </a>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="glass-card" style={{ padding: 0, overflow: 'hidden', height: '100%', minHeight: '400px', position: 'relative' }}>
-                            <img src="/images/herobg.jpg" alt="Vinit Rao" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'grayscale(100%) contrast(1.1) brightness(0.8)', transition: 'filter 0.5s ease' }} onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) contrast(1.1) brightness(1)'} onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) contrast(1.1) brightness(0.8)'} />
+                </header>
+            </div>
+
+            <div className="content-slide-over">
+                
+                {/* 1. SELECTED WORKS (MOVED TO TOP) */}
+                <section className="container works-section" style={{ paddingTop: '100px' }}>
+                    <ScrollReveal direction="up">
+                        <div className="section-header">
+                            <h2>SELECTED WORKS</h2>
+                            <Link to="/projects" className="view-all-link">ALL FILES →</Link>
                         </div>
-                    </div>
-                </section>
-
-                <section style={{ paddingBottom: '100px', marginTop: '60px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-                        <h2 style={{ fontFamily: 'var(--font-mono)', color: '#fff', fontSize: '1rem', letterSpacing: '2px' }}>FEATURED PROJECTS</h2>
-                        <Link to="/projects" style={{ color: 'var(--accent)', textDecoration: 'none', fontSize: '0.8rem' }}>ALL PROJECTS →</Link>
-                    </div>
-                    <div className="accordion-wrapper">
+                    </ScrollReveal>
+                    
+                    <div className="projects-grid">
                         {featured.map((p, idx) => (
-                            <div
-                                key={idx}
-                                className={`accordion-panel ${activeTouchCard === idx ? 'touch-active' : ''}`}
-                                onClick={(e) => handleProjectClick(e, p, idx)}
-                                style={{ '--card-color': getCategoryColor(p.category) }}
-                            >
-                                <img src={p.image} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} alt={p.title} />
-                                <div className="accordion-content">
-                                    <h3 className="accordion-title" style={{ fontFamily: 'var(--font-display)', color: '#fff', fontSize: '1.5rem', textTransform: 'uppercase' }}>{p.title}</h3>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
-                                        <div className="category-glow-dot"></div>
-                                        <span style={{ fontFamily: 'var(--font-mono)', color: '#fff', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                            {p.category}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <ScrollReveal key={idx} direction="up" delay={idx * 0.15}>
+                                <ProjectCard project={p} />
+                            </ScrollReveal>
                         ))}
                     </div>
                 </section>
+
+                {/* 2. ABOUT ME (MOVED TO BOTTOM) */}
+                <section id="about" className="container about-section" style={{ paddingTop: '40px' }}>
+                    <ScrollReveal direction="up">
+                        <div className="section-header">
+                            <h2>ABOUT ME</h2>
+                            <span className="meta-text">GPA: 3.7 / 4.0</span>
+                        </div>
+                    </ScrollReveal>
+
+                    <div className="bento-grid">
+                        <ScrollReveal direction="right" delay={0.1}>
+                            <div className="dossier-card">
+                                
+                                <div className="bio-text">
+                                    <p style={{ marginBottom: '30px' }}>
+                                        I'm a third-year Interactive Multimedia & Design student at <span className="red-marker"> Carleton University. </span> I specialize in bridging the gap between digital and physical—programming C# game systems, creating motion graphics, and engineering custom Arduino controllers.
+                                    </p>
+                                    
+                                    {/* SIDE-BY-SIDE GRID FOR LISTS */}
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '30px', marginBottom: '20px' }}>
+                                        
+                                        {/* COLUMN 1 */}
+                                        <div>
+                                            <strong style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>// Currently Working On:</strong>
+                                            <ul style={{ paddingLeft: '20px', marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem' }}>
+                                                <li>Roguelike platformer in Godot</li>
+                                                <li>Self hosting MC server & integrating API bot</li>
+                                                <li>Learning how to make FPV drone</li>
+                                            </ul>
+                                        </div>
+
+                                        {/* COLUMN 2 */}
+                                        <div>
+                                            <strong style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>// Hobbies:</strong>
+                                            <ul style={{ paddingLeft: '20px', marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem' }}>
+                                                <li>After Effects video editing</li>
+                                                <li>Sports (Tennis, Soccer, Pickleball)</li>
+                                                <li>Playing guitar & drums</li>
+                                                <li>Pixel art (Aseprite) & Video games</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
+                                <hr className="scrap-divider" />
+                                
+                                <div className="dossier-tech-grid">
+                                    <div className="stack-group">
+                                        <h4>LANGUAGES</h4>
+                                        <p>C#, C++, Python, Java, SQL (Postgres, SQLite), HTML/CSS/JS</p>
+                                    </div>
+                                    <div className="stack-group">
+                                        <h4>CREATIVE</h4>
+                                        <p>Adobe CC, Figma, Final Cut Pro, Blender, Maya, Aseprite</p>
+                                    </div>
+                                    <div className="stack-group">
+                                        <h4>ENGINES & HW</h4>
+                                        <p>Unity, Unreal, Godot, Arduino, Linux (Arch), Git, Django</p>
+                                    </div>
+                                    <div className="stack-group">
+                                        <h4>EXPERIENCE</h4>
+                                        <p>Freelance Multimedia<br/>cuHacking UX/UI & Motion Design</p>
+                                    </div>
+                                </div>
+                                
+                                <hr className="scrap-divider" />
+                                
+                                <div className="status-callout">
+                                    <i className="fas fa-satellite-dish" style={{ marginRight: '10px', color: 'var(--accent)' }}></i>
+                                    STATUS: Seeking <span className="text-red">Summer 2026 Co-op</span> placement.
+                                </div>
+                                
+                                <div className="bento-actions">
+                                    <Link to="/resume" className="glass-btn">RESUME</Link>
+                                    <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noopener noreferrer" className="glass-btn">LINKEDIN</a>
+                                    <Link to="/contact" className="glass-btn">CONTACT ME</Link>
+                                </div>
+                            </div>
+                        </ScrollReveal>
+                        
+                        <ScrollReveal direction="left" delay={0.2}>
+                            <div className="photo-scatter-container single-photo">
+                                <div className="single-polaroid">
+                                    <img src="/images/herobg.jpg" alt="Vinit Rao Profile" />
+                                </div>
+                            </div>
+                        </ScrollReveal>
+                    </div>
+                </section>
+
+                <Footer />
             </div>
-            <Footer />
+            
         </div>
     );
 };
