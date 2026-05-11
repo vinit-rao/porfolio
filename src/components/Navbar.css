@@ -5,7 +5,7 @@
     background: var(--bg-main);
     border-bottom: 1px solid var(--border-color);
     transition: background 0.4s ease, border-color 0.4s ease;
-    padding: 0; /* Forced to 0 so the inner .container handles all alignment */
+    padding: 0; 
 }
 
 .navbar-inner {
@@ -24,9 +24,10 @@
     color: var(--text-primary);
     text-decoration: none;
     letter-spacing: -1px;
+    position: relative;
+    z-index: 1002; /* Stay above mobile menu */
 }
 
-/* --- FRAMED NAVIGATION LINKS --- */
 .nav-links {
     display: flex;
     gap: 20px;
@@ -54,11 +55,8 @@
     box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
 }
 
-body.dark-theme .nav-framed-link:hover {
-    box-shadow: 4px 4px 0px rgba(255,255,255,0.05);
-}
+body.dark-theme .nav-framed-link:hover { box-shadow: 4px 4px 0px rgba(255,255,255,0.05); }
 
-/* --- THEME TOGGLE (Distinct Mechanical Button) --- */
 .theme-toggle-btn {
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -81,63 +79,44 @@ body.dark-theme .nav-framed-link:hover {
     box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
 }
 
-.nav-menu {
-    display: flex;
-    align-items: center;
-}
+.nav-menu { display: flex; align-items: center; }
 
 .desktop-only { display: block; }
 .mobile-only { display: none; }
 .nav-mobile-controls { display: none; }
 
-/* --- HAMBURGER ICON --- */
 .hamburger-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
+    display: flex; flex-direction: column; justify-content: space-between;
+    width: 28px; height: 18px; background: transparent; border: none;
+    cursor: pointer; padding: 0; z-index: 1002; /* Stay above menu */
 }
 
-.hamburger-btn span {
-    width: 100%;
-    height: 2px;
-    background-color: var(--text-primary);
-    transition: all 0.3s ease;
-}
-
+.hamburger-btn span { width: 100%; height: 2px; background-color: var(--text-primary); transition: all 0.3s ease; }
 .hamburger-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .hamburger-btn.open span:nth-child(2) { opacity: 0; }
 .hamburger-btn.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-/* --- CUSTOM MOBILE NAVBAR DRAWER --- */
+/* --- MOBILE FIX: Full Screen Menu Overlay --- */
 @media (max-width: 768px) {
     .nav-mobile-controls { display: flex; align-items: center; gap: 15px; }
     .desktop-only { display: none; }
     .mobile-only { display: block; margin-left: 0; padding: 6px 12px; font-size: 0.75rem; border-radius: 2px; }
     
     .nav-menu {
-        position: absolute;
-        top: 100%; 
-        left: 0;
-        right: 0;
+        position: fixed;
+        top: 61px; /* Height of the navbar */
+        left: 0; right: 0; bottom: 0;
+        height: calc(100vh - 61px);
         background: var(--bg-surface);
-        border-bottom: 2px solid var(--text-primary);
         flex-direction: column;
         align-items: center;
-        padding: 30px 25px;
-        gap: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        
+        padding: 40px 25px;
+        gap: 30px;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-20px);
+        transform: translateY(-10px);
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1001; /* Sits below the header bar but above everything else */
     }
     
     .nav-menu.active {
@@ -146,17 +125,10 @@ body.dark-theme .nav-framed-link:hover {
         transform: translateY(0);
     }
     
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-    }
+    .nav-links { flex-direction: column; width: 100%; gap: 20px; }
     
     .nav-framed-link {
-        width: 100%;
-        text-align: center;
-        padding: 15px;
-        font-size: 1rem;
-        background: var(--bg-main);
+        width: 100%; text-align: center; padding: 20px;
+        font-size: 1.1rem; background: var(--bg-main);
     }
 }

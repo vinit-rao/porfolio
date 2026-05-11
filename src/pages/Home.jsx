@@ -13,8 +13,7 @@ const Home = () => {
     const [scrollY, setScrollY] = useState(0);
 
     useEffect(() => {
-        // ENFORCED: 4 Featured Projects max for the perfect 2x2 grid
-        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 4);
+        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 2);
         setFeatured(randomized);
 
         const handleScroll = () => setScrollY(window.scrollY);
@@ -55,6 +54,9 @@ const Home = () => {
                             <button onClick={scrollToAbout} className="glass-btn">
                                 ABOUT ME
                             </button>
+                            <Link to="/resume" className="glass-btn">
+                                RESUME
+                            </Link>
                         </div>
                     </div>
 
@@ -79,7 +81,6 @@ const Home = () => {
                 </header>
             </div>
 
-            {/* Solid background applied here to block the hero text, while the HUD streaks flow over top */}
             <div className="content-slide-over" style={{
                 backgroundColor: 'var(--bg-main)',
                 backgroundImage: 'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
@@ -92,8 +93,8 @@ const Home = () => {
                 <section className="container works-section" style={{ paddingTop: '100px' }}>
                     <ScrollReveal direction="up">
                         <div className="section-header">
-                            <h2>FEATURED PROJECTS</h2>
-                            <Link to="/projects" className="view-all-link">ALL FILES →</Link>
+                            <h2>FEATURED</h2>
+                            <Link to="/projects" className="view-all-link">ALL PROJECTS</Link>
                         </div>
                     </ScrollReveal>
                     
@@ -106,7 +107,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section id="about" className="container about-section" style={{ paddingTop: '40px' }}>
+                <section id="about" className="container about-section" style={{ paddingTop: '40px', paddingBottom: '100px' }}>
                     <ScrollReveal direction="up">
                         <div className="section-header">
                             <h2>ABOUT ME</h2>
@@ -114,7 +115,7 @@ const Home = () => {
                         </div>
                     </ScrollReveal>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '50px', marginBottom: '80px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '50px' }}>
                         
                         <ScrollReveal direction="up" delay={0.1}>
                             <div style={{ 
@@ -189,18 +190,31 @@ const Home = () => {
                             <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
                                 <div style={{ 
                                     width: '100%', background: 'var(--bg-surface)', 
-                                    border: '10px solid var(--accent)', padding: '12px 12px 40px 12px', 
+                                    border: '10px solid var(--accent)', padding: '12px', 
                                     boxShadow: 'var(--shadow-soft)', transform: 'translateZ(0)', 
-                                    backfaceVisibility: 'hidden', transition: 'all 0.3s ease', display: 'flex' 
+                                    backfaceVisibility: 'hidden', transition: 'all 0.3s ease', display: 'flex',
+                                    flexDirection: 'column'
                                 }}
                                 onMouseOver={(e) => { e.currentTarget.style.transform = 'translate3d(-4px,-4px,0)'; e.currentTarget.style.boxShadow = '15px 15px 0px rgba(0,0,0,0.1)'; }}
                                 onMouseOut={(e) => { e.currentTarget.style.transform = 'translateZ(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-soft)'; }}
                                 >
-                                    <img 
-                                        src="/images/herobg.jpg" 
-                                        alt="Vinit Rao Profile" 
-                                        style={{ width: '100%', maxHeight: '600px', objectFit: 'cover' }} 
-                                    />
+                                    <div style={{ position: 'relative', width: '100%', display: 'flex', overflow: 'hidden' }}>
+                                        <img 
+                                            src="/images/herobg.jpg" 
+                                            alt="Maravanthe Beach" 
+                                            style={{ width: '100%', maxHeight: '600px', objectFit: 'cover' }} 
+                                        />
+                                        <div className="photo-metadata-overlay">
+                                            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <i className="fas fa-map-marker-alt" style={{ color: 'var(--accent)' }}></i> 
+                                                MARAVANTHE BEACH
+                                            </span>
+                                            <span className="metadata-separator" style={{ opacity: 0.3 }}>|</span>
+                                            <span style={{ color: '#A0A0A0' }}>GOOGLE PIXEL 7a</span>
+                                            <span className="metadata-separator" style={{ opacity: 0.3 }}>|</span>
+                                            <span style={{ color: '#A0A0A0' }}>MOBILE // RAW</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </ScrollReveal>

@@ -3,47 +3,47 @@
 
 .bp-massive-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 0.9; text-transform: uppercase; color: var(--text-primary); margin-bottom: 20px; letter-spacing: -1px; word-wrap: break-word; }
 
-/* FIXED BUTTON ACTIONS */
-.bp-hero-actions { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 20px; 
-    margin-top: 40px; 
-    width: 100%; 
-}
-.bp-hero-actions .glass-btn { 
-    width: 100%; 
-    justify-content: center; 
-    transform: none !important; 
-    border-radius: 4px; 
+/* Main layout stack */
+.bp-hero-stack { 
+    display: flex; flex-direction: column; gap: 50px; margin-bottom: 60px; 
 }
 
-/* PERFECT LEVEL ALIGNMENT SPLIT */
-.bp-hero-split { 
-    display: flex; flex-direction: column; gap: 40px; margin-bottom: 60px; 
+/* --- NEW TWO COLUMN INFO/ACTION SPLIT --- */
+.bp-info-actions-split {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
-@media (min-width: 1100px) { 
-    .bp-hero-split { 
-        flex-direction: row; 
-        align-items: center; 
-        gap: 60px; 
-    } 
-    .bp-project-info { flex: 1; }
-    .bp-media-gallery { flex: 1.4; } 
+
+@media (min-width: 900px) {
+    .bp-info-actions-split {
+        flex-direction: row;
+        gap: 60px;
+        align-items: flex-start;
+    }
+    .bp-project-info { flex: 1; position: sticky; top: 120px; } /* Keeps text pinned while scrolling media if needed */
+    .bp-media-gallery-wrapper { flex: 1.4; display: flex; flex-direction: column; gap: 30px; }
 }
 
 .bp-section-title { font-family: var(--font-display); color: var(--text-primary); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid var(--text-primary); font-weight: 900;}
 .bp-text { font-family: var(--font-body); color: var(--text-primary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; }
 
-/* THE SQUISHED CINEMATIC MEDIA POLAROID */
-.bp-media-gallery { display: flex; flex-direction: column; gap: 15px; width: 100%; height: 100%; min-width: 0; position: relative;}
-@media (min-width: 600px) { .bp-media-gallery { flex-direction: row; align-items: stretch; } }
+/* ACTIONS (Now positioned under the media gallery) */
+.bp-hero-actions { 
+    display: flex; flex-direction: column; gap: 15px; width: 100%; 
+}
+.bp-hero-actions .glass-btn { 
+    width: 100%; justify-content: center; transform: none !important; border-radius: 4px; padding: 15px; font-size: 1rem;
+}
+
+/* --- REDESIGNED MEDIA GALLERY --- */
+.bp-media-gallery { 
+    display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative;
+}
 
 .bp-main-media { 
-    flex: 1; position: relative; 
-    aspect-ratio: 2.35/1; 
-    min-width: 0; background: #FFF; padding: 10px 10px 40px 10px; 
-    border: 1px solid var(--border-color); box-shadow: var(--shadow-soft);
+    position: relative; width: 100%; aspect-ratio: 16/9; background: #FFF; 
+    padding: 10px 10px 40px 10px; border: 1px solid var(--border-color); box-shadow: var(--shadow-soft);
 }
 body.dark-theme .bp-main-media { background: #EEE; }
 
@@ -56,50 +56,43 @@ body.dark-theme .bp-main-media { background: #EEE; }
 .media-inner { position: relative; width: 100%; height: 100%; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; background: #000;}
 .media-inner iframe, .media-inner img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
 
-/* THUMBNAILS AS FILM STRIPS */
-.bp-thumbnails-list { display: flex; flex-direction: row; gap: 10px; overflow-x: auto; min-width: 0; padding-bottom: 10px;}
-@media (min-width: 600px) { 
-    .bp-thumbnails-list { flex-direction: column; width: 120px; height: auto; justify-content: space-between; overflow-x: visible; padding-bottom: 0;} 
+/* Perfect Grid Film Strip */
+.bp-thumbnails-list { 
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 12px; 
+    width: 100%; 
 }
 
 .bp-thumbnail { 
-    background: #FFF; padding: 5px 5px 15px 5px; border: 1px solid var(--border-color); 
-    cursor: pointer; transition: 0.3s; opacity: 0.6; position: relative; flex: 1; min-height: 0;
+    aspect-ratio: 16/9; 
+    background: #FFF; padding: 5px; border: 1px solid var(--border-color); 
+    cursor: pointer; transition: 0.3s; opacity: 0.6; position: relative; 
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05); transform: rotate(1deg);
 }
 body.dark-theme .bp-thumbnail { background: #EEE; }
-.bp-thumbnail:nth-child(even) { transform: rotate(-2deg); }
+.bp-thumbnail:nth-child(even) { transform: rotate(-1deg); }
 .bp-thumbnail:hover, .bp-thumbnail.active { opacity: 1; transform: scale(1.05) rotate(0deg); border-color: var(--text-primary); z-index: 10;}
 .bp-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid rgba(0,0,0,0.1);}
 
-/* MARQUEE FIX: Perfectly straight, adapts to dark mode seamlessly */
+/* MARQUEE */
 .bp-tech-stack-section { 
-    margin: 80px 0; 
-    background: var(--bg-surface); 
-    color: var(--text-primary); 
-    padding: 20px 0; 
-    border-top: 2px dashed var(--border-color);
-    border-bottom: 2px dashed var(--border-color);
-    transform: none !important; 
-    box-shadow: none; 
+    margin: 80px 0; background: var(--bg-surface); color: var(--text-primary); 
+    padding: 20px 0; border-top: 2px dashed var(--border-color); border-bottom: 2px dashed var(--border-color);
 }
 .marquee-wrapper { width: 100%; overflow: hidden; display: flex; align-items: center; }
 .marquee-track { display: flex; width: max-content; animation: marqueeScroll 35s linear infinite; }
 .marquee-text { font-family: var(--font-mono); font-size: 1rem; font-weight: bold; padding: 0 20px; white-space: nowrap; color: var(--text-primary); }
-
 @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+/* BOTTOM GRID */
 .bp-bottom-split { display: grid; grid-template-columns: 1fr; gap: 60px; margin-top: 40px; }
 .bp-bottom-split > div { min-width: 0; } 
 @media (min-width: 1100px) { .bp-bottom-split { grid-template-columns: 1fr 1fr; gap: 80px; } }
 
 /* NOTEPAD CONTRIBUTIONS */
 .bp-contribution-list { display: flex; flex-direction: column; gap: 15px; min-width: 0; }
-.bp-contribution-card { 
-    background: transparent; 
-    border: none; border-bottom: 2px dashed var(--border-color); 
-    padding: 20px 0; transition: 0.3s;
-}
+.bp-contribution-card { background: transparent; border: none; border-bottom: 2px dashed var(--border-color); padding: 20px 0; transition: 0.3s; }
 .bp-contribution-card:hover { border-bottom-color: var(--accent); transform: translateX(5px); }
 .bp-contribution-card h3 { font-family: var(--font-mono); color: var(--accent); font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase;}
 .bp-contribution-card p { font-family: var(--font-body); color: var(--text-primary); font-size: 1rem; line-height: 1.6; margin: 0; }
@@ -112,3 +105,29 @@ body.dark-theme .bp-thumbnail { background: #EEE; }
 .bp-carousel-controls button { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-family: var(--font-mono); font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
 .bp-carousel-controls button:hover { color: var(--accent); }
 .bp-carousel-indicator { color: var(--text-primary); letter-spacing: 2px; }
+
+/* --- FINAL MOBILE SWEEP --- */
+@media (max-width: 900px) {
+    /* Reverses the flow so the Video and Buttons show up FIRST on mobile */
+    .bp-info-actions-split {
+        flex-direction: column-reverse;
+    }
+    
+    /* Horizontal scrolling for thumbnails on mobile to prevent them from becoming tiny */
+    .bp-thumbnails-list { 
+        display: flex; 
+        overflow-x: auto; 
+        scroll-snap-type: x mandatory; 
+        padding-bottom: 15px; 
+        margin-bottom: 10px;
+    }
+    
+    .bp-thumbnail { 
+        flex: 0 0 75%; /* Thumbnails take up 75% of screen width, leaving 25% to peek at the next one */
+        scroll-snap-align: center;
+        transform: none !important; /* Remove rotation on mobile for cleaner swipe */
+    }
+    
+    .bp-tech-stack-section { margin: 50px 0; }
+    .social-viewport { min-height: 350px; height: 50vh; }
+}

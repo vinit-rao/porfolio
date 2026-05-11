@@ -17,7 +17,6 @@
     --shadow-hover: 8px 8px 0px rgba(217, 28, 28, 0.2); 
     --radius-sm: 2px;
     
-    /* RESTORED: Faded grid back to original 4% opacity */
     --grid-color: rgba(0, 0, 0, 0.04);
     
     --font-display: 'Syne', sans-serif; 
@@ -42,7 +41,6 @@ body.dark-theme {
     --shadow-soft: 4px 4px 0px rgba(0, 0, 0, 0.4);
     --shadow-hover: 8px 8px 0px rgba(255, 77, 77, 0.3);
 
-    /* RESTORED: Faded dark mode grid to 3% opacity */
     --grid-color: rgba(255, 255, 255, 0.03);
 }
 
@@ -63,15 +61,18 @@ body {
     -webkit-backface-visibility: hidden;
 }
 
+/* MOBILE FIX: Stepped padding to maximize screen real estate on tiny phones */
 .container { 
     width: 100%; max-width: 1060px; margin: 0 auto; padding: 0 40px; 
     position: relative; z-index: 10; box-sizing: border-box;
 }
 @media (max-width: 768px) { .container { padding: 0 25px; } }
+@media (max-width: 480px) { .container { padding: 0 15px; } }
 
 img { display: block; width: 100%; }
 
-.massive-title { font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 7.5rem); line-height: 1.05; letter-spacing: -0.03em; text-transform: uppercase; color: var(--text-primary); font-weight: 800; }
+/* MOBILE FIX: Dropped clamp minimum from 3.5rem to 2.5rem so words don't break on iPhone SE */
+.massive-title { font-family: var(--font-display); font-size: clamp(2.5rem, 12vw, 7.5rem); line-height: 1.05; letter-spacing: -0.03em; text-transform: uppercase; color: var(--text-primary); font-weight: 800; }
 
 .red-marker {
     background: linear-gradient(104deg, rgba(217, 28, 28, 0) 0.9%, rgba(217, 28, 28, 0.15) 2.4%, rgba(217, 28, 28, 0.3) 5.8%, rgba(217, 28, 28, 0.1) 93%, rgba(217, 28, 28, 0) 96%);
@@ -86,6 +87,11 @@ img { display: block; width: 100%; }
 }
 .glass-btn:hover { background: var(--accent); color: #FFF; border-color: var(--accent); transform: translate3d(-2px, -2px, 0) rotate(0deg); box-shadow: 8px 8px 0px rgba(217, 28, 28, 0.2); }
 
+/* MOBILE FIX: Smaller button paddings for mobile screens */
+@media (max-width: 480px) {
+    .glass-btn { padding: 10px 18px; font-size: 0.75rem; }
+}
+
 .scrap-input {
     background: transparent; border: none; border-bottom: 2px dashed var(--border-color);
     padding: 15px 5px; color: var(--text-primary); font-family: var(--font-mono); font-size: 1rem;
@@ -95,26 +101,18 @@ img { display: block; width: 100%; }
 
 /* Overlay Wrapper for Dynamic Lines */
 .dynamic-bg-wrapper {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9999;
-    overflow: hidden;
-    contain: strict;
+    position: fixed; inset: 0; pointer-events: none;
+    z-index: 9999; overflow: hidden; contain: strict;
 }
 
 .navbar-container { z-index: 10000 !important; }
 
 /* Perfect 2x2 Grid for Tablet/Desktop */
 .projects-grid, .archive-grid { 
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 60px !important; 
-    width: 100%;
+    display: grid; grid-template-columns: repeat(1, 1fr);
+    gap: 60px !important; width: 100%;
 }
 
 @media (min-width: 768px) {
-    .projects-grid, .archive-grid { 
-        grid-template-columns: repeat(2, 1fr) !important; 
-    }
+    .projects-grid, .archive-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }

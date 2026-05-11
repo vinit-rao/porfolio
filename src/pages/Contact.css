@@ -1,0 +1,74 @@
+/* --- CONTACT PAGE LAYOUT --- */
+.contact-container {
+    padding-top: 150px;
+    flex-grow: 1;
+    z-index: 10;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}
+
+/* Core Desktop Card Styles (Extracted from inline logic) */
+.contact-editorial-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    box-shadow: var(--shadow-soft);
+    transform: translateZ(0); /* Unslanted */
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    position: relative;
+}
+
+.contact-focus-card {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 35px 40px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    transform: translateZ(0);
+    position: relative;
+}
+
+.contact-form-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: var(--shadow-soft);
+    transform: rotate(1deg) translateZ(0); /* Slanted contrast */
+    height: 100%;
+}
+
+/* --- MOBILE RESPONSIVENESS (PHASE 4) --- */
+@media (max-width: 850px) {
+    .contact-container {
+        padding-top: 100px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr; /* Stack columns vertically */
+        gap: 60px; /* Give breathing room between stacked cards */
+        padding-bottom: 40px;
+    }
+
+    /* Reclaim horizontal padding for smaller screens */
+    .contact-editorial-card,
+    .contact-focus-card,
+    .contact-form-card {
+        padding: 30px 20px; 
+    }
+
+    /* Reduce the slant slightly so corners don't clip off the screen */
+    .contact-form-card {
+        transform: rotate(0.5deg) translateZ(0);
+    }
+}

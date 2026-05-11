@@ -27,7 +27,8 @@ const Footer = () => {
             <div className="container">
                 
                 <h2 className="footer-giant-title">
-                    INITIATE<br/><span>CONTACT.</span>
+                    CONTACT ME.
+                    {/* <span></span> */}
                 </h2>
 
                 <div className="footer-links-grid">

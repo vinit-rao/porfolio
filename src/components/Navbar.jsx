@@ -3,23 +3,29 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-    // ENFORCED LIGHT START
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
-        if (theme === 'dark') {
-            document.body.classList.add('dark-theme');
-        } else {
-            document.body.classList.remove('dark-theme');
-        }
+        if (theme === 'dark') document.body.classList.add('dark-theme');
+        else document.body.classList.remove('dark-theme');
         localStorage.setItem('theme', theme);
     }, [theme]);
 
     useEffect(() => {
         setMenuOpen(false);
     }, [location]);
+
+    // MOBILE FIX: Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (menuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [menuOpen]);
 
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
@@ -44,7 +50,6 @@ const Navbar = () => {
 
                     <div className={`nav-menu ${menuOpen ? 'active' : ''}`}>
                         <div className="nav-links">
-                            {/* FIX: URL path points to /projects to prevent blank page, but text says MY PROJECTS */}
                             <Link to="/projects" className="nav-framed-link">PROJECTS</Link>
                             <Link to="/contact" className="nav-framed-link">CONTACT</Link>
                             <Link to="/resume" className="nav-framed-link">RESUME</Link>

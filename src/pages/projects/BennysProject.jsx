@@ -42,48 +42,55 @@ const BennysProject = () => {
                     <h1 className="bp-massive-title">BENNY'S FROZEN ADVENTURE</h1>
                 </div>
 
-                <div className="bp-hero-split">
+                <div className="bp-hero-stack">
 
-                    {/* LEFT: Info and Action Stack */}
-                    <div className="bp-project-info">
-                        <h2 className="bp-section-title">THE PROJECT</h2>
-                        <p className="bp-text">
-                            Benny’s Frozen Adventure is a frantic, isometric arcade game built in Unity. The core loop requires players to catch falling ice cream scoops and perfectly match customer orders before the timer runs out.
-                        </p>
-                        <p className="bp-text">
-                            I developed this project alongside three other team members as our final assignment for Carleton University's IMD2006 Game Development course. We collaborated over the entire semester to build, integrate, and polish a fully working game for the year-end Demo Day.
-                        </p>
-
-                        {/* Button and Github Card grouped to force 100% width alignment */}
-                        <div className="bp-hero-actions">
-                            <a href="https://vinitrao.itch.io/bennys-frozen-adventure-demo" target="_blank" rel="noreferrer" className="glass-btn" style={{ background: 'var(--accent)', color: '#FFF', borderColor: 'var(--accent)' }}>
-                                PLAY GAME
-                            </a>
-                            
-                            <GithubRepoCard username="vinit-rao" repo="bennys-frozen-adventure" />
+                    {/* TWO COLUMN SPLIT */}
+                    <div className="bp-info-actions-split">
+                        
+                        {/* LEFT: Project Text Only */}
+                        <div className="bp-project-info">
+                            <h2 className="bp-section-title">THE PROJECT</h2>
+                            <p className="bp-text">
+                                Benny’s Frozen Adventure is a frantic, isometric arcade game built in Unity. The core loop requires players to catch falling ice cream scoops and perfectly match customer orders before the timer runs out.
+                            </p>
+                            <p className="bp-text">
+                                I developed this project alongside three other team members as our final assignment for Carleton University's IMD2006 Game Development course. We collaborated over the entire semester to build, integrate, and polish a fully working game for the year-end Demo Day.
+                            </p>
                         </div>
-                    </div>
 
-                    {/* RIGHT: Gallery */}
-                    <div className="bp-media-gallery">
-                        <div className="bp-main-media">
-                            <div className="media-inner">
-                                {heroMedia[activeMedia].type === 'iframe' && (
-                                    <iframe src={heroMedia[activeMedia].src} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="Trailer" loading="lazy"></iframe>
-                                )}
-                                {heroMedia[activeMedia].type === 'image' && (
-                                    <img src={heroMedia[activeMedia].src} alt="Gameplay" />
-                                )}
+                        {/* RIGHT: Media + Actions to fill the gap */}
+                        <div className="bp-media-gallery-wrapper">
+                            <div className="bp-media-gallery">
+                                <div className="bp-main-media">
+                                    <div className="media-inner">
+                                        {heroMedia[activeMedia].type === 'iframe' && (
+                                            <iframe src={heroMedia[activeMedia].src} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="Trailer" loading="lazy"></iframe>
+                                        )}
+                                        {heroMedia[activeMedia].type === 'image' && (
+                                            <img src={heroMedia[activeMedia].src} alt="Gameplay" />
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Thumbnails perfectly divided */}
+                                <div className="bp-thumbnails-list">
+                                    {heroMedia.map((media, idx) => (
+                                        <div key={media.id} className={`bp-thumbnail ${activeMedia === idx ? 'active' : ''}`} onClick={() => setActiveMedia(idx)}>
+                                            <img src={media.thumb} alt={`Thumb ${idx}`} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* ACTIONS MOVED HERE TO BALANCE LAYOUT */}
+                            <div className="bp-hero-actions">
+                                <a href="https://vinitrao.itch.io/bennys-frozen-adventure-demo" target="_blank" rel="noreferrer" className="glass-btn" style={{ background: 'var(--accent)', color: '#FFF', borderColor: 'var(--accent)' }}>
+                                    PLAY GAME
+                                </a>
+                                <GithubRepoCard username="vinit-rao" repo="bennys-frozen-adventure" />
                             </div>
                         </div>
 
-                        <div className="bp-thumbnails-list">
-                            {heroMedia.map((media, idx) => (
-                                <div key={media.id} className={`bp-thumbnail ${activeMedia === idx ? 'active' : ''}`} onClick={() => setActiveMedia(idx)}>
-                                    <img src={media.thumb} alt={`Thumb ${idx}`} />
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </div>
 

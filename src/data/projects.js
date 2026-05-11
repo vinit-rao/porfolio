@@ -2,12 +2,25 @@
 
 const projects = [
     {
+        category: 'hardware',
+        title: 'Arduino Hardware Controller (R&D Placeholder)',
+        description: 'Custom Arduino hardware controller integrated with a 3D environment.',
+        image: '/images/project_25-4.jpg', 
+        badges: ['| C++ | Arduino | Hardware Integration |'],
+        featured: true,
+        
+        // --- DOSSIER / CASE STUDY FIELDS (Only used for Hardware) --- //
+        objective: "Engineer a custom physical controller bridging analog inputs to digital game states. The goal was to replace traditional keyboard controls with a tactile hardware system.",
+        process: "I wired an Arduino Uno with an ultrasonic sensor, an RGB LED, and an analog joystick. The hardest part of the build was writing the serial communication script to parse the incoming byte stream.",
+        friction: "Encountered severe logic desyncs during the initial stress tests. Resolved by engineering a custom buffer-clear script that gracefully throttles physical inputs."
+    },
+    {
         category: 'code',
         title: 'Bennys Frozen Adventure',
         description: 'Unity made 3D game where the player trys to catch falling scoops and complete orders.',
         internalLink: '/bennys-adventure',
         video: 'videos/project_25.mp4',
-        image: 'images/project_25-4.jpg',
+        image: 'images/project_25-5.jpg',
         badges: ['| C# | Unity | After Effects | School |'],
         featured: true
     },
