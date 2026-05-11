@@ -1,6 +1,5 @@
 /* THE SCRAPBOOK GLOBALS */
 :root { 
-    /* NEW LIGHT MODE: Much darker, muted matte gray/beige to kill glare completely */
     --bg-main: #D5D3C8; 
     --bg-surface: #E4E2D7; 
     --border-color: #B5B3A9; 
@@ -49,15 +48,23 @@ body.dark-theme {
 html { scroll-behavior: smooth; }
 
 body { 
-    overflow-x: hidden; width: 100%; max-width: 100vw; -webkit-font-smoothing: antialiased; 
-    background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-body);
+    overflow-x: hidden; 
+    width: 100%; 
+    max-width: 100vw; 
+    -webkit-font-smoothing: antialiased; 
+    background-color: var(--bg-main); 
+    color: var(--text-primary); 
+    font-family: var(--font-body);
     transition: background-color 0.4s ease, color 0.4s ease;
     
+    /* Grid background flattened to body to prevent scroll repaints */
     background-image: 
         linear-gradient(var(--grid-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
     background-size: 40px 40px; 
+    background-attachment: fixed; 
     position: relative;
+    -webkit-backface-visibility: hidden;
 }
 
 /* THE TIGHTER GLOBAL CONTAINER */
@@ -66,62 +73,114 @@ body {
     max-width: 1060px; 
     margin: 0 auto; 
     padding: 0 40px; 
-    position: relative; z-index: 10; 
+    position: relative; 
+    z-index: 10; 
     box-sizing: border-box;
 }
+
 @media (max-width: 768px) {
     .container { padding: 0 25px; } 
 }
 
 img { display: block; width: 100%; }
 
-.massive-title { font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 7.5rem); line-height: 1.05; letter-spacing: -0.03em; text-transform: uppercase; color: var(--text-primary); font-weight: 800; }
+.massive-title { 
+    font-family: var(--font-display); 
+    font-size: clamp(3.5rem, 10vw, 7.5rem); 
+    line-height: 1.05; 
+    letter-spacing: -0.03em; 
+    text-transform: uppercase; 
+    color: var(--text-primary); 
+    font-weight: 800; 
+}
 
 .red-marker {
     background: linear-gradient(104deg, rgba(217, 28, 28, 0) 0.9%, rgba(217, 28, 28, 0.15) 2.4%, rgba(217, 28, 28, 0.3) 5.8%, rgba(217, 28, 28, 0.1) 93%, rgba(217, 28, 28, 0) 96%);
-    padding: 0 4px; font-style: italic;
+    padding: 0 4px; 
+    font-style: italic;
 }
 
 .glass-btn { 
-    background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-color); 
-    padding: 12px 24px; font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; cursor: pointer; 
-    text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; 
-    transition: all 0.15s ease; box-shadow: var(--shadow-soft); transform: rotate(-1deg);
+    background: var(--bg-surface); 
+    color: var(--text-primary); 
+    border: 1px solid var(--border-color); 
+    padding: 12px 24px; 
+    font-family: var(--font-mono); 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    cursor: pointer; 
+    text-decoration: none; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 900; 
+    transition: all 0.15s ease; 
+    box-shadow: var(--shadow-soft); 
+    transform: rotate(-1deg);
 }
-.glass-btn:hover { background: var(--accent); color: #FFF; border-color: var(--accent); transform: translate(-2px, -2px) rotate(0deg); box-shadow: 8px 8px 0px rgba(217, 28, 28, 0.2); }
+
+.glass-btn:hover { 
+    background: var(--accent); 
+    color: #FFF; 
+    border-color: var(--accent); 
+    /* Use translate3d instead of translate to force GPU */
+    transform: translate3d(-2px, -2px, 0) rotate(0deg); 
+    box-shadow: 8px 8px 0px rgba(217, 28, 28, 0.2); 
+}
 
 .scrap-input {
-    background: transparent; border: none; border-bottom: 2px dashed var(--border-color);
-    padding: 15px 5px; color: var(--text-primary); font-family: var(--font-mono); font-size: 1rem;
-    transition: all 0.3s ease; border-radius: 0;
+    background: transparent; 
+    border: none; 
+    border-bottom: 2px dashed var(--border-color);
+    padding: 15px 5px; 
+    color: var(--text-primary); 
+    font-family: var(--font-mono); 
+    font-size: 1rem;
+    transition: all 0.3s ease; 
+    border-radius: 0;
 }
-.scrap-input:focus { outline: none; border-bottom: 2px solid var(--accent); background: rgba(217, 28, 28, 0.03); }
 
-/* --- COMPOSITING ENGINE OPTIMIZATION --- */
+.scrap-input:focus { 
+    outline: none; 
+    border-bottom: 2px solid var(--accent); 
+    background: rgba(217, 28, 28, 0.03); 
+}
 
-/* Forces GPU to handle cards and buttons on their own layers */
+/* ==========================================================================
+   ULTIMATE MAC & HIGH-DPI STABILITY FIXES
+   These rules separate the high-intensity background layers from the 
+   interactive foreground cards to prevent the subpixel Safari flickering.
+   ========================================================================== */
+
+/* 1. Isolate the entire background so it exists in its own memory space */
+.dynamic-bg-wrapper {
+    isolation: isolate;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translate3d(0, 0, -100px); /* Pushes background physically away from UI layers */
+    pointer-events: none;
+    z-index: -1;
+    contain: strict; /* Tells GPU it will never affect surrounding layout */
+}
+
+/* 2. Force all interactive elements into their own clean GPU layers */
 .single-polaroid, 
 .dossier-card, 
 .glass-btn, 
 .hero-social-link,
+.hero-social-board,
 .project-card,
 .archive-hero-selector {
+    transform: translate3d(0, 0, 0); 
+    will-change: transform, opacity, box-shadow;
     backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
-    will-change: transform;
-    transform: translateZ(0); /* The magic line that stops flickering */
+    -webkit-perspective: 1000;
+    -webkit-font-smoothing: antialiased; 
 }
 
-/* Isolates the background so it doesn't trigger global repaints */
-.dynamic-bg-wrapper {
-    contain: strict;
-    pointer-events: none;
-    transform: translateZ(-1px);
-    z-index: -1;
-}
-
-/* Optimizes SVG performance for wavy lines */
+/* 3. Disable line-scaling recalculations for the moving paths */
 .wavy-path {
     shape-rendering: optimizeSpeed;
+    vector-effect: non-scaling-stroke; 
     will-change: stroke-dashoffset;
 }
