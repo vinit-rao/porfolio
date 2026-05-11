@@ -1,8 +1,10 @@
 /* THE SCRAPBOOK GLOBALS */
 :root { 
-    --bg-main: #F4F1EA; 
-    --bg-surface: #FCFAEF; 
-    --border-color: #D1CDBC; 
+    /* NEW LIGHT MODE: Much darker, muted matte gray/beige to kill glare completely */
+    --bg-main: #D5D3C8; 
+    --bg-surface: #E4E2D7; 
+    --border-color: #B5B3A9; 
+    
     --text-primary: #1A1A1A; 
     --text-secondary: #5C5A51; 
     --accent: #D91C1C; 
@@ -16,11 +18,14 @@
     --shadow-hover: 8px 8px 0px rgba(217, 28, 28, 0.2); 
     --radius-sm: 2px;
     
+    --grid-color: rgba(0, 0, 0, 0.04);
+    
     --font-display: 'Syne', sans-serif; 
     --font-body: 'Inter', sans-serif; 
     --font-mono: 'JetBrains Mono', monospace; 
 }
 
+/* DARK MODE */
 body.dark-theme {
     --bg-main: #121212; 
     --bg-surface: #1E1E1E; 
@@ -36,6 +41,8 @@ body.dark-theme {
 
     --shadow-soft: 4px 4px 0px rgba(0, 0, 0, 0.4);
     --shadow-hover: 8px 8px 0px rgba(255, 77, 77, 0.3);
+
+    --grid-color: rgba(255, 255, 255, 0.025);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,17 +52,26 @@ body {
     overflow-x: hidden; width: 100%; max-width: 100vw; -webkit-font-smoothing: antialiased; 
     background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-body);
     transition: background-color 0.4s ease, color 0.4s ease;
-    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
-    background-size: 20px 20px;
+    
+    background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 40px 40px; 
     position: relative;
 }
 
+/* THE TIGHTER GLOBAL CONTAINER */
 .container { 
-    width: 100%; max-width: 1240px; margin: 0 auto; 
-    padding: 0 5vw; position: relative; z-index: 10; 
+    width: 100%; 
+    max-width: 1060px; 
+    margin: 0 auto; 
+    padding: 0 40px; 
+    position: relative; z-index: 10; 
     box-sizing: border-box;
 }
-@media (max-width: 768px) { .container { padding: 0 25px; } }
+@media (max-width: 768px) {
+    .container { padding: 0 25px; } 
+}
 
 img { display: block; width: 100%; }
 
@@ -67,7 +83,7 @@ img { display: block; width: 100%; }
 }
 
 .glass-btn { 
-    background: var(--bg-surface); color: var(--text-primary); border: 2px solid var(--text-primary); 
+    background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-color); 
     padding: 12px 24px; font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; cursor: pointer; 
     text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; 
     transition: all 0.15s ease; box-shadow: var(--shadow-soft); transform: rotate(-1deg);
@@ -80,31 +96,3 @@ img { display: block; width: 100%; }
     transition: all 0.3s ease; border-radius: 0;
 }
 .scrap-input:focus { outline: none; border-bottom: 2px solid var(--accent); background: rgba(217, 28, 28, 0.03); }
-
-.filter-btn {
-    background: var(--bg-surface); color: var(--text-secondary); border: 2px solid var(--border-color); border-radius: 2px;
-    padding: 8px 16px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
-    cursor: pointer; transition: all 0.2s ease; box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
-}
-.filter-btn:nth-child(even) { transform: rotate(1deg); }
-.filter-btn:nth-child(odd) { transform: rotate(-1.5deg); }
-.filter-btn:hover { color: var(--text-primary); border-color: var(--text-primary); transform: translateY(-2px) rotate(0deg) scale(1.05); box-shadow: 4px 4px 0px rgba(0,0,0,0.1); }
-.filter-btn.active { background: var(--accent); color: #FFF; border-color: var(--accent); transform: translateY(-2px) rotate(0deg); box-shadow: 4px 4px 0px rgba(217, 28, 28, 0.2); }
-
-/* --- ORGANIC SCRIBBLE STREAKS --- */
-.scribble-path {
-    /* dash array makes a short visible line, then a massive invisible gap */
-    stroke-dasharray: 200 3000; 
-    stroke-dashoffset: 3200;
-    animation: scribbleDraw linear infinite;
-}
-.path-red { animation-duration: 8s; animation-delay: 0s; }
-.path-grey { animation-duration: 12s; animation-delay: 3s; stroke-dasharray: 150 3000; }
-.path-white { animation-duration: 10s; animation-delay: 1s; stroke-dasharray: 250 3000; }
-
-@keyframes scribbleDraw {
-    0% { stroke-dashoffset: 3200; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { stroke-dashoffset: -200; opacity: 0; }
-}

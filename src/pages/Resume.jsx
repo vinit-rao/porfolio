@@ -8,9 +8,10 @@ const Resume = () => {
             <Navbar />
             <DynamicBackground />
 
+            {/* FIX: Removed conflicting padding shorthand, restored paddingTop */}
             <div className="container" style={{ paddingTop: '140px', flexGrow: 1, display: 'flex', flexDirection: 'column', zIndex: 10 }}>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px', flexWrap: 'wrap', gap: '20px', borderBottom: '2px solid var(--text-primary)', paddingBottom: '15px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px', flexWrap: 'wrap', gap: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '15px' }}>
                     <div>
                         <h1 className="massive-title" style={{ margin: 0 }}>RESUME</h1>
                         <p className="meta-text" style={{ marginTop: '10px' }}>
@@ -27,7 +28,7 @@ const Resume = () => {
                 <div style={{ 
                     flexGrow: 1, 
                     background: 'var(--bg-surface)', 
-                    border: '2px solid var(--border-color)', 
+                    border: '1px solid var(--border-color)',
                     minHeight: '75vh', 
                     marginBottom: '60px', 
                     position: 'relative',
@@ -35,7 +36,6 @@ const Resume = () => {
                     boxShadow: 'var(--shadow-soft)',
                     transform: 'rotate(-0.5deg)'
                 }}>
-                    {/* Tape on top */}
                     <div style={{
                         position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%) rotate(2deg)',
                         width: '100px', height: '30px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(2px)',
@@ -46,7 +46,7 @@ const Resume = () => {
                         src="/Vinit_Rao_Resume.pdf" 
                         width="100%" 
                         height="100%" 
-                        style={{ border: '1px solid rgba(0,0,0,0.1)' }} 
+                        style={{ border: '1px solid var(--border-color)' }}
                         title="Vinit Rao Resume" 
                         loading="lazy"
                     />

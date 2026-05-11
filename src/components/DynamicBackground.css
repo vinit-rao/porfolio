@@ -1,0 +1,67 @@
+.dynamic-bg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.dynamic-bg-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0.9;
+}
+
+.wavy-path {
+    fill: none;
+    stroke-linecap: round;
+    
+    /* Creates a single short dash (var(--streak-length)), 
+      followed by an invisible gap of 4000px so it doesn't repeat immediately 
+    */
+    stroke-dasharray: var(--streak-length, 250) 4000;
+    stroke-dashoffset: 4000;
+    
+    /* Uses 'linear' so the speed is consistent as it travels */
+    animation: shootWavy var(--draw-duration) linear infinite;
+    animation-delay: var(--draw-delay);
+    
+    /* Opacity is driven entirely by the keyframes to make them fade in and out */
+    opacity: 0; 
+}
+
+/* Red Accent Waves */
+.wavy-path.red {
+    stroke: var(--accent);
+    stroke-width: 3px;
+    --max-opacity: 0.65;
+}
+
+/* Secondary Background Waves */
+.wavy-path.dark {
+    stroke: var(--text-primary);
+    stroke-width: 2px;
+    --max-opacity: 0.25;
+}
+
+/* Soften the secondary waves in dark mode */
+body.dark-theme .wavy-path.dark {
+    stroke: #FFFFFF;
+    --max-opacity: 0.15;
+}
+
+/* 1. Starts offscreen and invisible
+  2. Fades in as it enters
+  3. Stays visible across the main body
+  4. Flies offscreen (-500) and fades out completely
+*/
+@keyframes shootWavy {
+    0% { stroke-dashoffset: 4000; opacity: 0; }
+    15% { opacity: var(--max-opacity); }
+    85% { opacity: var(--max-opacity); }
+    100% { stroke-dashoffset: -500; opacity: 0; }
+}

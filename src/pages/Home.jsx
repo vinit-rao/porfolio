@@ -24,7 +24,6 @@ const Home = () => {
     const heroY = scrollY * 0.4;    
     const heroOpacity = Math.max(0, 1 - (scrollY / 500));
 
-    // Smooth scroll handler for the About button
     const scrollToAbout = () => {
         const aboutSection = document.getElementById('about');
         if (aboutSection) {
@@ -40,7 +39,6 @@ const Home = () => {
             <div className="hero-curtain-container">
                 <header className="container hero-clean-desk" style={{ opacity: heroOpacity, transform: `translateY(${heroY}px)` }}>
                     
-                    {/* LEFT: Name, Info, Buttons */}
                     <div className="hero-left-col">
                         <h1 className="hero-title-massive">
                             <span className="reveal-mask"><span className="reveal-text delay-1">VINIT</span></span><br/>
@@ -54,14 +52,12 @@ const Home = () => {
                             <Link to="/projects" className="glass-btn btn-primary" style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', border: 'none' }}>
                                 SEE MY WORK
                             </Link>
-                            {/* FIXED: Uses onClick to smoothly scroll down without breaking React Router */}
                             <button onClick={scrollToAbout} className="glass-btn">
                                 ABOUT ME
                             </button>
                         </div>
                     </div>
 
-                    {/* RIGHT: Social Links inside a sticky note frame */}
                     <div className="hero-right-col">
                         <div className="hero-social-board">
                             <div className="hero-social-cluster">
@@ -86,7 +82,6 @@ const Home = () => {
 
             <div className="content-slide-over">
                 
-                {/* 1. SELECTED WORKS (MOVED TO TOP) */}
                 <section className="container works-section" style={{ paddingTop: '100px' }}>
                     <ScrollReveal direction="up">
                         <div className="section-header">
@@ -104,7 +99,6 @@ const Home = () => {
                     </div>
                 </section>
 
-                {/* 2. ABOUT ME (MOVED TO BOTTOM) */}
                 <section id="about" className="container about-section" style={{ paddingTop: '40px' }}>
                     <ScrollReveal direction="up">
                         <div className="section-header">
@@ -118,34 +112,30 @@ const Home = () => {
                             <div className="dossier-card">
                                 
                                 <div className="bio-text">
-                                    <p style={{ marginBottom: '30px' }}>
+                                    <p className="bio-paragraph">
                                         I'm a third-year Interactive Multimedia & Design student at <span className="red-marker"> Carleton University. </span> I specialize in bridging the gap between digital and physical—programming C# game systems, creating motion graphics, and engineering custom Arduino controllers.
                                     </p>
                                     
-                                    {/* SIDE-BY-SIDE GRID FOR LISTS */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '30px', marginBottom: '20px' }}>
-                                        
-                                        {/* COLUMN 1 */}
-                                        <div>
-                                            <strong style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>// Currently Working On:</strong>
-                                            <ul style={{ paddingLeft: '20px', marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem' }}>
-                                                <li>Roguelike platformer in Godot</li>
-                                                <li>Self hosting MC server & integrating API bot</li>
-                                                <li>Learning how to make FPV drone</li>
+                                    {/* FIXED: Strict 2-column layout via CSS class */}
+                                    <div className="bio-lists-grid">
+                                        <div className="bio-list-block">
+                                            <strong className="bio-list-title">// Currently Working On:</strong>
+                                            <ul className="bio-list">
+                                                <li>Godot Roguelike Platformer</li>
+                                                <li>MC Server & API Integration</li>
+                                                <li>Building FPV Drones</li>
                                             </ul>
                                         </div>
 
-                                        {/* COLUMN 2 */}
-                                        <div>
-                                            <strong style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>// Hobbies:</strong>
-                                            <ul style={{ paddingLeft: '20px', marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem' }}>
-                                                <li>After Effects video editing</li>
-                                                <li>Sports (Tennis, Soccer, Pickleball)</li>
-                                                <li>Playing guitar & drums</li>
-                                                <li>Pixel art (Aseprite) & Video games</li>
+                                        <div className="bio-list-block">
+                                            <strong className="bio-list-title">// Hobbies:</strong>
+                                            <ul className="bio-list">
+                                                <li>After Effects Video Editing</li>
+                                                <li>Tennis, Soccer, Pickleball</li>
+                                                <li>Playing Guitar & Drums</li>
+                                                <li>Pixel Art & Video Games</li>
                                             </ul>
                                         </div>
-
                                     </div>
                                 </div>
                                 

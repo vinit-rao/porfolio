@@ -3,50 +3,58 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
-    const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
-        // Check for saved user preference or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            setIsDark(true);
+        if (theme === 'dark') {
             document.body.classList.add('dark-theme');
         } else {
-            setIsDark(false);
             document.body.classList.remove('dark-theme');
         }
-    }, []);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    useEffect(() => {
+        setMenuOpen(false);
+    }, [location]);
 
     const toggleTheme = () => {
-        if (isDark) {
-            document.body.classList.remove('dark-theme');
-            localStorage.setItem('theme', 'light');
-            setIsDark(false);
-        } else {
-            document.body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark');
-            setIsDark(true);
-        }
+        setTheme(theme === 'light' ? 'dark' : 'light');
     };
 
     return (
-        <div className="nav-wrapper">
-            <nav className="nav-container container">
-                <Link to="/" className="nav-brand">VINIT RAO</Link>
-                
-                <div className="nav-links">
-                    <Link to="/projects" className={location.pathname === '/projects' ? 'active' : ''}>WORK</Link>
-                    <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>CONTACT</Link>
-                    <Link to="/resume" className={location.pathname === '/resume' ? 'active' : ''}>RESUME</Link>
-                    <button onClick={toggleTheme} className="theme-toggle">
-                        {isDark ? 'LIGHT' : 'DARK'}
-                    </button>
+        <nav className="navbar-container">
+            {/* CENTRALIZED CONTAINER ENFORCED */}
+            <div className="container">
+                <div className="navbar-inner">
+                    <Link to="/" className="nav-logo">VINIT RAO</Link>
+
+                    <div className="nav-mobile-controls">
+                        <button className="theme-toggle-btn mobile-only" onClick={toggleTheme}>
+                            {theme === 'light' ? 'DARK' : 'LIGHT'}
+                        </button>
+                        <button className={`hamburger-btn ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+
+                    <div className={`nav-menu ${menuOpen ? 'active' : ''}`}>
+                        <div className="nav-links">
+                            <Link to="/projects" className="nav-framed-link">WORK</Link>
+                            <Link to="/contact" className="nav-framed-link">CONTACT</Link>
+                            <Link to="/resume" className="nav-framed-link">RESUME</Link>
+                        </div>
+                        <button className="theme-toggle-btn desktop-only" onClick={toggleTheme}>
+                            {theme === 'light' ? 'DARK MODE' : 'LIGHT MODE'}
+                        </button>
+                    </div>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     );
 };
 
