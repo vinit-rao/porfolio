@@ -8,24 +8,17 @@ const Navbar = () => {
     const location = useLocation();
 
     useEffect(() => {
-        if (theme === 'dark') document.body.classList.add('dark-theme');
-        else document.body.classList.remove('dark-theme');
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
         localStorage.setItem('theme', theme);
     }, [theme]);
 
     useEffect(() => {
         setMenuOpen(false);
     }, [location]);
-
-    // MOBILE FIX: Lock body scroll when mobile menu is open
-    useEffect(() => {
-        if (menuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [menuOpen]);
 
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
@@ -50,10 +43,18 @@ const Navbar = () => {
 
                     <div className={`nav-menu ${menuOpen ? 'active' : ''}`}>
                         <div className="nav-links">
-                            <Link to="/projects" className="nav-framed-link">PROJECTS</Link>
-                            <Link to="/contact" className="nav-framed-link">CONTACT</Link>
-                            <Link to="/resume" className="nav-framed-link">RESUME</Link>
+                            <Link to="/projects" className="nav-framed-link" onClick={() => setMenuOpen(false)}>PROJECTS</Link>
+                            <Link to="/contact" className="nav-framed-link" onClick={() => setMenuOpen(false)}>CONTACT</Link>
+                            <Link to="/resume" className="nav-framed-link" onClick={() => setMenuOpen(false)}>RESUME</Link>
                         </div>
+                        
+                        <div className="nav-mobile-socials">
+                            <a href="https://github.com/vinit-rao" target="_blank" rel="noreferrer"><i className="fab fa-github"></i></a>
+                            <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a>
+                            <a href="https://youtube.com/@OfficialVinitRao" target="_blank" rel="noreferrer"><i className="fab fa-youtube"></i></a>
+                            <a href="https://instagram.com/officialvinitrao" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
+                        </div>
+
                         <button className="theme-toggle-btn desktop-only" onClick={toggleTheme}>
                             {theme === 'light' ? 'DARK MODE' : 'LIGHT MODE'}
                         </button>

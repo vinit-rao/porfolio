@@ -3,13 +3,10 @@
 const projects = [
     {
         category: 'hardware',
-        title: 'Arduino Hardware Controller (R&D Placeholder)',
+        title: 'Arduino Game Controller',
         description: 'Custom Arduino hardware controller integrated with a 3D environment.',
         image: '/images/project_25-4.jpg', 
-        badges: ['| C++ | Arduino | Hardware Integration |'],
-        featured: true,
-        
-        // --- DOSSIER / CASE STUDY FIELDS (Only used for Hardware) --- //
+        badges: ['| C++ | Arduino | School |'],
         objective: "Engineer a custom physical controller bridging analog inputs to digital game states. The goal was to replace traditional keyboard controls with a tactile hardware system.",
         process: "I wired an Arduino Uno with an ultrasonic sensor, an RGB LED, and an analog joystick. The hardest part of the build was writing the serial communication script to parse the incoming byte stream.",
         friction: "Encountered severe logic desyncs during the initial stress tests. Resolved by engineering a custom buffer-clear script that gracefully throttles physical inputs."
@@ -84,7 +81,6 @@ const projects = [
         video: 'videos/project_22.mp4',
         image: 'images/project_22.jpg',
         badges: ['| C# | Unity | Blender | School |'],
-        featured: true
     },
     {
         category: 'graphics',
@@ -134,7 +130,6 @@ const projects = [
         video: 'videos/project_17.mp4',
         image: 'images/project_17.jpg',
         badges: ['| Blender | Personal |'],
-        featured: true
     },
     {
         category: 'graphics',
@@ -236,7 +231,6 @@ const projects = [
         video: 'videos/project_11.mp4',
         image: 'images/project_11.jpg',
         badges: ['| Premiere Pro | School |'],
-        featured: true
     },
     {
         category: 'photos',
@@ -347,6 +341,21 @@ const projects = [
         video: 'videos/project_27.mp4',
         image: 'images/project_27.jpg',
         badges: ['| Python | School |']
+    },
+    {
+        category: 'hardware',
+        title: 'TEJ20 Custom Robot',
+        description: 'A fully custom-built autonomous rover featuring a scratch-designed PCB, laser-cut acrylic chassis, and 3D-printed mechanics.',
+        image: '/images/project_39-2.jpg', 
+        images: [
+            '/images/project_39-1.jpg', 
+            '/images/project_39-2.jpg'
+        ],
+        badges: ['| AutoCAD | Inventor | Custom PCB | 3D Printing | C++ |'],
+        featured: true,
+        objective: "Engineer a fully autonomous, randomized-movement rover entirely from scratch. The goal was to bypass off-the-shelf kits by manually designing every element—from the raw electronics to the physical chassis.",
+        process: "The structural body and wheels were drafted in AutoCAD and laser-cut from red acrylic. I used Autodesk Inventor to model custom 3D-printed motor mounts and wheel stoppers. Electronically, I designed and etched a custom PCB to route a 9V power supply to a dual DC motor setup, writing the C++ micro-controller logic to execute randomized movement patterns.",
+        friction: "Achieving tight mechanical tolerances was a major hurdle. I had to manually measure, cut, and drill the metal standoffs to ensure the structural layers were perfectly parallel so the custom laser-cut wheels wouldn't bind or rub against the acrylic chassis during rotation."
     },
     {
         category: 'video',

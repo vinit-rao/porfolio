@@ -10,12 +10,11 @@ const ProjectCard = ({ project, onClick }) => {
             case 'code': return 'var(--cat-code)';
             case 'graphics': return 'var(--cat-graphics)';
             case 'photos': return 'var(--cat-photos)';
-            case 'hardware': return '#E67E22'; /* Distinct Industrial Orange */
+            case 'hardware': return '#E67E22'; 
             default: return 'var(--text-primary)';
         }
     };
 
-    // STRICT CLEANUP: Removes all empty boxes caused by the | characters
     const cleanBadges = project.badges
         ? project.badges.flatMap(b => b.split('|')).map(b => b.trim()).filter(b => b !== '')
         : [];
@@ -31,9 +30,9 @@ const ProjectCard = ({ project, onClick }) => {
 
     return (
         <div className="scrap-project-card" onClick={handleClick}>
-            <div className="tape-strip"></div>
             
-            <div className="scrap-category-stamp" style={{ color: getCategoryColor(project.category), borderColor: getCategoryColor(project.category) }}>
+            {/* THE COLORED TAPE */}
+            <div className="scrap-category-stamp" style={{ '--cat-color': getCategoryColor(project.category) }}>
                 {project.category}
             </div>
 

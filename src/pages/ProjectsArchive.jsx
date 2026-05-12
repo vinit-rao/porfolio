@@ -26,7 +26,7 @@ const ProjectsArchive = () => {
 
     const filterCards = [
         { id: 'all', label: 'ALL FILES', icon: 'fas fa-database', img: '/images/project_25-5.jpg', color: 'var(--text-primary)' }, 
-        { id: 'hardware', label: 'R&D LAB', icon: 'fas fa-microchip', img: '/images/project_25-5.jpg', color: '#E67E22' },
+        { id: 'hardware', label: 'HARDWARE', icon: 'fas fa-microchip', img: '/images/project_25-5.jpg', color: '#E67E22' },
         { id: 'graphics', label: 'GRAPHICS', icon: 'fas fa-shapes', img: '/images/project_15.jpg', color: 'var(--cat-graphics)' },
         { id: 'video', label: 'VIDEO', icon: 'fas fa-film', img: '/images/project_11.jpg', color: 'var(--cat-video)' },
         { id: 'code', label: 'CODE', icon: 'fas fa-code', img: '/images/project_25-5.jpg', color: 'var(--cat-code)' },
@@ -89,7 +89,7 @@ const ProjectsArchive = () => {
                         <div key={activeCard.id} className="stage-anim-wrapper">
                             <img src={activeCard.img} alt={activeCard.label} className="stage-bg-img" />
                             <div className="stage-overlay">
-                                <h2 className="stage-title">{activeCard.id === 'all' ? 'FULL DATABASE' : activeCard.label}</h2>
+                                <h2 className="stage-title">{activeCard.id === 'all' ? 'ALL PROJECTS' : activeCard.label}</h2>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@ const ProjectsArchive = () => {
                                 className={`filter-grid-item ${filter === card.id ? 'active' : ''}`}
                                 onClick={() => handleFilterChange(card.id)}
                             >
-                                <i className={card.icon} style={{ color: card.color, opacity: filter === card.id ? 1 : 0.7 }}></i>
+                                <i className={card.icon} style={{ color: filter === card.id ? 'var(--accent)' : card.color, opacity: filter === card.id ? 1 : 0.7 }}></i>
                                 <span className="filter-label">{card.label}</span>
                                 {filter === card.id && <div className="active-dot"></div>}
                             </div>
@@ -128,6 +128,7 @@ const ProjectsArchive = () => {
                 )}
             </div>
 
+            {/* --- DOSSIER MODAL --- */}
             {activeProject && (
                 <div className="dossier-modal-overlay" onClick={() => setActiveProject(null)}>
                     <div className="dossier-modal-panel" onClick={e => e.stopPropagation()}>
@@ -139,13 +140,20 @@ const ProjectsArchive = () => {
                         
                         <div className="modal-scroll-area">
                             <div className="modal-hero-container">
-                                <div className="modal-category-stamp" style={{ 
-                                    color: getCategoryColor(activeProject.category), 
-                                    borderColor: getCategoryColor(activeProject.category) 
-                                }}>
+                                {/* THE COLORED TAPE IN THE MODAL */}
+                                <div className="modal-category-stamp" style={{ '--cat-color': getCategoryColor(activeProject.category) }}>
                                     {activeProject.category}
                                 </div>
-                                <img src={activeProject.image} alt={activeProject.title} className="modal-hero-img" />
+                                
+                                {activeProject.images && activeProject.images.length > 0 ? (
+                                    <div className="modal-image-gallery">
+                                        {activeProject.images.map((img, i) => (
+                                            <img key={i} src={img} alt={`${activeProject.title} ${i + 1}`} className="modal-hero-img gallery-img" />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <img src={activeProject.image} alt={activeProject.title} className="modal-hero-img" />
+                                )}
                             </div>
 
                             <div className="modal-manifest">
@@ -178,16 +186,7 @@ const ProjectsArchive = () => {
                             </div>
 
                             <div className="modal-actions">
-                                {/* FIX: Added onClick to ensure modal state clears before routing to internal link */}
-                                {activeProject.internalLink && (
-                                    <Link 
-                                        to={activeProject.internalLink} 
-                                        className="glass-btn action-btn primary-action-btn"
-                                        onClick={() => setActiveProject(null)}
-                                    >
-                                        VIEW FULL PROJECT
-                                    </Link>
-                                )}
+                                {activeProject.internalLink && <Link to={activeProject.internalLink} className="glass-btn action-btn primary-action-btn" onClick={() => setActiveProject(null)}>VIEW FULL PROJECT</Link>}
                                 
                                 {activeProject.link && <a href={activeProject.link} target="_blank" rel="noreferrer" className="glass-btn action-btn">VIEW LIVE</a>}
                                 {activeProject.github && <a href={activeProject.github} target="_blank" rel="noreferrer" className="glass-btn action-btn">SOURCE CODE</a>}
