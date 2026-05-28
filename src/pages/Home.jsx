@@ -132,9 +132,10 @@ const Home = () => {
                                         <div className="bio-list-block">
                                             <strong className="bio-list-title">// Currently Working On:</strong>
                                             <ul className="bio-list">
-                                                <li>Godot Roguelike Platformer</li>
-                                                <li>Self hosting MC server & integrating API bot</li>
-                                                <li>Learning how to make FPV drone</li>
+                                                <li>Music Videos for Clients</li>
+                                                <li>Modding an IPOD Classic</li>
+                                                <li>Learning 3D Printing</li>
+                                                <li>Working at Marcan</li>
                                             </ul>
                                         </div>
 
@@ -144,7 +145,7 @@ const Home = () => {
                                                 <li>After Effects video editing</li>
                                                 <li>Tennis, Soccer, Pickleball</li>
                                                 <li>Playing guitar & drums</li>
-                                                <li>Pixel art & Video games</li>
+                                                <li>Pixel art & gaming</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -167,16 +168,17 @@ const Home = () => {
                                     </div>
                                     <div className="stack-group">
                                         <h4>EXPERIENCE</h4>
-                                        <p>Freelance Multimedia<br/>cuHacking UX/UI & Motion Design</p>
+                                        <p>Systems Analyst @ Marcan Pharmaceuticals Inc.<br/>Freelance Multimedia @ WhyDNA<br/>UX/UI + Motion Designer @ cuHacking</p>
                                     </div>
                                 </div>
                                 
                                 <hr className="scrap-divider" />
                                 
-                                <div className="status-callout">
+                                {/* LF COOP TAG */}
+                                {/* <div className="status-callout">
                                     <i className="fas fa-satellite-dish" style={{ marginRight: '10px', color: 'var(--accent)' }}></i>
                                     STATUS: Seeking <span className="text-red">Summer 2026 Co-op</span> placement.
-                                </div>
+                                </div> */}
                                 
                                 <div className="bento-actions">
                                     <Link to="/resume" className="glass-btn">RESUME</Link>

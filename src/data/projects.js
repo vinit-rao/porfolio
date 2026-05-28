@@ -2,6 +2,33 @@
 
 const projects = [
     {
+        category: 'video',
+        title: 'Refuse Music Video',
+        description: 'Fast heavy edited music video for Refuse featuring their new release countdown! Recorded on Sony FX30, 11-18mm F2.8 Lens (Slog3).',
+        link: 'https://www.youtube.com/watch?v=3AueerddCdA',
+        linkType: 'youtube',
+        image: 'images/project_41-2.jpg',
+        images: [
+            '/images/project_41-1.jpg', 
+            '/images/project_41-2.jpg'
+        ],
+        badges: ['| After Effects | Work |'],
+        featured: true
+    },
+    {
+        category: 'code',
+        title: 'MC Server Bot',
+        description: 'Unity made 3D game where the player trys to catch falling scoops and complete orders.',
+        link: 'https://github.com/vinit-rao/ServerManagerMC',
+        linkType: 'github',
+        image: '/images/project_40-1.jpg', 
+        images: [
+            '/images/project_40-1.jpg', 
+            '/images/project_40-2.jpg'
+        ],
+        badges: ['| Python | Java | Personal |']
+    },
+    {
         category: 'hardware',
         title: 'Arduino Game Controller',
         description: 'Custom Arduino hardware controller integrated with a 3D environment.',
