@@ -5,7 +5,7 @@ const projects = [
         category: 'video',
         title: 'Refuse Music Video',
         description: 'Fast heavy edited music video for Refuse featuring their new release countdown! Recorded on Sony FX30, 11-18mm F2.8 Lens (Slog3).',
-        link: 'https://www.youtube.com/watch?v=3AueerddCdA',
+        link: 'https://www.youtube.com/watch?v=WiyHN2I-Vj8&list=RDWiyHN2I-Vj8&start_radio=1',
         linkType: 'youtube',
         image: 'images/project_41-2.jpg',
         images: [
