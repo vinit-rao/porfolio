@@ -2,81 +2,89 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import projectsData from '../data/projects';
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
 import ScrollReveal from '../components/ScrollReveal';
-import ProjectCard from '../components/ProjectCard';
-import DynamicBackground from '../components/DynamicBackground'; 
+import FeaturedCarousel from '../components/FeaturedCarousel';
 import './Home.css';
 
+// Featured projects, shuffled once per page load (stable while navigating;
+// avoids an impure call / setState during render).
+const FEATURED = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random());
+
 const Home = () => {
-    const [featured, setFeatured] = useState([]);
     const [scrollY, setScrollY] = useState(0);
+    // The hero parallax/fade only makes sense where the hero is sticky (desktop).
+    // On mobile it scrolls normally, so we skip the fade to avoid a blank gap.
+    const [isDesktop, setIsDesktop] = useState(true);
 
     useEffect(() => {
-        const randomized = projectsData.filter(p => p.featured).sort(() => 0.5 - Math.random()).slice(0, 2);
-        setFeatured(randomized);
+        const mq = window.matchMedia('(min-width: 901px)');
+        const sync = () => setIsDesktop(mq.matches);
+        sync();
+        mq.addEventListener('change', sync);
+        return () => mq.removeEventListener('change', sync);
+    }, []);
 
-        const handleScroll = () => setScrollY(window.scrollY);
+    useEffect(() => {
+        // Throttle scroll updates to one per animation frame so the hero
+        // parallax doesn't re-render on every raw scroll event.
+        let ticking = false;
+        const handleScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(() => {
+                setScrollY(window.scrollY);
+                ticking = false;
+            });
+        };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const heroY = scrollY * 0.4;    
+    const heroY = scrollY * 0.4;
     const heroOpacity = Math.max(0, 1 - (scrollY / 500));
-
-    const scrollToAbout = () => {
-        const aboutSection = document.getElementById('about');
-        if (aboutSection) {
-            aboutSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+    const heroStyle = isDesktop
+        ? { opacity: heroOpacity, transform: `translateY(${heroY}px)` }
+        : undefined;
 
     return (
         <div className="page-wrapper">
-            <Navbar />
-            <DynamicBackground />
-            
-            <div className="hero-curtain-container">
-                <header className="container hero-clean-desk" style={{ opacity: heroOpacity, transform: `translateY(${heroY}px)` }}>
+            <div className="hero-curtain-container" id="main-content">
+                <header className="container hero-clean-desk" style={heroStyle}>
                     <div className="hero-left-col">
                         <h1 className="hero-title-massive">
                             <span className="reveal-mask"><span className="reveal-text delay-1">VINIT</span></span><br/>
                             <span className="reveal-mask"><span className="reveal-text delay-2 text-red">RAO.</span></span>
                         </h1>
                         <p className="hero-subtitle">
-                            Interactive designer and software developer.
+                            I like to create. I want to learn.
                         </p>
-                        
-                        <div className="hero-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            <Link to="/projects" className="glass-btn btn-primary" style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', border: 'none' }}>
+
+                        <div className="hero-actions">
+                            <Link to="/projects" className="glass-btn btn-primary">
                                 SEE MY WORK
                             </Link>
-                            <button onClick={scrollToAbout} className="glass-btn">
-                                ABOUT ME
-                            </button>
                             <Link to="/resume" className="glass-btn">
                                 RESUME
                             </Link>
+                            <Link to="/contact" className="glass-btn">
+                                CONTACT
+                            </Link>
+                        </div>
+
+                        <div className="hero-socials">
+                            <a href="https://github.com/vinit-rao" target="_blank" rel="noreferrer" aria-label="GitHub"><i className="fab fa-github" aria-hidden="true"></i></a>
+                            <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i className="fab fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="https://youtube.com/@OfficialVinitRao" target="_blank" rel="noreferrer" aria-label="YouTube"><i className="fab fa-youtube" aria-hidden="true"></i></a>
+                            <a href="https://instagram.com/instavinitgram" target="_blank" rel="noreferrer" aria-label="Instagram"><i className="fab fa-instagram" aria-hidden="true"></i></a>
                         </div>
                     </div>
 
                     <div className="hero-right-col">
-                        <div className="hero-social-board">
-                            <div className="hero-social-cluster">
-                                <a href="https://github.com/vinit-rao" target="_blank" rel="noreferrer" className="hero-social-link">
-                                    GITHUB <i className="fab fa-github"></i>
-                                </a>
-                                <a href="https://linkedin.com/in/vinitrao1/" target="_blank" rel="noreferrer" className="hero-social-link">
-                                    LINKEDIN <i className="fab fa-linkedin"></i>
-                                </a>
-                                <a href="https://youtube.com/@OfficialVinitRao" target="_blank" rel="noreferrer" className="hero-social-link">
-                                    YOUTUBE <i className="fab fa-youtube"></i>
-                                </a>
-                                <a href="https://instagram.com/officialvinitrao" target="_blank" rel="noreferrer" className="hero-social-link">
-                                    INSTAGRAM <i className="fab fa-instagram"></i>
-                                </a>
-                            </div>
+                        <div className="hero-featured-head">
+                            <span className="hero-featured-label">FEATURED WORK</span>
+                            <Link to="/projects" className="hero-featured-all">ALL PROJECTS →</Link>
                         </div>
+                        <FeaturedCarousel projects={FEATURED} />
                     </div>
                 </header>
             </div>
@@ -90,24 +98,7 @@ const Home = () => {
                 zIndex: 10
             }}>
                 
-                <section className="container works-section" style={{ paddingTop: '100px' }}>
-                    <ScrollReveal direction="up">
-                        <div className="section-header">
-                            <h2>FEATURED</h2>
-                            <Link to="/projects" className="view-all-link">ALL PROJECTS</Link>
-                        </div>
-                    </ScrollReveal>
-                    
-                    <div className="projects-grid">
-                        {featured.map((p, idx) => (
-                            <ScrollReveal key={idx} direction="up" delay={idx * 0.15}>
-                                <ProjectCard project={p} />
-                            </ScrollReveal>
-                        ))}
-                    </div>
-                </section>
-
-                <section id="about" className="container about-section" style={{ paddingTop: '40px', paddingBottom: '100px' }}>
+                <section id="about" className="container about-section" style={{ paddingTop: '100px', paddingBottom: '100px' }}>
                     <ScrollReveal direction="up">
                         <div className="section-header">
                             <h2>ABOUT ME</h2>
@@ -118,41 +109,44 @@ const Home = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '50px' }}>
                         
                         <ScrollReveal direction="up" delay={0.1}>
-                            <div style={{ 
-                                background: 'var(--bg-surface)', border: '1px solid var(--border-color)', 
-                                padding: '40px', position: 'relative', boxShadow: 'var(--shadow-soft)', 
-                                display: 'flex', flexDirection: 'column', gap: '30px', transform: 'translateZ(0)' 
-                            }}>
-                                <div className="bio-text">
-                                    <p className="bio-paragraph" style={{ marginBottom: '25px' }}>
-                                        I'm a third-year Interactive Multimedia & Design student at <span className="red-marker"> Carleton University. </span> I specialize in bridging the gap between digital and physical—programming C# game systems, creating motion graphics, and engineering custom Arduino controllers.
-                                    </p>
-                                    
-                                    <div className="bio-lists-grid">
-                                        <div className="bio-list-block">
-                                            <strong className="bio-list-title">// Currently Working On:</strong>
-                                            <ul className="bio-list">
-                                                <li>Music Videos for Clients</li>
-                                                <li>Modding an IPOD Classic</li>
-                                                <li>Learning 3D Printing</li>
-                                                <li>Working at Marcan</li>
-                                            </ul>
-                                        </div>
+                            <div className="about-card">
+                                <div className="about-top">
+                                    <div className="bio-text">
+                                        <p className="bio-paragraph">
+                                            I'm a third-year Interactive Multimedia & Design student at <span className="red-marker"> Carleton University. </span> I specialize in bridging the gap between digital and physical—programming C# game systems, creating motion graphics, and engineering custom Arduino controllers.
+                                        </p>
 
-                                        <div className="bio-list-block">
-                                            <strong className="bio-list-title">// Hobbies:</strong>
-                                            <ul className="bio-list">
-                                                <li>After Effects video editing</li>
-                                                <li>Tennis, Soccer, Pickleball</li>
-                                                <li>Playing guitar & drums</li>
-                                                <li>Pixel art & gaming</li>
-                                            </ul>
+                                        <div className="bio-lists-grid">
+                                            <div className="bio-list-block">
+                                                <strong className="bio-list-title">// Currently Working On:</strong>
+                                                <ul className="bio-list">
+                                                    <li>Music Videos for Clients</li>
+                                                    <li>Modding an IPOD Classic</li>
+                                                    <li>Learning 3D Printing</li>
+                                                    <li>Working at Marcan</li>
+                                                </ul>
+                                            </div>
+
+                                            <div className="bio-list-block">
+                                                <strong className="bio-list-title">// Hobbies:</strong>
+                                                <ul className="bio-list">
+                                                    <li>After Effects video editing</li>
+                                                    <li>Tennis, Soccer, Pickleball</li>
+                                                    <li>Playing guitar & drums</li>
+                                                    <li>Pixel art & gaming</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <figure className="about-portrait">
+                                        <img src="/images/vinit.jpg" alt="Vinit Rao" loading="lazy" decoding="async" />
+                                        <figcaption>VINIT RAO // OTTAWA, ON</figcaption>
+                                    </figure>
                                 </div>
-                                
+
                                 <hr className="scrap-divider" />
-                                
+
                                 <div className="dossier-tech-grid">
                                     <div className="stack-group">
                                         <h4>LANGUAGES</h4>

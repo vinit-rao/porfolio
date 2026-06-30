@@ -1,74 +1,92 @@
-/* --- CONTACT PAGE LAYOUT --- */
+/* --- CONTACT PAGE — simple & direct --- */
 .contact-container {
     padding-top: 150px;
+    padding-bottom: 90px;
     flex-grow: 1;
     z-index: 10;
 }
 
+.contact-head { margin-bottom: 56px; }
+.contact-head .massive-title {
+    text-align: left;
+    margin: 0;
+    font-size: clamp(2.4rem, 8vw, 5rem);
+}
+.contact-coop {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    margin-top: 18px;
+}
+
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    margin: 0 auto;
-    padding-bottom: 80px;
+    grid-template-columns: 1fr;
+    gap: 36px;
 }
-
-/* Core Desktop Card Styles (Extracted from inline logic) */
-.contact-editorial-card {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    padding: 40px;
-    box-shadow: var(--shadow-soft);
-    transform: translateZ(0); /* Unslanted */
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    position: relative;
-}
-
-.contact-focus-card {
-    background: var(--bg-surface);
-    color: var(--text-primary);
-    padding: 35px 40px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-soft);
-    transform: translateZ(0);
-    position: relative;
-}
-
-.contact-form-card {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: var(--shadow-soft);
-    transform: rotate(1deg) translateZ(0); /* Slanted contrast */
-    height: 100%;
-}
-
-/* --- MOBILE RESPONSIVENESS (PHASE 4) --- */
-@media (max-width: 850px) {
-    .contact-container {
-        padding-top: 100px;
-    }
-
+@media (min-width: 760px) {
     .contact-grid {
-        grid-template-columns: 1fr; /* Stack columns vertically */
-        gap: 60px; /* Give breathing room between stacked cards */
-        padding-bottom: 40px;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 60px;
+        align-items: stretch;
     }
+}
 
-    /* Reclaim horizontal padding for smaller screens */
-    .contact-editorial-card,
-    .contact-focus-card,
-    .contact-form-card {
-        padding: 30px 20px; 
-    }
+/* left — direct details */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 6px;
+}
+.contact-info-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 2px;
+}
+.contact-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+.contact-line i { color: var(--accent); width: 20px; text-align: center; font-size: 1rem; }
+.contact-link { text-decoration: none; transition: color 0.2s ease; }
+.contact-link:hover { color: var(--accent); }
 
-    /* Reduce the slant slightly so corners don't clip off the screen */
-    .contact-form-card {
-        transform: rotate(0.5deg) translateZ(0);
-    }
+.contact-socials { display: flex; gap: 22px; margin-top: 10px; }
+.contact-socials a {
+    color: var(--text-secondary);
+    font-size: 1.4rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.contact-socials a:hover { color: var(--accent); transform: translateY(-3px); }
+
+/* right — form */
+.contact-form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 32px;
+    box-shadow: var(--shadow-soft);
+}
+.contact-form-card textarea {
+    resize: vertical;
+    min-height: 160px;
+    flex: 1 1 auto;
+}
+.contact-send { width: 100%; gap: 10px; margin-top: 6px; }
+
+@media (max-width: 759px) {
+    .contact-container { padding-top: 120px; }
+    .contact-form-card { padding: 24px; }
+    .contact-info { gap: 18px; }
 }

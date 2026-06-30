@@ -18,9 +18,10 @@ const ScrollReveal = ({ children, direction = 'up', delay = 0, distance = '40px'
       }
     );
 
-    if (ref.current) observer.observe(ref.current);
+    const node = ref.current;
+    if (node) observer.observe(node);
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      if (node) observer.unobserve(node);
     };
   }, []);
 

@@ -1,157 +1,265 @@
-// projects.js - All your projects in one easy-to-edit file
+// ============================================================
+//  PROJECTS DATA
+// ------------------------------------------------------------
+//  HOW TO ADD A PROJECT — copy this template into the array below
+//  and fill in what you have. Only the REQUIRED fields are needed;
+//  everything else is optional and just makes the detail page richer.
+//
+//  {
+//      // --- REQUIRED ---
+//      category: 'graphics',                 // code | video | graphics | photos | hardware
+//      title: 'My Project',                  // shown on the card + becomes the page URL
+//      image: 'images/project_X.jpg',        // card thumbnail (local path or full URL)
+//      description: 'One short line for the card.',
+//
+//      // --- DETAIL PAGE TEXT (optional, but nice) ---
+//      longDescription: 'A fuller intro paragraph for the detail page.',
+//      sections: [                           // extra write-up blocks, in order
+//          { heading: 'The Idea', body: '...' },
+//          { heading: 'How I Built It', body: '...' },
+//      ],
+//
+//      // --- LINKS (optional) ---
+//      link: 'https://...',                  // primary external link
+//      linkType: 'youtube',                  // youtube | github | photo | live  (button label + embed)
+//      github: 'https://...',                // adds a separate "Source Code" button
+//      internalLink: '/bennys-adventure',    // ONLY for projects with a hand-built page
+//
+//      // --- MEDIA (optional) ---
+//      video: 'videos/project_X.mp4',        // local clip → card hover-preview + detail player
+//      images: ['/images/a.jpg', '/images/b.jpg'], // gallery (used on detail instead of `image`)
+//
+//      // --- FLAGS (optional) ---
+//      badges: ['| Tool | Tool | Tag |'],    // tools/tags, pipe-separated
+//      featured: true,                       // show in the homepage carousel
+//  }
+// ============================================================
 
 const projects = [
     {
+        category: 'graphics',
+        title: 'Blender Car Animation',
+        description: 'A Blender animation rigging a McLaren and driving it down a road, with realistic car-paint shaders and a moving camera.',
+        longDescription: 'A 3D motion piece built in Blender. I rigged a McLaren for believable wheel and body motion, set it driving along a road, and focused on realistic automotive shading — clearcoat car paint, reflective glass, and grounded lighting — while choreographing a camera that moves with the car to sell the speed and scale.',
+        link: 'https://www.youtube.com/watch?v=IO67XUsepdE',
+        linkType: 'youtube',
+        image: 'images/firstcar1.png',
+        images: [
+            '/images/firstcar1.png',
+            '/images/firstcar2.png',
+        ],
+        video: 'videos/blender-car-animation.mp4',
+        badges: ['| Blender | Shading | Personal |'],
+        sections: [
+            { heading: 'The Idea', body: 'I wanted a short, cinematic automotive shot — a car driving down a road — that leaned on realistic shading and camera work rather than just the modelling.' },
+            { heading: 'Rigging & Motion', body: 'The car was rigged so the wheels and body move convincingly as it drives, keeping everything grounded instead of floaty.' },
+            { heading: 'Shading & Camera', body: 'Most of the effort went into the look: layered car-paint shaders with clearcoat, reflective surfaces, and lighting tuned to the road, paired with a moving camera that tracks the car to add energy and scale.' },
+        ],
+    },
+    {
+        category: 'graphics',
+        title: 'Renault 5 Drift Animation',
+        description: 'A Blender animation of a Renault 5 drifting through a scene, pushing the motion and realistic shaders further.',
+        longDescription: 'A Blender animation of a Renault 5 drifting through a scene. Building on my first car study, I pushed the drift motion, the tire-to-road contact, and the realistic shading, while keeping the camera moving with the action to capture the slide.',
+        link: 'https://www.youtube.com/watch?v=HJaATJZOUNo',
+        linkType: 'youtube',
+        image: 'images/renault5blender1.png',
+        images: [
+            '/images/renault5blender1.png',
+            '/images/renault5blender2.png',
+        ],
+        video: 'videos/renault5-drift.mp4',
+        badges: ['| Blender | Shading | Personal |'],
+        sections: [
+            { heading: 'The Goal', body: 'A car study built around a drift — getting the weight, slide, and recovery of the Renault 5 to read as believable motion.' },
+            { heading: 'Drift & Motion', body: 'The animation focuses on the drift itself: the car rotating into the slide and the wheels staying planted on the road through the turn.' },
+            { heading: 'Shading & Camera', body: 'I carried a realistic shading approach through and moved the camera with the car, following the drift to keep the shot dynamic.' },
+        ],
+    },
+    {
         category: 'video',
         title: 'Refuse Music Video',
-        description: 'Fast heavy edited music video for Refuse featuring their new release countdown! Recorded on Sony FX30, 11-18mm F2.8 Lens (Slog3).',
+        description: 'Fast, heavy-edited music video for Refuse featuring their new-release countdown. Recorded on Sony FX30, 11-18mm F2.8 (S-Log3).',
+        longDescription: 'A fast, heavily-edited music video cut for the band Refuse around their new-release countdown. Shot on a Sony FX30 with an 11–18mm f/2.8 in S-Log3 for flexibility in the grade, then edited with aggressive pacing and motion-graphic accents to match the energy of the track.',
         link: 'https://www.youtube.com/watch?v=WiyHN2I-Vj8&list=RDWiyHN2I-Vj8&start_radio=1',
         linkType: 'youtube',
         image: 'images/project_41-2.jpg',
         images: [
-            '/images/project_41-1.jpg', 
-            '/images/project_41-2.jpg'
+            '/images/project_41-1.jpg',
+            '/images/project_41-2.jpg',
         ],
-        badges: ['| After Effects | Work |'],
-        featured: true
+        badges: ['| After Effects | Premiere Pro | Work |'],
+        sections: [
+            { heading: 'The Shoot', body: 'Captured on a Sony FX30 with an 11–18mm f/2.8 lens in S-Log3, giving room to push the colour and contrast in post.' },
+            { heading: 'The Edit', body: 'Cut to be fast and heavy — tight beat-synced pacing with After Effects accents to build toward the release countdown.' },
+        ],
     },
     {
         category: 'code',
         title: 'MC Server Bot',
-        description: 'Unity made 3D game where the player trys to catch falling scoops and complete orders.',
+        description: 'A Minecraft server management bot that automates server controls and status reporting through Python and Java.',
+        longDescription: 'A management bot for a Minecraft server that automates routine admin tasks and reports status, wiring Python automation together with the Java side of the server so common jobs do not have to be done by hand.',
         link: 'https://github.com/vinit-rao/ServerManagerMC',
         linkType: 'github',
-        image: '/images/project_40-1.jpg', 
+        image: '/images/project_40-1.jpg',
         images: [
-            '/images/project_40-1.jpg', 
-            '/images/project_40-2.jpg'
+            '/images/project_40-1.jpg',
+            '/images/project_40-2.jpg',
         ],
-        badges: ['| Python | Java | Personal |']
+        badges: ['| Python | Java | Personal |'],
+        sections: [
+            { heading: 'Overview', body: 'It handles common server-admin tasks — starting and stopping the server, checking status, and running console actions — without manual babysitting.' },
+            { heading: 'The Stack', body: 'Python drives the automation and bot logic, talking to the Java-based Minecraft server.' },
+        ],
     },
     {
         category: 'hardware',
         title: 'Arduino Game Controller',
-        description: 'Custom Arduino hardware controller integrated with a 3D environment.',
-        image: '/images/project_25-4.jpg', 
+        description: 'Custom Arduino hardware controller integrated with a 3D environment, replacing keyboard controls with tactile inputs.',
+        longDescription: 'A custom Arduino controller that bridges physical inputs to a digital game, replacing traditional keyboard controls with a tactile hardware system wired from individual components.',
+        image: '/images/project_25-4.jpg',
         badges: ['| C++ | Arduino | School |'],
-        objective: "Engineer a custom physical controller bridging analog inputs to digital game states. The goal was to replace traditional keyboard controls with a tactile hardware system.",
-        process: "I wired an Arduino Uno with an ultrasonic sensor, an RGB LED, and an analog joystick. The hardest part of the build was writing the serial communication script to parse the incoming byte stream.",
-        friction: "Encountered severe logic desyncs during the initial stress tests. Resolved by engineering a custom buffer-clear script that gracefully throttles physical inputs."
+        sections: [
+            { heading: 'The Objective', body: 'Engineer a custom physical controller bridging analog inputs to digital game states. The goal was to replace traditional keyboard controls with a tactile hardware system.' },
+            { heading: 'The Build', body: 'I wired an Arduino Uno with an ultrasonic sensor, an RGB LED, and an analog joystick. The hardest part of the build was writing the serial communication script to parse the incoming byte stream.' },
+            { heading: 'The Friction & Resolution', body: 'Encountered severe logic desyncs during the initial stress tests. Resolved by engineering a custom buffer-clear script that gracefully throttles physical inputs.' },
+        ],
     },
     {
         category: 'code',
-        title: 'Bennys Frozen Adventure',
-        description: 'Unity made 3D game where the player trys to catch falling scoops and complete orders.',
+        title: "Benny's Frozen Adventure",
+        description: 'Unity-made 3D game where the player tries to catch falling scoops and complete customer orders before the timer runs out.',
         internalLink: '/bennys-adventure',
         video: 'videos/project_25.mp4',
         image: 'images/project_25-5.jpg',
         badges: ['| C# | Unity | After Effects | School |'],
-        featured: true
+        featured: true,
     },
     {
         category: 'video',
         title: 'WhyDNA Trial Edit',
-        description: 'Trial edit for Youtuber "WhyDNA" using provided footage and assets.',
+        description: 'Trial edit for YouTuber "WhyDNA" using provided footage and assets.',
+        longDescription: 'A trial edit made for YouTuber "WhyDNA" using their provided footage and assets — a chance to match an existing channel\'s tone and pacing in Premiere Pro with After Effects accents.',
         link: 'https://www.youtube.com/watch?v=r1J8bAHEH4U',
         linkType: 'youtube',
         video: 'videos/project_34.mp4',
         image: 'images/project_34.jpg',
-        badges: ['| Premiere Pro | After Effects | Personal |']
+        badges: ['| Premiere Pro | After Effects | Personal |'],
     },
     {
         category: 'code',
         title: 'QueueUp - Lobby System Application',
-        description: 'Frontend & Backend Django Lobby Application.',
+        description: 'Full-stack Django lobby application — create and join lobbies, with the server handling state and routing.',
+        longDescription: 'A full-stack lobby system built with Django, covering both the frontend and the backend. Users can create and join lobbies, with the server handling state, routing, and the data model behind the scenes.',
         link: 'https://github.com/vinit-rao/queueup-django',
         linkType: 'github',
         video: 'videos/project_26.mp4',
         image: 'images/project_26.jpg',
-        badges: ['| Python | Django | School |']
+        badges: ['| Python | Django | School |'],
+        sections: [
+            { heading: 'Overview', body: 'QueueUp lets users spin up and join lobbies. I built the full stack in Django — templates and views on the front, models and routing on the back.' },
+            { heading: 'What I Focused On', body: 'Keeping the lobby state coherent across users and laying the data model out so joining, leaving, and managing a lobby stayed simple and reliable.' },
+        ],
     },
     {
         category: 'photos',
         title: 'Pomelo Soda 02/15',
-        description: 'Band performace showcasing their new originals and covers at a bar.',
-        iframe: "https://www.smugmug.com/frame/slideshow?key=S7zpk4&speed=3&transition=fade&autoStart=1&captions=0&navigation=0&playButton=0&randomize=1&transitionSpeed=2",
+        description: 'Band performance showcasing new originals and covers at a bar.',
+        longDescription: 'Live concert photography of the band Pomelo Soda performing their originals and covers at a bar. Shot and graded in Lightroom, the gallery captures the stage lighting and energy of the set.',
+        iframe: 'https://www.smugmug.com/frame/slideshow?key=S7zpk4&speed=3&transition=fade&autoStart=1&captions=0&navigation=0&playButton=0&randomize=1&transitionSpeed=2',
         link: 'https://www.smugmug.com/gallery/n-hXFjj8',
         linkType: 'photo',
         image: 'images/project_36.jpg',
         badges: ['| Lightroom | Personal |'],
-        featured: true
+        featured: true,
     },
     {
         category: 'graphics',
         title: 'Sachin Rao Intro',
-        description: 'Advertisment to promote Sachin Rao photography business. Made using After Effects with custom assets.',
+        description: 'Advertisement to promote Sachin Rao photography. Made in After Effects with custom assets.',
+        longDescription: 'An animated intro/advert built in After Effects to promote Sachin Rao\'s photography business, using custom assets and motion to give the brand a polished opener.',
         link: 'https://www.youtube.com/watch?v=dOJTkZ3NaNs',
         linkType: 'youtube',
         video: 'videos/project_24.mp4',
         image: 'images/project_24.jpg',
-        badges: ['| After Effects | Work |']
+        badges: ['| After Effects | Work |'],
     },
     {
         category: 'photos',
         title: 'Iron Lung Movie Night',
-        description: 'Fun movie night with friends. Photos captured using Sony A7III 28mm F2.0',
-        iframe: "https://www.smugmug.com/frame/slideshow?key=g2SCzt&speed=3&transition=fade&autoStart=1&captions=0&navigation=0&playButton=0&randomize=1&transitionSpeed=2",
+        description: 'Fun movie night with friends. Photos captured on Sony A7III 28mm F2.0.',
+        longDescription: 'A relaxed movie night with friends, shot on a Sony A7III with a 28mm f/2.0 and edited in Lightroom — a low-light set focused on mood and candid moments.',
+        iframe: 'https://www.smugmug.com/frame/slideshow?key=g2SCzt&speed=3&transition=fade&autoStart=1&captions=0&navigation=0&playButton=0&randomize=1&transitionSpeed=2',
         link: 'https://www.smugmug.com/gallery/n-2ZbFMs',
         linkType: 'photo',
         image: 'images/project_37.jpg',
-        badges: ['| Lightroom | Personal |']
+        badges: ['| Lightroom | Personal |'],
     },
     {
         category: 'code',
         title: 'Acorn Catcher Game',
-        description: 'Game made in Unity where the player catches falling acorns while avoiding spikey acorns.',
+        description: 'Unity game where the player catches falling acorns while avoiding spiky ones.',
+        longDescription: 'A Unity arcade game where the player catches falling acorns while dodging the spiky ones, with 3D assets modelled in Blender.',
         link: 'https://www.youtube.com/watch?v=p6OpZmpUm80',
         linkType: 'youtube',
         video: 'videos/project_22.mp4',
         image: 'images/project_22.jpg',
         badges: ['| C# | Unity | Blender | School |'],
+        featured: true,
+        sections: [
+            { heading: 'The Loop', body: 'Catch the good acorns, avoid the spiky ones — a simple arcade loop that ramps up as you go.' },
+            { heading: 'Built With', body: 'Gameplay built in Unity with C#, and the 3D assets created in Blender.' },
+        ],
     },
     {
         category: 'graphics',
         title: 'Club Promotional Reel',
-        description: 'Fun reel mixed with Minecraft assets!',
+        description: 'Fun reel mixed with Minecraft assets.',
+        longDescription: 'A short, punchy promotional reel that mixes real footage with Minecraft assets, cut in After Effects to grab attention for a club.',
         link: 'https://www.instagram.com/reel/DT_e7HMAaOB/?igsh=MWN3ZnB3NHRuMnEwOQ==',
+        linkType: 'live',
         video: 'videos/project_21.mp4',
         image: 'images/project_21.jpg',
-        badges: ['| After Effects | Club |']
+        badges: ['| After Effects | Club |'],
     },
     {
         category: 'graphics',
         title: 'Retro Adventure Trailer',
-        description: 'After effects animated trailer for a friend!',
+        description: 'After Effects animated trailer made for a friend.',
+        longDescription: 'An After Effects animated trailer made for a friend, styled around a retro adventure aesthetic with custom motion and type.',
         link: 'https://www.youtube.com/watch?v=9wGekC8UZN4',
         linkType: 'youtube',
         video: 'videos/project_20.mp4',
         image: 'images/project_20.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'video',
         title: 'Wedding Puja Highlight',
-        description: 'Wedding puja highlight with simple editing techniques.',
+        description: 'Wedding puja highlight with clean, simple editing.',
+        longDescription: 'A wedding puja highlight reel cut in Premiere Pro, using clean, restrained editing to let the ceremony itself carry the piece.',
         link: 'https://www.youtube.com/watch?v=-lmDa3Hinbw',
         linkType: 'youtube',
         video: 'videos/project_19.mp4',
         image: 'images/project_19.jpg',
-        badges: ['| Premiere Pro | Work |']
+        badges: ['| Premiere Pro | Work |'],
     },
     {
         category: 'video',
         title: 'Wedding Reception Highlight',
         description: 'Wedding reception highlight with various film techniques.',
+        longDescription: 'A wedding reception highlight that leans on a range of film techniques and Premiere Pro editing to capture the celebration and the people in it.',
         link: 'https://www.youtube.com/watch?v=oekmYU2RsI8',
         linkType: 'youtube',
         video: 'videos/project_18.mp4',
         image: 'images/project_18.jpg',
-        badges: ['| Premiere Pro | Work |']
+        badges: ['| Premiere Pro | Work |'],
     },
     {
         category: 'graphics',
         title: 'Forest Animation',
-        description: 'Blender made animation to test out simple analog horror.',
+        description: 'Blender animation testing simple analog horror.',
+        longDescription: 'A short Blender animation built as a test of simple analog-horror atmosphere — a quiet forest scene leaning on mood and unease rather than effects.',
         link: 'https://www.youtube.com/watch?v=lrCLhPRmp-g',
         linkType: 'youtube',
         video: 'videos/project_17.mp4',
@@ -161,259 +269,297 @@ const projects = [
     {
         category: 'graphics',
         title: 'Beach Diorama',
-        description: 'Blender animated water cool animation!',
+        description: 'Blender animated water in a cool diorama scene.',
+        longDescription: 'A Blender diorama animation experimenting with stylised water and a calm, cool beach scene packed into a small contained world.',
         link: 'https://www.youtube.com/watch?v=Co7ycAHEKb4',
         linkType: 'youtube',
         video: 'videos/project_23.mp4',
         image: 'images/project_23.jpg',
-        badges: ['| Blender | Personal |']
+        badges: ['| Blender | Personal |'],
     },
     {
         category: 'graphics',
         title: 'Pinterest Animation',
-        description: 'Created motion graphics from a static graphic found on Pinterest.',
+        description: 'Motion graphics built from a static graphic found on Pinterest.',
+        longDescription: 'A motion-graphics piece in After Effects that takes a static graphic found on Pinterest and brings it to life with movement and timing.',
         link: 'https://www.youtube.com/shorts/Nse5BKR48dE',
         linkType: 'youtube',
         video: 'videos/project_16.mp4',
         image: 'images/project_16.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'graphics',
         title: 'Mad Typography Edit',
-        description: 'Typographic modern style animation with various effects and animation techniques.',
+        description: 'Modern typographic animation with various effects and techniques.',
+        longDescription: 'A modern typographic animation in After Effects, layering effects and kinetic type into a high-energy edit driven by the rhythm of the audio.',
         link: 'https://www.youtube.com/shorts/3JITY32alVM',
         linkType: 'youtube',
         video: 'videos/project_15.mp4',
         image: 'images/project_15.jpg',
         badges: ['| After Effects | Personal |'],
-        featured: true
+        featured: true,
     },
     {
         category: 'graphics',
         title: 'AE Exercises #1',
-        description: 'Practicing going through tutorials learning texturing and animating fake 3D shapes.',
+        description: 'Tutorial practice — texturing and animating fake-3D shapes.',
+        longDescription: 'A practice piece working through tutorials, focused on texturing and animating fake-3D shapes in After Effects to build up core motion-design fundamentals.',
         link: 'https://www.youtube.com/shorts/5S7Uq2qFkgY',
         linkType: 'youtube',
         video: 'videos/project_14.mp4',
         image: 'images/project_14.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'graphics',
         title: 'Soupcan Test',
-        description: 'Animation practice with Soupcan plugin in AE.',
+        description: 'Animation practice with the Soupcan plugin in After Effects.',
+        longDescription: 'An animation test exploring the Soupcan plugin workflow in After Effects — getting comfortable with the tool and what it can add to a motion piece.',
         link: 'https://www.youtube.com/shorts/mpm4THyTKfw',
         linkType: 'youtube',
         video: 'videos/project_29.mp4',
         image: 'images/project_29.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'photos',
         title: 'Late Night Hangout',
-        description: 'Chill hangout with friends. Photos captured using Sony A7III 28-75mm F2.8',
-        iframe: "https://www.smugmug.com/frame/slideshow?key=hxvKgw&speed=3&transition=fade&autoStart=1&captions=0&navigation=0&playButton=0&randomize=1&transitionSpeed=2",
+        description: 'Chill hangout with friends. Photos on Sony A7III 28-75mm F2.8.',
+        longDescription: 'A chill late-night hangout with friends, shot on a Sony A7III with a 28–75mm f/2.8 and graded in Lightroom — candid frames that lean into the low light.',
+        iframe: 'https://www.smugmug.com/frame/slideshow?key=hxvKgw&speed=3&transition=fade&autoStart=1&captions=0&navigation=0&playButton=0&randomize=1&transitionSpeed=2',
         link: 'https://www.smugmug.com/gallery/n-9J8VRh',
         linkType: 'photo',
         image: 'images/project_38.jpg',
-        badges: ['| Lightroom | Personal |']
+        badges: ['| Lightroom | Personal |'],
     },
     {
         category: 'graphics',
         title: 'Bubblz Animation',
-        description: 'More After Effects practice with a fun bubbly animation.',
+        description: 'Fun, bubbly After Effects animation.',
+        longDescription: 'A playful, bubbly After Effects animation made as more motion-design practice — light, bouncy, and focused on satisfying timing.',
         link: 'https://www.youtube.com/watch?v=8WFianh_Bko',
         linkType: 'youtube',
         video: 'videos/project_30.mp4',
         image: 'images/project_30.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'graphics',
         title: 'CU Hacking Animation',
-        description: 'Short intro animation revealing new CU Hacking colors and branding.',
+        description: "Short intro animation revealing CU Hacking's new colours and branding.",
+        longDescription: "A short intro animation revealing CU Hacking's new colours and branding, animated in After Effects to introduce the refreshed identity.",
         link: 'https://www.youtube.com/watch?v=IrP4P2sCuQY',
         linkType: 'youtube',
         video: 'videos/project_13.mp4',
         image: 'images/project_13.jpg',
-        badges: ['| After Effects | Club |']
+        badges: ['| After Effects | Club |'],
     },
     {
         category: 'graphics',
         title: 'Heartless Edit',
-        description: 'Fun edit of the song Heartless by The Weeknd with various effects and techniques.',
+        description: 'Edit of "Heartless" by The Weeknd with various effects and techniques.',
+        longDescription: 'A stylised edit set to The Weeknd\'s "Heartless," layering a range of After Effects techniques and effects to match the mood of the track.',
         link: 'https://www.youtube.com/shorts/0y-5EnI4KO8',
         linkType: 'youtube',
         video: 'videos/project_32.mp4',
         image: 'images/project_32.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'video',
         title: 'Lighting Showcase',
-        description: 'Cinematic lighting study featuring three professional techniques: three-point, high-contrast, and back lighting.',
+        description: 'Cinematic lighting study: three-point, high-contrast, and back lighting.',
+        longDescription: 'A cinematic lighting study demonstrating three professional setups — three-point, high-contrast, and back lighting — each shown clearly so the differences read on camera.',
         link: 'https://www.youtube.com/watch?v=3i4h8ERBTiQ',
         linkType: 'youtube',
         video: 'videos/project_11.mp4',
         image: 'images/project_11.jpg',
         badges: ['| Premiere Pro | School |'],
+        sections: [
+            { heading: 'The Study', body: 'Each segment isolates one lighting technique so the contrast between them is easy to see side by side.' },
+            { heading: 'The Techniques', body: 'Three-point for balanced, controlled coverage; high-contrast for drama; and back lighting for separation from the background.' },
+        ],
     },
     {
         category: 'photos',
         title: 'Stills Video Project',
-        description: 'Curated photography sequence exploring composition, pacing, and visual storytelling.',
+        description: 'Curated photography sequence exploring composition, pacing, and storytelling.',
+        longDescription: 'A curated photography sequence cut into a video, exploring composition, pacing, and visual storytelling through a series of stills set to rhythm.',
         link: 'https://www.youtube.com/watch?v=DOs879L4MvE',
         linkType: 'youtube',
         video: 'videos/project_8.mp4',
         image: 'images/project_8.jpg',
-        badges: ['| Premiere Pro | School |']
+        badges: ['| Premiere Pro | School |'],
     },
     {
         category: 'code',
         title: 'Cheese Touch Game',
-        description: 'Platformer game built with Godot engine.',
+        description: 'Platformer game built with the Godot engine.',
+        longDescription: 'A 2D platformer built in the Godot engine — a tight jump-and-run with classic platforming mechanics.',
         link: 'https://github.com/vinit-rao/2dplatformer-godot',
         linkType: 'github',
         video: 'videos/project_33.mp4',
         image: 'images/project_33.jpg',
-        badges: ['| C++ | Godot | Personal |']
+        badges: ['| C++ | Godot | Personal |'],
+        sections: [
+            { heading: 'The Game', body: 'A 2D platformer with responsive jump-and-run mechanics and hand-built levels.' },
+            { heading: 'Built With', body: 'Made in the Godot engine, with the gameplay logic written in C++.' },
+        ],
     },
     {
         category: 'graphics',
-        title: 'Wendy\'s Commercial',
+        title: "Wendy's Commercial",
         description: '15-second animated commercial with dynamic keyframes and motion graphics.',
+        longDescription: 'A 15-second animated commercial built in After Effects, packed with dynamic keyframes and motion graphics to tell a quick, punchy story.',
         link: 'https://www.youtube.com/watch?v=VhibQHSWPOE',
         linkType: 'youtube',
         video: 'videos/project_7.mp4',
         image: 'images/project_7.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'graphics',
         title: 'Introducing RAVO',
-        description: 'Sleek motion graphics opener for videography brand.',
+        description: 'Sleek motion-graphics opener for a videography brand.',
+        longDescription: 'A sleek motion-graphics opener built in After Effects to introduce the videography brand RAVO, focused on clean, confident brand motion.',
         link: 'https://www.youtube.com/watch?v=4LNe7tF2YQ8',
         linkType: 'youtube',
         video: 'videos/project_1.mp4',
         image: 'images/project_1.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'video',
         title: 'NiuNiuBox Video',
-        description: 'Promotional video for NiuNiuBox company.',
+        description: 'Promotional video for NiuNiuBox.',
+        longDescription: 'A promotional video for NiuNiuBox, edited in Premiere Pro with After Effects compositions to present the product cleanly and clearly.',
         link: 'https://www.youtube.com/watch?v=8Q6uj5gckwI',
         linkType: 'youtube',
         video: 'videos/project_35.mp4',
         image: 'images/project_35.jpg',
-        badges: ['| Premiere Pro | After Effects | Work |']
+        badges: ['| Premiere Pro | After Effects | Work |'],
     },
     {
         category: 'graphics',
         title: 'Text Morph',
         description: 'Experimental typography using graph editors for smooth morphing transitions.',
+        longDescription: 'An experimental typography piece that uses the After Effects graph editor to drive smooth morphing transitions between forms of text.',
         link: 'https://www.youtube.com/watch?v=ML7khUEzdOY',
         linkType: 'youtube',
         video: 'videos/project_2.mp4',
         image: 'images/project_2.jpg',
-        badges: ['| After Effects | Personal |']
+        badges: ['| After Effects | Personal |'],
     },
     {
         category: 'graphics',
         title: 'The Button',
         description: 'Sprite-based character animation with custom artwork and sound design.',
+        longDescription: 'A sprite-based character animation with custom artwork and sound design, assembled in After Effects into a short, characterful piece.',
         link: 'https://www.youtube.com/watch?v=7xYjZKmTmC8',
         linkType: 'youtube',
         video: 'videos/project_6.mp4',
         image: 'images/project_6.jpg',
-        badges: ['| After Effects | School |']
+        badges: ['| After Effects | School |'],
     },
     {
         category: 'video',
         title: 'Global Nurse Initiative',
-        description: 'Professional event coverage with interviews, edited in Premiere Pro with After Effects compositions.',
+        description: 'Professional event coverage with interviews, edited in Premiere Pro.',
+        longDescription: 'Professional event coverage with interviews, edited in Premiere Pro with After Effects compositions to package the day into a clean, broadcast-style piece.',
         link: 'https://www.youtube.com/watch?v=RRANPGpEcV0',
         linkType: 'youtube',
         video: 'videos/project_10.mp4',
         image: 'images/project_10.jpg',
-        badges: ['| Premiere Pro | After Effects | Work |']
+        badges: ['| Premiere Pro | After Effects | Work |'],
     },
     {
         category: 'video',
         title: 'Music Video',
-        description: 'Artistic slow-motion edit emphasizing movement and emotion.',
+        description: 'Artistic slow-motion edit emphasising movement and emotion.',
+        longDescription: 'An artistic, slow-motion-driven edit emphasising movement and emotion, cut in Premiere Pro with After Effects to give the piece a dreamy, deliberate feel.',
         link: 'https://www.youtube.com/watch?v=mRWqT6rZetQ',
         linkType: 'youtube',
         video: 'videos/project_5.mp4',
         image: 'images/project_5.jpg',
-        badges: ['| Premiere Pro | After Effects | Personal |']
+        badges: ['| Premiere Pro | After Effects | Personal |'],
     },
     {
         category: 'code',
         title: 'Go Fish Game',
-        description: 'Object-oriented Java card game with custom UI and strategic AI gameplay.',
+        description: 'Object-oriented Java card game with a custom UI and AI opponent.',
+        longDescription: 'An object-oriented Java card game — a digital Go Fish with a custom UI and a simple AI opponent to play against.',
         link: 'https://www.youtube.com/watch?v=6Rl1UXpWMZY',
         linkType: 'youtube',
         video: 'videos/project_9.mp4',
         image: 'images/project_9.jpg',
-        badges: ['| Java | NetBeans | School |']
+        badges: ['| Java | NetBeans | School |'],
+        sections: [
+            { heading: 'The Game', body: 'A digital take on Go Fish with a custom interface and a computer opponent that plays its own hand.' },
+            { heading: 'Built With', body: 'Written in Java (NetBeans) and structured with an object-oriented design.' },
+        ],
     },
     {
         category: 'code',
         title: 'Pyth-Art Art Application',
-        description: 'Drawing application made with Python.',
-        link: '#',
-        linkType: 'github',
+        description: 'A drawing application built in Python.',
+        longDescription: 'A drawing application built in Python that lets the user paint and create simple art on a canvas with a basic set of tools.',
         video: 'videos/project_27.mp4',
         image: 'images/project_27.jpg',
-        badges: ['| Python | School |']
+        badges: ['| Python | School |'],
     },
     {
         category: 'hardware',
         title: 'TEJ20 Custom Robot',
-        description: 'A fully custom-built autonomous rover featuring a scratch-designed PCB, laser-cut acrylic chassis, and 3D-printed mechanics.',
-        image: '/images/project_39-2.jpg', 
+        description: 'A fully custom autonomous rover — scratch-designed PCB, laser-cut acrylic chassis, and 3D-printed mechanics.',
+        longDescription: 'A fully custom-built autonomous rover made from scratch — bypassing off-the-shelf kits to design every element by hand, from the raw electronics to the physical chassis.',
+        image: '/images/project_39-2.jpg',
         images: [
-            '/images/project_39-1.jpg', 
-            '/images/project_39-2.jpg'
+            '/images/project_39-1.jpg',
+            '/images/project_39-2.jpg',
         ],
         badges: ['| AutoCAD | Inventor | Custom PCB | 3D Printing | C++ |'],
         featured: true,
-        objective: "Engineer a fully autonomous, randomized-movement rover entirely from scratch. The goal was to bypass off-the-shelf kits by manually designing every element—from the raw electronics to the physical chassis.",
-        process: "The structural body and wheels were drafted in AutoCAD and laser-cut from red acrylic. I used Autodesk Inventor to model custom 3D-printed motor mounts and wheel stoppers. Electronically, I designed and etched a custom PCB to route a 9V power supply to a dual DC motor setup, writing the C++ micro-controller logic to execute randomized movement patterns.",
-        friction: "Achieving tight mechanical tolerances was a major hurdle. I had to manually measure, cut, and drill the metal standoffs to ensure the structural layers were perfectly parallel so the custom laser-cut wheels wouldn't bind or rub against the acrylic chassis during rotation."
+        sections: [
+            { heading: 'The Objective', body: 'Engineer a fully autonomous, randomized-movement rover entirely from scratch. The goal was to bypass off-the-shelf kits by manually designing every element — from the raw electronics to the physical chassis.' },
+            { heading: 'The Build', body: 'The structural body and wheels were drafted in AutoCAD and laser-cut from red acrylic. I used Autodesk Inventor to model custom 3D-printed motor mounts and wheel stoppers. Electronically, I designed and etched a custom PCB to route a 9V power supply to a dual DC motor setup, writing the C++ micro-controller logic to execute randomized movement patterns.' },
+            { heading: 'The Friction & Resolution', body: 'Achieving tight mechanical tolerances was a major hurdle. I had to manually measure, cut, and drill the metal standoffs to ensure the structural layers were perfectly parallel so the custom laser-cut wheels would not bind or rub against the acrylic chassis during rotation.' },
+        ],
     },
     {
         category: 'video',
         title: 'Environmental Impact Video',
-        description: 'Informative video on environmental issues with motion graphics and data visualization.',
+        description: 'Informative video on environmental issues with motion graphics and data visualisation.',
+        longDescription: 'An informative video on environmental issues, combining motion graphics and data visualisation in Premiere Pro to make the information clear and engaging.',
         link: 'https://www.youtube.com/watch?v=JGQL1EyGY1w',
         linkType: 'youtube',
         video: 'videos/project_31.mp4',
         image: 'images/project_31.jpg',
-        badges: ['| Premiere Pro | School |']
+        badges: ['| Premiere Pro | School |'],
     },
     {
         category: 'graphics',
         title: 'Walk Cycle',
-        description: '3D character animation practice in Blender with rigging and walk cycle.',
+        description: '3D character animation practice in Blender with rigging and a walk cycle.',
+        longDescription: 'A 3D character animation exercise in Blender, covering rigging and a believable walk cycle — a fundamentals study in weight and timing.',
         link: 'https://www.youtube.com/watch?v=_4oRm1HuIbo',
         linkType: 'youtube',
         video: 'videos/project_3.mp4',
         image: 'images/project_3.jpg',
-        badges: ['| Blender | Personal |']
+        badges: ['| Blender | Personal |'],
     },
     {
         category: 'video',
         title: 'Mannequin Challenge',
-        description: 'Fun mannequin challenge video with creative camera movements and editing techniques.',
+        description: 'Fun mannequin challenge video with creative camera movement.',
+        longDescription: 'A fun mannequin-challenge video with creative camera movement and editing techniques, cut in Final Cut to keep the frozen-moment effect crisp.',
         link: 'https://www.youtube.com/watch?v=ocfZhbex0U0',
         linkType: 'youtube',
         video: 'videos/project_28.mp4',
         image: 'images/project_28.jpg',
-        badges: ['| Final Cut | Personal |']
-    }
+        badges: ['| Final Cut | Personal |'],
+        featured: true,
+    },
 ];
 
 export default projects;

@@ -33,7 +33,7 @@
     display: flex; flex-direction: column; gap: 15px; width: 100%; 
 }
 .bp-hero-actions .glass-btn { 
-    width: 100%; justify-content: center; transform: none !important; border-radius: 4px; padding: 15px; font-size: 1rem;
+    width: 100%; justify-content: center; transform: none !important; padding: 15px; font-size: 1rem;
 }
 
 /* --- REDESIGNED MEDIA GALLERY --- */
@@ -41,11 +41,11 @@
     display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative;
 }
 
-.bp-main-media { 
-    position: relative; width: 100%; aspect-ratio: 16/9; background: #FFF; 
+.bp-main-media {
+    position: relative; width: 100%; aspect-ratio: 16/9; background: var(--bg-surface);
     padding: 10px 10px 40px 10px; border: 1px solid var(--border-color); box-shadow: var(--shadow-soft);
+    border-radius: var(--radius-sm);
 }
-body.dark-theme .bp-main-media { background: #EEE; }
 
 .bp-main-media::after {
     content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-1deg);
@@ -64,15 +64,14 @@ body.dark-theme .bp-main-media { background: #EEE; }
     width: 100%; 
 }
 
-.bp-thumbnail { 
-    aspect-ratio: 16/9; 
-    background: #FFF; padding: 5px; border: 1px solid var(--border-color); 
-    cursor: pointer; transition: 0.3s; opacity: 0.6; position: relative; 
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.05); transform: rotate(1deg);
+.bp-thumbnail {
+    aspect-ratio: 16/9;
+    background: var(--bg-surface); padding: 5px; border: 1px solid var(--border-color);
+    cursor: pointer; transition: 0.3s; opacity: 0.55; position: relative;
+    box-shadow: var(--shadow-soft); transform: rotate(1deg); border-radius: var(--radius-sm);
 }
-body.dark-theme .bp-thumbnail { background: #EEE; }
 .bp-thumbnail:nth-child(even) { transform: rotate(-1deg); }
-.bp-thumbnail:hover, .bp-thumbnail.active { opacity: 1; transform: scale(1.05) rotate(0deg); border-color: var(--text-primary); z-index: 10;}
+.bp-thumbnail:hover, .bp-thumbnail.active { opacity: 1; transform: scale(1.05) rotate(0deg); border-color: var(--accent); z-index: 10;}
 .bp-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid rgba(0,0,0,0.1);}
 
 /* MARQUEE */

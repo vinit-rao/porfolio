@@ -1,43 +1,60 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import projectsData from '../data/projects';
 import ProjectCard from '../components/ProjectCard';
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import DynamicBackground from '../components/DynamicBackground';
 import './ProjectsArchive.css';
+
+const KNOWN_CATS = ['all', 'code', 'video', 'graphics', 'photos', 'hardware'];
+
+const FILTER_CARDS = [
+    { id: 'all', label: 'ALL', icon: 'fas fa-layer-group', color: 'var(--accent)', ink: '#fff' },
+    { id: 'code', label: 'CODE', icon: 'fas fa-code', color: 'var(--cat-code)', ink: '#0b0b0d' },
+    { id: 'video', label: 'VIDEO', icon: 'fas fa-film', color: 'var(--cat-video)', ink: '#0b0b0d' },
+    { id: 'graphics', label: 'GRAPHICS', icon: 'fas fa-shapes', color: 'var(--cat-graphics)', ink: '#0b0b0d' },
+    { id: 'photos', label: 'PHOTOS', icon: 'fas fa-camera', color: 'var(--cat-photos)', ink: '#0b0b0d' },
+    { id: 'hardware', label: 'HARDWARE', icon: 'fas fa-microchip', color: 'var(--cat-hardware)', ink: '#0b0b0d' },
+];
 
 const ProjectsArchive = () => {
     const [filter, setFilter] = useState('all');
+    const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [activeProject, setActiveProject] = useState(null);
-    const itemsPerPage = 12; 
+    const itemsPerPage = 12;
 
-    const getCategoryColor = (cat) => {
-        switch(cat?.toLowerCase()) {
-            case 'video': return 'var(--cat-video)';
-            case 'code': return 'var(--cat-code)';
-            case 'graphics': return 'var(--cat-graphics)';
-            case 'photos': return 'var(--cat-photos)';
-            case 'hardware': return '#E67E22'; 
-            default: return 'var(--text-primary)';
-        }
-    };
+    const [searchParams] = useSearchParams();
 
-    const filterCards = [
-        { id: 'all', label: 'ALL FILES', icon: 'fas fa-database', img: '/images/project_25-5.jpg', color: 'var(--text-primary)' }, 
-        { id: 'hardware', label: 'HARDWARE', icon: 'fas fa-microchip', img: '/images/project_25-5.jpg', color: '#E67E22' },
-        { id: 'graphics', label: 'GRAPHICS', icon: 'fas fa-shapes', img: '/images/project_15.jpg', color: 'var(--cat-graphics)' },
-        { id: 'video', label: 'VIDEO', icon: 'fas fa-film', img: '/images/project_11.jpg', color: 'var(--cat-video)' },
-        { id: 'code', label: 'CODE', icon: 'fas fa-code', img: '/images/project_25-5.jpg', color: 'var(--cat-code)' },
-        { id: 'photos', label: 'PHOTOS', icon: 'fas fa-camera', img: '/images/project_36.jpg', color: 'var(--cat-photos)' }
-    ];
-    
-    const activeCard = filterCards.find(c => c.id === filter);
+    // Let the command palette (or a shared link) deep-link into a category/search.
+    useEffect(() => {
+        const cat = (searchParams.get('cat') || '').toLowerCase();
+        const q = searchParams.get('q') || '';
+        /* eslint-disable react-hooks/set-state-in-effect */
+        if (cat && KNOWN_CATS.includes(cat)) setFilter(cat);
+        if (q) setSearch(q);
+        if (cat || q) setCurrentPage(1);
+        /* eslint-enable react-hooks/set-state-in-effect */
+    }, [searchParams]);
+
+    // How many projects sit in each category (for the chip count badges)
+    const counts = useMemo(() => {
+        const c = { all: projectsData.length };
+        projectsData.forEach(p => {
+            const k = p.category?.toLowerCase();
+            if (k) c[k] = (c[k] || 0) + 1;
+        });
+        return c;
+    }, []);
 
     const filtered = useMemo(() => {
-        return projectsData.filter(p => filter === 'all' || p.category?.toLowerCase() === filter);
-    }, [filter]);
+        const q = search.trim().toLowerCase();
+        return projectsData.filter(p => {
+            const catOk = filter === 'all' || p.category?.toLowerCase() === filter;
+            if (!catOk) return false;
+            if (!q) return true;
+            const haystack = [p.title, p.description, ...(p.badges || [])].join(' ').toLowerCase();
+            return haystack.includes(q);
+        });
+    }, [filter, search]);
 
     const totalPages = Math.ceil(filtered.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -45,30 +62,27 @@ const ProjectsArchive = () => {
 
     const handleFilterChange = (c) => {
         setFilter(c);
-        setCurrentPage(1); 
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+        setCurrentPage(1);
     };
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [currentPage, filter]); 
-
-    useEffect(() => {
-        if (activeProject) document.body.style.overflow = 'hidden';
-        else document.body.style.overflow = 'unset';
-        return () => { document.body.style.overflow = 'unset'; };
-    }, [activeProject]);
+    }, [currentPage, filter, search]);
 
     const renderGithubStats = () => {
-        const username = "vinit-rao";
+        const username = 'vinit-rao';
         return (
             <div className="github-stats-wrapper">
-                <div className="gh-contribution-section">
-                    <h4 className="gh-graph-title">LIVE COMMIT ACTIVITY</h4>
-                    <div className="gh-heatmap-container">
-                        <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer">
-                            <img src={`https://ghchart.rshah.org/D91C1C/${username}`} alt={`${username} GitHub chart`} />
-                        </a>
-                    </div>
+                <h4 className="gh-graph-title">LIVE COMMIT ACTIVITY</h4>
+                <div className="gh-heatmap-container">
+                    <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer">
+                        <img src={`https://ghchart.rshah.org/D91C1C/${username}`} alt={`${username} GitHub contribution chart`} />
+                    </a>
                 </div>
             </div>
         );
@@ -76,125 +90,85 @@ const ProjectsArchive = () => {
 
     return (
         <div className="archive-wrapper">
-            <Navbar />
-            <DynamicBackground />
-            
-            <div className="container archive-container">
+            <div className="container archive-container" id="main-content">
                 <header className="archive-header">
                     <h1 className="massive-title" style={{ textShadow: 'none', textAlign: 'left' }}>Projects</h1>
+                    <p className="archive-subtitle">A working archive of code, motion, hardware &amp; photography.</p>
                 </header>
 
-                <div className="archive-hero-selector">
-                    <div className="hero-main-stage">
-                        <div key={activeCard.id} className="stage-anim-wrapper">
-                            <img src={activeCard.img} alt={activeCard.label} className="stage-bg-img" />
-                            <div className="stage-overlay">
-                                <h2 className="stage-title">{activeCard.id === 'all' ? 'ALL PROJECTS' : activeCard.label}</h2>
-                            </div>
-                        </div>
+                <div className="archive-toolbar">
+                    <div className="archive-search">
+                        <i className="fas fa-search" aria-hidden="true"></i>
+                        <input
+                            type="search"
+                            value={search}
+                            onChange={handleSearchChange}
+                            placeholder="Search projects, tools, tech…"
+                            aria-label="Search projects"
+                            className="archive-search-input"
+                        />
+                        {search && (
+                            <button type="button" className="search-clear" onClick={() => { setSearch(''); setCurrentPage(1); }} aria-label="Clear search">
+                                <i className="fas fa-times" aria-hidden="true"></i>
+                            </button>
+                        )}
                     </div>
 
-                    <div className="hero-filter-grid">
-                        {filterCards.map(card => (
-                            <div 
+                    <div className="filter-chip-row" role="group" aria-label="Filter projects by category">
+                        {FILTER_CARDS.map(card => (
+                            <button
+                                type="button"
                                 key={card.id}
-                                className={`filter-grid-item ${filter === card.id ? 'active' : ''}`}
+                                className={`filter-chip ${filter === card.id ? 'active' : ''}`}
+                                style={{ '--chip-color': card.color, '--chip-ink': card.ink }}
                                 onClick={() => handleFilterChange(card.id)}
+                                aria-pressed={filter === card.id}
                             >
-                                <i className={card.icon} style={{ color: filter === card.id ? 'var(--accent)' : card.color, opacity: filter === card.id ? 1 : 0.7 }}></i>
-                                <span className="filter-label">{card.label}</span>
-                                {filter === card.id && <div className="active-dot"></div>}
-                            </div>
+                                <i className={card.icon} aria-hidden="true"></i>
+                                <span className="chip-label">{card.label}</span>
+                                <span className="chip-count">{counts[card.id] || 0}</span>
+                            </button>
                         ))}
                     </div>
+
+                    <p className="archive-result-count" aria-live="polite">
+                        {filtered.length} {filtered.length === 1 ? 'project' : 'projects'}
+                        {search ? ` matching “${search}”` : ''}
+                    </p>
                 </div>
-                
+
                 {filter === 'code' && renderGithubStats()}
 
-                <div className="archive-grid">
-                    {currentProjects.map((p, idx) => (
-                        <ProjectCard key={idx} project={p} onClick={setActiveProject} />
-                    ))}
-                </div>
-
-                {totalPages > 1 && (
-                    <div className="scrap-pagination">
-                        <button className="glass-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>PREV</button>
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                            <button key={page} className={`glass-btn ${currentPage === page ? 'active-page' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>
+                {currentProjects.length > 0 ? (
+                    <div className="archive-grid">
+                        {currentProjects.map((p) => (
+                            <ProjectCard key={p.title} project={p} />
                         ))}
-                        <button className="glass-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>NEXT</button>
+                    </div>
+                ) : (
+                    <div className="archive-empty">
+                        <i className="fas fa-folder-open" aria-hidden="true"></i>
+                        <p>No projects found. Try a different search or category.</p>
+                        <button type="button" className="glass-btn" onClick={() => { setSearch(''); setFilter('all'); setCurrentPage(1); }}>RESET FILTERS</button>
                     </div>
                 )}
+
+                {totalPages > 1 && (
+                    <nav className="scrap-pagination" aria-label="Project pages">
+                        <button className="glass-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)} aria-label="Previous page">PREV</button>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                            <button
+                                key={page}
+                                className={`glass-btn ${currentPage === page ? 'active-page' : ''}`}
+                                onClick={() => setCurrentPage(page)}
+                                aria-label={`Page ${page}`}
+                                aria-current={currentPage === page ? 'page' : undefined}
+                            >{page}</button>
+                        ))}
+                        <button className="glass-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)} aria-label="Next page">NEXT</button>
+                    </nav>
+                )}
             </div>
-
-            {/* --- DOSSIER MODAL --- */}
-            {activeProject && (
-                <div className="dossier-modal-overlay" onClick={() => setActiveProject(null)}>
-                    <div className="dossier-modal-panel" onClick={e => e.stopPropagation()}>
-                        
-                        <div className="modal-header">
-                            <h3 className="modal-title">// {activeProject.title}</h3>
-                            <button className="modal-close" onClick={() => setActiveProject(null)}>[ X ]</button>
-                        </div>
-                        
-                        <div className="modal-scroll-area">
-                            <div className="modal-hero-container">
-                                {/* THE COLORED TAPE IN THE MODAL */}
-                                <div className="modal-category-stamp" style={{ '--cat-color': getCategoryColor(activeProject.category) }}>
-                                    {activeProject.category}
-                                </div>
-                                
-                                {activeProject.images && activeProject.images.length > 0 ? (
-                                    <div className="modal-image-gallery">
-                                        {activeProject.images.map((img, i) => (
-                                            <img key={i} src={img} alt={`${activeProject.title} ${i + 1}`} className="modal-hero-img gallery-img" />
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <img src={activeProject.image} alt={activeProject.title} className="modal-hero-img" />
-                                )}
-                            </div>
-
-                            <div className="modal-manifest">
-                                <h4>[ SYSTEM MANIFEST ]</h4>
-                                <div className="manifest-tags">
-                                    {activeProject.badges?.flatMap(b => b.split('|')).map(b => b.trim()).filter(b => b !== '').map((b, i) => (
-                                        <span key={i} className="manifest-tag">{b}</span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="modal-teardown">
-                                {activeProject.category?.toLowerCase() === 'hardware' ? (
-                                    <>
-                                        <h4>01. THE OBJECTIVE</h4>
-                                        <p>{activeProject.objective}</p>
-                                        
-                                        <h4>02. THE BUILD</h4>
-                                        <p>{activeProject.process}</p>
-                                        
-                                        <h4>03. THE FRICTION & RESOLUTION</h4>
-                                        <p>{activeProject.friction}</p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <h4>DESCRIPTION</h4>
-                                        <p>{activeProject.description}</p>
-                                    </>
-                                )}
-                            </div>
-
-                            <div className="modal-actions">
-                                {activeProject.internalLink && <Link to={activeProject.internalLink} className="glass-btn action-btn primary-action-btn" onClick={() => setActiveProject(null)}>VIEW FULL PROJECT</Link>}
-                                
-                                {activeProject.link && <a href={activeProject.link} target="_blank" rel="noreferrer" className="glass-btn action-btn">VIEW LIVE</a>}
-                                {activeProject.github && <a href={activeProject.github} target="_blank" rel="noreferrer" className="glass-btn action-btn">SOURCE CODE</a>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             <Footer />
         </div>

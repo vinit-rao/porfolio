@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
-import DynamicBackground from '../../components/DynamicBackground';
 import GithubRepoCard from '../../components/GithubRepoCard';
 import './BennysProject.css';
 
 const BennysProject = () => {
-    useEffect(() => { window.scrollTo(0, 0); }, []);
-
     const [activeMedia, setActiveMedia] = useState(0);
     const [socialSlide, setSocialSlide] = useState(0);
 
@@ -29,10 +25,7 @@ const BennysProject = () => {
 
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar />
-            <DynamicBackground />
-            
-            <div className="container" style={{ paddingTop: '140px', flexGrow: 1, paddingBottom: '100px' }}>
+            <div className="container" id="main-content" style={{ paddingTop: '140px', flexGrow: 1, paddingBottom: '100px' }}>
 
                 <div style={{ marginBottom: '30px' }}>
                     <Link to="/projects" className="bp-back-btn">[ ← RETURN TO ARCHIVE ]</Link>

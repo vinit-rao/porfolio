@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Oversized video kept locally — exceeds GitHub's 100MB file limit (compress before committing)
+public/videos/Refuse - countdown (Official Music Video) - Refuse (1080p).mp4
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

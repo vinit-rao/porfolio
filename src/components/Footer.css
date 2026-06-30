@@ -66,8 +66,8 @@
     color: var(--text-primary);
     display: inline-block;
     letter-spacing: 1px;
+    border-radius: var(--radius-sm);
 }
-body.dark-theme .footer-stamp { border-color: var(--text-primary); }
 
 @media (max-width: 768px) {
     .footer-links-grid { flex-direction: column; gap: 15px; }

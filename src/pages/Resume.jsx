@@ -1,15 +1,10 @@
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import DynamicBackground from '../components/DynamicBackground';
 
 const Resume = () => {
     return (
         <div className="page-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar />
-            <DynamicBackground />
-
             {/* Main Content Area */}
-            <main className="container" style={{
+            <main className="container" id="main-content" style={{
                 paddingTop: '160px',
                 flexGrow: 1,
                 display: 'flex',

@@ -1,0 +1,76 @@
+.featured-carousel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.fc-viewport {
+    overflow: hidden;
+    /* vertical breathing room so the card's hover lift isn't clipped;
+       keep horizontal tight so the next slide doesn't peek through */
+    padding: 16px 3px;
+    margin: -16px -3px;
+}
+
+.fc-track {
+    display: flex;
+    transition: transform 0.6s var(--ease-out);
+    will-change: transform;
+}
+
+.fc-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    padding: 0 3px;
+}
+
+.fc-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.fc-arrow {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.fc-arrow:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.fc-dots {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+.fc-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: none;
+    background: var(--border-strong);
+    cursor: pointer;
+    transition: all 0.25s var(--ease-out);
+}
+.fc-dot:hover { background: var(--text-secondary); }
+.fc-dot.active {
+    width: 26px;
+    background: var(--accent);
+    box-shadow: var(--glow-accent);
+}
