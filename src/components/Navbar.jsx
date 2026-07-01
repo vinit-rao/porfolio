@@ -35,6 +35,7 @@ const Navbar = () => {
 
                     <div className={`nav-menu ${menuOpen ? 'active' : ''}`} id="nav-menu">
                         <div className="nav-links">
+                            <Link to="/" className={`nav-framed-link ${location.pathname === '/' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>HOME</Link>
                             <Link to="/projects" className={`nav-framed-link ${location.pathname === '/projects' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>PROJECTS</Link>
                             <Link to="/contact" className={`nav-framed-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>CONTACT</Link>
                             <Link to="/resume" className={`nav-framed-link ${location.pathname === '/resume' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>RESUME</Link>
